@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Preview — Orb animée</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;background:radial-gradient(circle at 50% 40%,#15121d 0%,#0a0908 70%,#000 100%);color:#e8e6e0;font-family:'Space Grotesk',sans-serif;overflow:hidden;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:30px}
+
+  .label{font-family:'Geist Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.4em;color:#5a5660;display:flex;align-items:center;gap:14px}
+  .label::before, .label::after{content:'';width:32px;height:1px;background:#5a5660;opacity:.6}
+
+  /* === Stage === */
+  .stage{position:relative;width:520px;height:680px;display:flex;align-items:center;justify-content:center;perspective:1400px}
+
+  /* Halo glow behind */
+  .halo{position:absolute;inset:60px 50px 80px 50px;background:radial-gradient(ellipse at 50% 55%,rgba(95,201,255,.5) 0%,rgba(255,94,168,.35) 35%,rgba(255,181,71,.2) 60%,transparent 80%);filter:blur(40px);animation:haloPulse 5s ease-in-out infinite alternate;z-index:0}
+  @keyframes haloPulse{from{opacity:.6;transform:scale(.9)}to{opacity:1;transform:scale(1.12)}}
+
+  /* Floor reflection */
+  .floor-glow{position:absolute;bottom:60px;left:50%;width:340px;height:60px;background:radial-gradient(ellipse at center,rgba(95,201,255,.3) 0%,rgba(255,94,168,.18) 40%,transparent 75%);filter:blur(18px);transform:translateX(-50%);z-index:0}
+
+  /* Spin wrapper - continuous Y rotation */
+  .orb-spin{position:relative;width:100%;height:100%;display:flex;align-items:center;justify-content:center;transform-style:preserve-3d;animation:orbSpin 16s linear infinite;z-index:2}
+  @keyframes orbSpin{from{transform:rotateY(-12deg)}to{transform:rotateY(348deg)}}
+
+  /* Bob wrapper - vertical float */
+  .orb-bob{display:flex;align-items:center;justify-content:center;animation:orbBob 4s ease-in-out infinite alternate}
+  @keyframes orbBob{from{transform:translateY(0)}to{transform:translateY(-22px)}}
+
+  /* The image */
+  .orb-img{width:380px;height:auto;display:block;-webkit-mask-image:radial-gradient(ellipse 70% 75% at 50% 55%,black 60%,transparent 95%);mask-image:radial-gradient(ellipse 70% 75% at 50% 55%,black 60%,transparent 95%);filter:drop-shadow(0 30px 50px rgba(95,201,255,.4)) drop-shadow(0 0 40px rgba(255,94,168,.3)) drop-shadow(0 10px 18px rgba(0,0,0,.7))}
+
+  /* Orbit particles */
+  .orbit{position:absolute;inset:0;z-index:3;pointer-events:none}
+  .op{position:absolute;width:6px;height:6px;border-radius:999px;top:50%;left:50%;transform:translate(-50%,-50%)}
+  .op::before{content:'';position:absolute;inset:0;border-radius:inherit;background:inherit;box-shadow:inherit}
+  .op.p1{background:#5fc9ff;box-shadow:0 0 14px #5fc9ff,0 0 26px rgba(95,201,255,.5);animation:orbit1 7s linear infinite}
+  .op.p2{background:#ff5ea8;box-shadow:0 0 14px #ff5ea8,0 0 26px rgba(255,94,168,.5);animation:orbit2 9s linear infinite}
+  .op.p3{background:#ffb547;box-shadow:0 0 12px #ffb547,0 0 22px rgba(255,181,71,.5);animation:orbit3 11s linear infinite;width:5px;height:5px}
+  .op.p4{background:#5fffd4;box-shadow:0 0 14px #5fffd4,0 0 26px rgba(95,255,212,.5);animation:orbit4 8s linear infinite;width:4px;height:4px}
+  .op.p5{background:#fff;box-shadow:0 0 10px #fff,0 0 18px rgba(255,255,255,.4);animation:orbit5 13s linear infinite;width:3px;height:3px}
+  .op.p6{background:#a47fff;box-shadow:0 0 12px #a47fff,0 0 22px rgba(164,127,255,.5);animation:orbit6 10s linear infinite}
+
+  @keyframes orbit1{from{transform:translate(-50%,-50%) rotate(0) translateX(220px) rotate(0)}to{transform:translate(-50%,-50%) rotate(360deg) translateX(220px) rotate(-360deg)}}
+  @keyframes orbit2{from{transform:translate(-50%,-50%) rotate(45deg) translateX(260px) rotate(-45deg)}to{transform:translate(-50%,-50%) rotate(405deg) translateX(260px) rotate(-405deg)}}
+  @keyframes orbit3{from{transform:translate(-50%,-50%) rotate(120deg) translateX(190px) rotate(-120deg)}to{transform:translate(-50%,-50%) rotate(480deg) translateX(190px) rotate(-480deg)}}
+  @keyframes orbit4{from{transform:translate(-50%,-50%) rotate(200deg) translateX(280px) rotate(-200deg)}to{transform:translate(-50%,-50%) rotate(560deg) translateX(280px) rotate(-560deg)}}
+  @keyframes orbit5{from{transform:translate(-50%,-50%) rotate(280deg) translateX(240px) rotate(-280deg)}to{transform:translate(-50%,-50%) rotate(640deg) translateX(240px) rotate(-640deg)}}
+  @keyframes orbit6{from{transform:translate(-50%,-50%) rotate(160deg) translateX(200px) rotate(-160deg)}to{transform:translate(-50%,-50%) rotate(520deg) translateX(200px) rotate(-520deg)}}
+
+  /* Caption */
+  .caption{font-family:'Geist Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.3em;color:#5a5660;text-align:center;line-height:1.8;max-width:520px}
+  .caption strong{color:#e8e6e0;font-weight:700;letter-spacing:.05em}
+  .caption .glow-c{color:#5fc9ff}
+  .caption .glow-p{color:#ff5ea8}
+</style>
+</head>
+<body>
+
+<div class="label">Preview · Animation orb keycap</div>
+
+<div class="stage">
+  <div class="halo"></div>
+  <div class="floor-glow"></div>
+  <div class="orb-spin">
+    <div class="orb-bob">
+      <img class="orb-img" src="../assets/keycap-3d.png" alt="Keycap">
+    </div>
+  </div>
+  <div class="orbit">
+    <div class="op p1"></div>
+    <div class="op p2"></div>
+    <div class="op p3"></div>
+    <div class="op p4"></div>
+    <div class="op p5"></div>
+    <div class="op p6"></div>
+  </div>
+</div>
+
+<div class="caption">
+  <strong>Animations actives</strong> :<br>
+  · Rotation Y continue 16s (lente, fluide)<br>
+  · Float vertical 4s (alternate ease-in-out, ±22px)<br>
+  · Halo pulsant <span class="glow-c">cyan</span>/<span class="glow-p">pink</span>/ambre 5s<br>
+  · 6 particules orbitant à différentes vitesses, rayons et couleurs<br>
+  · Mask radial pour fader les bords du PNG<br>
+  · Drop-shadow multi-layer (cyan + pink + dark grounding)
+</div>
+
+</body>
+</html>

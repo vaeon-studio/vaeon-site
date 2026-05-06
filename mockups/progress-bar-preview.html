@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Preview — Progress bar barber-pole</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#0e0e10;color:#f3f1ea;font-family:'JetBrains Mono',monospace;min-height:100vh;padding:60px 40px}
+  .label{font-size:11px;text-transform:uppercase;letter-spacing:.2em;color:#7a7a82;margin-bottom:14px;margin-top:48px}
+  .label:first-of-type{margin-top:0}
+
+  /* === Variant A — vertical stripes, fast scroll, dense === */
+  .bar-a{position:relative;height:14px;width:100%;overflow:hidden;border-radius:3px;background:#02060f}
+  .bar-a::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(90deg,#0a3fcf 0,#5fc9ff 3px,#0a3fcf 6px);animation:scrollX 0.6s linear infinite;filter:drop-shadow(0 0 6px #2a8cff)}
+  @keyframes scrollX{from{transform:translateX(0)}to{transform:translateX(6px)}}
+
+  /* === Variant B — diagonal stripes (barber pole) === */
+  .bar-b{position:relative;height:14px;width:100%;overflow:hidden;border-radius:3px;background:#02060f}
+  .bar-b::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(-65deg,#0a3fcf 0,#5fc9ff 4px,#0a3fcf 8px);animation:scrollDiag 0.8s linear infinite;filter:drop-shadow(0 0 6px #2a8cff);width:calc(100% + 16px)}
+  @keyframes scrollDiag{from{transform:translateX(0)}to{transform:translateX(-8px)}}
+
+  /* === Variant C — closer to your screenshot (very dense vertical w/ glow) === */
+  .bar-c{position:relative;height:18px;width:100%;overflow:hidden;background:#000311;box-shadow:0 0 12px rgba(42,140,255,.6),inset 0 0 8px rgba(0,0,0,.5)}
+  .bar-c::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(90deg,#000814 0,#1858d8 2px,#7ad8ff 3px,#1858d8 4px,#000814 6px);animation:scrollX2 0.5s linear infinite;width:calc(100% + 12px)}
+  @keyframes scrollX2{from{transform:translateX(0)}to{transform:translateX(-6px)}}
+
+  /* === Variant D — like C but slower + slight diagonal tilt === */
+  .bar-d{position:relative;height:18px;width:100%;overflow:hidden;background:#000311;box-shadow:0 0 14px rgba(42,140,255,.55),inset 0 0 8px rgba(0,0,0,.5)}
+  .bar-d::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(-78deg,#000814 0,#1858d8 2px,#7ad8ff 3px,#1858d8 4px,#000814 6px);animation:scrollX3 0.9s linear infinite;width:calc(100% + 12px)}
+  @keyframes scrollX3{from{transform:translateX(0)}to{transform:translateX(-6px)}}
+
+  .stage{padding:24px;background:#15151a;border:1px solid rgba(243,241,234,.1);border-radius:10px;margin-bottom:20px}
+  h1{font-size:13px;text-transform:uppercase;letter-spacing:.18em;color:#b9b6ad;margin-bottom:32px}
+</style>
+</head>
+<body>
+
+<h1>Preview · barre de progression — comparatif</h1>
+
+<div class="stage">
+  <div class="label">A · rayures verticales rapides, denses</div>
+  <div class="bar-a"></div>
+</div>
+
+<div class="stage">
+  <div class="label">B · barber pole diagonal</div>
+  <div class="bar-b"></div>
+</div>
+
+<div class="stage">
+  <div class="label">C · proche de ton screen (vertical dense + glow + hot core)</div>
+  <div class="bar-c"></div>
+</div>
+
+<div class="stage">
+  <div class="label">D · variante de C, lég&egrave;rement diagonale + plus lent</div>
+  <div class="bar-d"></div>
+</div>
+
+</body>
+</html>

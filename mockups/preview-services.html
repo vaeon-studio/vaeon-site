@@ -1,0 +1,437 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Preview — Services redesign</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600;700&family=Fraunces:ital,wght@0,400;1,300;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0e0e10;--bg-2:#15151a;--bg-3:#1c1c22;
+    --ink:#f3f1ea;--ink-2:#b9b6ad;--ink-3:#7a7a82;--ink-4:#3a3a40;
+    --line:rgba(243,241,234,.10);--line-2:rgba(243,241,234,.18);
+    --c-pink:#ff5e8a;--c-cyan:#5fc9ff;--c-lime:#c6f964;--c-amber:#ffb547;--c-mint:#5fffd4;
+    --sans:'Space Grotesk',sans-serif;--serif:'Fraunces',serif;--mono:'JetBrains Mono',monospace;--display-mono:'Geist Mono',monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-weight:500;-webkit-font-smoothing:antialiased;padding:80px 40px}
+
+  /* Section header */
+  .sec-head{text-align:center;margin-bottom:80px;display:flex;flex-direction:column;align-items:center;gap:24px}
+  .pill-tag{display:inline-flex;align-items:center;gap:10px;padding:10px 18px;border:1px solid var(--line);border-radius:999px;font-family:var(--mono);font-size:11px;color:var(--ink-2);text-transform:uppercase;letter-spacing:.14em;background:var(--bg-2)}
+  .sec-title{font-family:var(--display-mono);font-weight:700;font-size:clamp(38px,5.5vw,86px);line-height:1.02;letter-spacing:-.045em;text-transform:uppercase}
+  .sec-title em{font-family:var(--serif);font-style:italic;font-weight:300;text-transform:none;color:var(--ink-2)}
+  .sec-aside{font-family:var(--serif);font-style:italic;font-weight:300;font-size:18px;color:var(--ink-2);max-width:640px;line-height:1.55}
+
+  /* Services grid */
+  .services{display:grid;grid-template-columns:1fr 1fr;gap:18px;max-width:1400px;margin:0 auto}
+  .svc{position:relative;background:var(--bg-2);border:1px solid var(--line);border-radius:24px;padding:36px;min-height:540px;overflow:hidden;display:flex;flex-direction:column;transition:transform .4s, border-color .4s}
+  .svc::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 80% 0%, rgba(255,255,255,.04), transparent 50%);pointer-events:none}
+  .svc .preview{flex:1;margin:-36px -36px 24px;border-bottom:1px solid var(--line);position:relative;overflow:hidden;min-height:300px;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at 50% 50%, var(--bg-3), var(--bg-2))}
+  .svc .delay{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.22em;color:var(--ink-3);margin-bottom:8px;display:flex;align-items:center;gap:10px}
+  .svc .delay::before{content:'';width:6px;height:6px;border-radius:999px;background:var(--accent)}
+  .svc h3{font-family:var(--sans);font-size:32px;font-weight:700;letter-spacing:-.02em;margin-bottom:6px;color:var(--ink)}
+  .svc h3 em{font-family:var(--serif);font-style:italic;font-weight:300}
+  .svc .tag{font-family:var(--serif);font-style:italic;font-weight:300;font-size:18px;color:var(--accent);margin-bottom:14px;line-height:1.4}
+  .svc p{font-size:14.5px;line-height:1.55;color:var(--ink-2);max-width:480px}
+  .svc .deliverables{margin-top:18px;display:flex;flex-wrap:wrap;gap:6px}
+  .svc .deliverables span{font-family:var(--mono);font-size:10px;color:var(--ink-2);padding:5px 10px;border:1px solid var(--line);border-radius:999px;letter-spacing:.06em}
+  .svc .stack{margin-top:auto;padding-top:18px;border-top:1px dashed var(--line);font-family:var(--mono);font-size:10px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.18em;display:flex;justify-content:space-between;align-items:center}
+  .svc .stack strong{color:var(--accent);font-weight:500}
+
+  /* Accent variations */
+  .svc.s1{--accent:var(--c-pink)}
+  .svc.s2{--accent:var(--c-cyan)}
+  .svc.s3{--accent:var(--c-lime)}
+  .svc.s4{--accent:var(--c-amber)}
+
+  /* === PREVIEW VISUALS === */
+
+  /* 1 — Brand kit grid */
+  .pv-brand{position:absolute;inset:0;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto auto auto;gap:14px;padding:24px;align-content:center}
+  .pv-brand .logo{grid-column:span 2;display:flex;align-items:center;justify-content:center;gap:10px;font-family:var(--display-mono);font-weight:700;font-size:42px;color:var(--ink);letter-spacing:.04em}
+  .pv-brand .logo .star{width:24px;height:24px;background:var(--c-pink);border-radius:50%;box-shadow:0 0 18px rgba(255,94,138,.5)}
+  .pv-brand .swatches{grid-column:span 2;display:flex;gap:8px;justify-content:center}
+  .pv-brand .sw{width:48px;height:48px;border-radius:50%;border:2px solid rgba(243,241,234,.1);position:relative}
+  .pv-brand .sw::after{content:attr(data-hex);position:absolute;bottom:-18px;left:50%;transform:translateX(-50%);font-family:var(--mono);font-size:8px;color:var(--ink-3);letter-spacing:.1em;white-space:nowrap}
+  .pv-brand .typo{display:flex;flex-direction:column;gap:4px}
+  .pv-brand .typo .big{font-family:var(--display-mono);font-weight:700;font-size:22px;color:var(--ink);letter-spacing:-.02em;text-transform:uppercase}
+  .pv-brand .typo .sm{font-family:var(--serif);font-style:italic;font-size:14px;color:var(--ink-2)}
+  .pv-brand .typo .lbl{font-family:var(--mono);font-size:8px;color:var(--ink-3);letter-spacing:.18em;text-transform:uppercase;margin-top:4px}
+
+  /* 2 — UI/UX : Figma artboard mockup (dark mode) */
+  .pv-uiux{position:absolute;inset:0;overflow:hidden;background:#1a1a1f;font-family:var(--mono)}
+  /* Subtle dot grid (Figma canvas) */
+  .pv-uiux::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,rgba(255,255,255,.04) 1px,transparent 1px);background-size:14px 14px;z-index:0}
+
+  /* Top bar (Figma file header) */
+  .figma-top{position:absolute;top:0;left:0;right:0;height:32px;background:#15151a;border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:center;padding:0 12px;gap:10px;font-size:10px;color:#9aa;letter-spacing:.06em;z-index:5}
+  .figma-top .flogo{width:14px;height:14px;border-radius:3px;background:linear-gradient(135deg,#ff5ea8 0%,#ffb547 50%,#5fc9ff 100%);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:8px;color:#fff}
+  .figma-top .crumb{display:flex;align-items:center;gap:6px;color:#7a7a82}
+  .figma-top .crumb strong{color:#e0e0e6;font-weight:500}
+  .figma-top .crumb .sep{opacity:.4}
+  .figma-top .right{margin-left:auto;display:flex;align-items:center;gap:8px}
+  .figma-top .avatar{width:14px;height:14px;border-radius:50%;background:#5fc9ff;border:1px solid #1a1a1f}
+  .figma-top .avatar.b{background:#ff5e8a;margin-left:-6px}
+  .figma-top .avatar.c{background:#c6f964;margin-left:-6px}
+  .figma-top .badge{padding:2px 6px;background:rgba(95,201,255,.15);color:#5fc9ff;border-radius:3px;font-size:8px;letter-spacing:.1em;font-weight:600}
+
+  /* Artboard grid (4 sections) */
+  .figma-board{position:absolute;top:42px;left:14px;right:14px;bottom:14px;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:8px;z-index:2}
+  .fig-section{background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.06);border-radius:6px;padding:10px 12px;display:flex;flex-direction:column;gap:8px;position:relative}
+  .fig-section .stitle{font-size:8px;color:#7a7a82;letter-spacing:.18em;text-transform:uppercase;display:flex;align-items:center;gap:6px}
+  .fig-section .stitle::before{content:'';width:5px;height:5px;border-radius:1px;background:currentColor;color:var(--ink-3)}
+
+  /* Color tokens */
+  .fig-colors{display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
+  .fig-tok{aspect-ratio:1;border-radius:4px;position:relative}
+  .fig-tok::after{content:attr(data-label);position:absolute;bottom:-2px;left:50%;transform:translateX(-50%) translateY(100%);font-size:7px;color:#7a7a82;letter-spacing:.04em;white-space:nowrap;line-height:1}
+
+  /* Type scale */
+  .fig-type{display:flex;flex-direction:column;gap:4px}
+  .fig-type .tline{display:flex;align-items:baseline;gap:8px;color:#e0e0e6}
+  .fig-type .tline .name{font-size:7px;color:#5a5a60;width:18px;text-transform:uppercase;letter-spacing:.1em}
+  .fig-type .h1{font-family:var(--display-mono);font-size:18px;font-weight:700;line-height:1;letter-spacing:-.02em;color:#fff}
+  .fig-type .h2{font-family:var(--display-mono);font-size:13px;font-weight:600;line-height:1;color:#fff}
+  .fig-type .body{font-size:9px;color:#aaa}
+  .fig-type .meta{font-size:7px;color:#5a5a60;margin-left:auto}
+
+  /* Components */
+  .fig-comps{display:flex;flex-wrap:wrap;gap:4px;align-content:flex-start}
+  .fig-btn{padding:4px 8px;background:#5fc9ff;color:#1a1a1f;font-size:8px;font-weight:600;border-radius:3px;letter-spacing:.04em}
+  .fig-btn.ghost{background:transparent;border:1px solid rgba(255,255,255,.18);color:#e0e0e6}
+  .fig-input{padding:4px 8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:3px;font-size:8px;color:#7a7a82;flex:1;min-width:60px}
+  .fig-badge{padding:3px 7px;background:rgba(255,94,168,.15);color:#ff5e8a;border:1px solid rgba(255,94,168,.4);font-size:7px;border-radius:99px;letter-spacing:.08em;font-weight:600;text-transform:uppercase}
+  .fig-card{padding:5px 7px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:3px;font-size:7px;color:#aaa;display:flex;align-items:center;gap:4px}
+  .fig-card::before{content:'';width:8px;height:8px;border-radius:1px;background:#c6f964}
+
+  /* Spacing tokens */
+  .fig-spacing{display:flex;align-items:center;gap:5px;flex:1}
+  .fig-sp{display:flex;flex-direction:column;align-items:center;gap:2px}
+  .fig-sp .bar{background:rgba(95,201,255,.6);border-radius:1px;width:3px}
+  .fig-sp.s1 .bar{height:4px}
+  .fig-sp.s2 .bar{height:8px}
+  .fig-sp.s3 .bar{height:14px}
+  .fig-sp.s4 .bar{height:22px}
+  .fig-sp.s5 .bar{height:32px}
+  .fig-sp .lbl{font-size:7px;color:#7a7a82;letter-spacing:.05em}
+
+  /* Selection rect (Figma blue) */
+  .fig-section.selected{border-color:#5fc9ff;box-shadow:inset 0 0 0 1px rgba(95,201,255,.2),0 0 12px rgba(95,201,255,.15);animation:figSel 3s ease-in-out infinite}
+  @keyframes figSel{0%,100%{box-shadow:inset 0 0 0 1px rgba(95,201,255,.2),0 0 12px rgba(95,201,255,.15)}50%{box-shadow:inset 0 0 0 1px rgba(95,201,255,.4),0 0 18px rgba(95,201,255,.3)}}
+  .fig-section.selected::after{content:'';position:absolute;top:-3px;left:-3px;width:5px;height:5px;background:#5fc9ff;border:1px solid #1a1a1f;border-radius:1px}
+  .fig-section.selected::before{content:'';position:absolute;top:-3px;right:-3px;width:5px;height:5px;background:#5fc9ff;border:1px solid #1a1a1f;border-radius:1px}
+
+  /* Cursor (Figma cursor with name tag) */
+  .fig-cursor{position:absolute;z-index:6;width:14px;height:14px;animation:cursorMove 8s ease-in-out infinite}
+  .fig-cursor svg{width:100%;height:100%;filter:drop-shadow(0 1px 2px rgba(0,0,0,.5))}
+  .fig-cursor .tag{position:absolute;top:14px;left:10px;background:#ff5e8a;color:#fff;padding:2px 5px;border-radius:3px;font-size:7px;white-space:nowrap;letter-spacing:.04em;font-weight:500}
+  @keyframes cursorMove{
+    0%{top:50%;left:25%}
+    25%{top:30%;left:60%}
+    50%{top:65%;left:55%}
+    75%{top:75%;left:30%}
+    100%{top:50%;left:25%}
+  }
+
+  /* Floating UI overlays around the image (chips, swatches, code) */
+  .pv-uiux .ui-chip{position:absolute;z-index:4;background:rgba(15,15,20,.8);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:8px 12px;font-family:var(--mono);font-size:9px;color:var(--ink-2);letter-spacing:.18em;text-transform:uppercase;box-shadow:0 8px 20px rgba(0,0,0,.4)}
+  .pv-uiux .ui-chip.c1{top:14px;left:14px;animation:chipFloat 4s ease-in-out infinite alternate}
+  .pv-uiux .ui-chip.c2{bottom:14px;right:14px;animation:chipFloat 4s ease-in-out infinite alternate;animation-delay:1s}
+  .pv-uiux .ui-chip.c3{top:14px;right:14px;animation:chipFloat 4s ease-in-out infinite alternate;animation-delay:2s;display:flex;align-items:center;gap:6px}
+  .pv-uiux .ui-chip strong{color:var(--c-cyan);font-weight:600}
+  .pv-uiux .ui-chip .dot{width:6px;height:6px;border-radius:50%;background:#7adc4a;box-shadow:0 0 8px #7adc4a}
+  @keyframes chipFloat{from{transform:translateY(0)}to{transform:translateY(-4px)}}
+
+  .pv-uiux .swatch-row{position:absolute;bottom:14px;left:14px;z-index:4;display:flex;gap:4px;background:rgba(15,15,20,.8);backdrop-filter:blur(8px);padding:6px;border-radius:8px;border:1px solid rgba(255,255,255,.12);animation:chipFloat 4s ease-in-out infinite alternate;animation-delay:.5s}
+  .pv-uiux .swatch-row span{width:14px;height:14px;border-radius:3px}
+
+  /* (legacy design system tokens, kept for any leftover refs) */
+  .pv-ds{position:absolute;inset:0;display:flex;flex-direction:column;gap:16px;padding:26px}
+  .pv-ds .row{display:flex;align-items:center;gap:10px}
+  .pv-ds .lbl{font-family:var(--mono);font-size:9px;color:var(--ink-3);letter-spacing:.2em;text-transform:uppercase;width:60px;flex-shrink:0}
+  .pv-ds .tokens{display:flex;gap:6px}
+  .pv-ds .tok{width:26px;height:26px;border-radius:6px;border:1px solid var(--line);position:relative}
+  .pv-ds .scale{display:flex;align-items:baseline;gap:14px;flex:1}
+  .pv-ds .scale .h1{font-family:var(--display-mono);font-weight:700;font-size:24px;color:var(--ink);text-transform:uppercase;letter-spacing:-.03em}
+  .pv-ds .scale .h2{font-family:var(--display-mono);font-weight:600;font-size:16px;color:var(--ink);text-transform:uppercase;letter-spacing:-.02em}
+  .pv-ds .scale .body{font-size:11px;color:var(--ink-2)}
+  .pv-ds .components{display:flex;gap:8px}
+  .pv-ds .comp{padding:6px 12px;background:var(--bg);border:1px solid var(--line-2);border-radius:6px;font-family:var(--mono);font-size:10px;color:var(--ink-2)}
+  .pv-ds .comp.btn{background:var(--c-cyan);color:var(--bg);border:none;font-weight:600}
+  .pv-ds .comp.input{flex:1;color:var(--ink-3)}
+  .pv-ds .comp.badge{background:rgba(95,201,255,.15);border-color:var(--c-cyan);color:var(--c-cyan)}
+
+  /* 3 — Code + terminal */
+  .pv-code{position:absolute;inset:0;display:flex;flex-direction:column;padding:20px;font-family:var(--display-mono);font-size:11px;line-height:1.65}
+  .pv-code .code-block{flex:1;color:var(--ink-2)}
+  .pv-code .c-1{color:var(--ink-3)}
+  .pv-code .c-k{color:var(--c-pink)}
+  .pv-code .c-s{color:var(--c-lime)}
+  .pv-code .c-v{color:var(--c-amber)}
+  .pv-code .c-f{color:var(--c-cyan)}
+  .pv-code .terminal{margin-top:12px;padding:10px 12px;background:rgba(0,0,0,.45);border:1px solid var(--line);border-radius:6px;font-family:var(--mono);font-size:10px;color:var(--ink-2);line-height:1.7}
+  .pv-code .terminal .ok{color:var(--c-lime)}
+  .pv-code .terminal .arrow{color:var(--ink-3)}
+  .pv-code .terminal .num{color:var(--c-amber)}
+
+  /* 4 — Motion : monochrome 3D tunnel + ambient starfield + drifting beam */
+  .pv-motion{position:absolute;inset:0;overflow:hidden;background:radial-gradient(ellipse at center,#0a0a14 0%,#040408 70%,#000 100%);perspective:700px;perspective-origin:center}
+
+  /* Background starfield (parallax twinkling stars) */
+  .pv-motion .starfield{position:absolute;inset:0;z-index:1;pointer-events:none}
+  .pv-motion .star{position:absolute;width:1px;height:1px;background:#fff;border-radius:50%;animation:starTwinkle 3s ease-in-out infinite}
+  .pv-motion .star.big{width:2px;height:2px;box-shadow:0 0 4px rgba(255,255,255,.6)}
+  @keyframes starTwinkle{0%,100%{opacity:.2}50%{opacity:.85}}
+
+  /* Drifting light beam (slow diagonal sweep) */
+  .pv-motion .beam{position:absolute;top:-50%;left:-100%;width:200%;height:200%;background:linear-gradient(115deg,transparent 40%,rgba(255,255,255,.04) 49%,rgba(255,255,255,.10) 50%,rgba(255,255,255,.04) 51%,transparent 60%);animation:beamDrift 14s linear infinite;z-index:2;pointer-events:none}
+  @keyframes beamDrift{from{transform:translate(-30%,-30%)}to{transform:translate(30%,30%)}}
+
+  /* Floating dust particles drifting upward */
+  .pv-motion .dust{position:absolute;width:2px;height:2px;border-radius:50%;background:rgba(255,255,255,.5);box-shadow:0 0 4px rgba(255,255,255,.3);animation:dustRise 8s linear infinite;z-index:3;pointer-events:none}
+  @keyframes dustRise{0%{transform:translateY(120%) translateX(0);opacity:0}10%{opacity:.7}90%{opacity:.7}100%{transform:translateY(-20%) translateX(15px);opacity:0}}
+
+  /* The tunnel (monochrome rings flying toward viewer) */
+  .tunnel{position:absolute;top:50%;left:50%;width:0;height:0;transform-style:preserve-3d;z-index:4}
+  .ring{position:absolute;width:520px;height:520px;margin-left:-260px;margin-top:-260px;border:1px solid currentColor;border-radius:0;box-shadow:0 0 14px currentColor,inset 0 0 30px rgba(255,255,255,.02);animation:tunnelMove 5s linear infinite;transform-origin:center}
+  @keyframes tunnelMove{
+    0%{transform:translateZ(-2400px) rotate(0deg);opacity:0}
+    8%{opacity:.4}
+    50%{opacity:.7}
+    85%{opacity:.4}
+    100%{transform:translateZ(400px) rotate(6deg);opacity:0}
+  }
+
+  /* All rings monochrome silver/white with subtle amber accent every 4th */
+  .ring:nth-child(1){color:rgba(255,255,255,.6);animation-delay:0s}
+  .ring:nth-child(2){color:rgba(255,255,255,.45);animation-delay:-.42s}
+  .ring:nth-child(3){color:rgba(255,255,255,.55);animation-delay:-.83s;border-radius:50%}
+  .ring:nth-child(4){color:rgba(212,160,80,.55);animation-delay:-1.25s}
+  .ring:nth-child(5){color:rgba(255,255,255,.6);animation-delay:-1.66s}
+  .ring:nth-child(6){color:rgba(255,255,255,.5);animation-delay:-2.08s;border-radius:50%}
+  .ring:nth-child(7){color:rgba(255,255,255,.55);animation-delay:-2.5s}
+  .ring:nth-child(8){color:rgba(212,160,80,.45);animation-delay:-2.91s}
+  .ring:nth-child(9){color:rgba(255,255,255,.55);animation-delay:-3.33s;border-radius:50%}
+  .ring:nth-child(10){color:rgba(255,255,255,.6);animation-delay:-3.75s}
+  .ring:nth-child(11){color:rgba(255,255,255,.45);animation-delay:-4.16s}
+  .ring:nth-child(12){color:rgba(212,160,80,.55);animation-delay:-4.58s;border-radius:50%}
+
+  /* Vanishing-point (warm white glow at horizon) */
+  .pv-motion .vanish{position:absolute;top:50%;left:50%;width:60px;height:60px;margin:-30px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.95) 0%,rgba(255,235,200,.5) 30%,rgba(212,160,80,.2) 60%,transparent 80%);filter:blur(3px);animation:vanishPulse 3s ease-in-out infinite;z-index:5;pointer-events:none}
+  @keyframes vanishPulse{0%,100%{transform:scale(1);opacity:.8}50%{transform:scale(1.2);opacity:1}}
+
+  /* Subtle scan-line overlay (CRT premium texture) */
+  .pv-motion::after{content:'';position:absolute;inset:0;pointer-events:none;background-image:repeating-linear-gradient(0deg,rgba(255,255,255,.018) 0px,rgba(255,255,255,.018) 1px,transparent 1px,transparent 3px);mix-blend-mode:screen;z-index:7}
+</style>
+</head>
+<body>
+
+  <!-- === SECTION HEADER === -->
+  <div class="sec-head">
+    <span class="pill-tag">◐ Nos métiers</span>
+    <h2 class="sec-title">Quatre métiers,<br><em>un seul studio.</em></h2>
+    <p class="sec-aside">De la première intuition au déploiement. Quatre disciplines réunies sous un même toit — parce que la cohérence ne se sous-traite pas.</p>
+  </div>
+
+  <!-- === 4 SERVICE CARDS === -->
+  <div class="services">
+
+    <!-- 1 IDENTITÉ -->
+    <article class="svc s1">
+      <div class="preview">
+        <div class="pv-brand">
+          <div class="logo"><span class="star"></span>NOVA</div>
+          <div class="swatches">
+            <div class="sw" style="background:#ff5e8a" data-hex="PINK"></div>
+            <div class="sw" style="background:#ffb547" data-hex="AMBER"></div>
+            <div class="sw" style="background:#c6f964" data-hex="LIME"></div>
+            <div class="sw" style="background:#0e0e10;border-color:rgba(243,241,234,.4)" data-hex="INK"></div>
+          </div>
+          <div class="typo">
+            <div class="big">DISPLAY</div>
+            <div class="lbl">Geist Mono · 700</div>
+          </div>
+          <div class="typo">
+            <div class="sm">italique accent</div>
+            <div class="lbl">Fraunces · 300 ital</div>
+          </div>
+        </div>
+      </div>
+      <div class="delay">Délai moyen · 5 jours</div>
+      <h3>Identité de <em>marque</em></h3>
+      <div class="tag">Pour qu'on vous reconnaisse en 0,3 seconde.</div>
+      <p>Logo, système typographique, palette, ton de voix. Une vraie marque qu'on n'oublie pas — pas un habillage de surface.</p>
+      <div class="deliverables">
+        <span>Logo + variantes</span><span>Charte graphique</span><span>Palette</span><span>Typo</span><span>Tone of voice</span>
+      </div>
+      <div class="stack"><span>STACK</span><strong>Figma · Adobe · Notion</strong></div>
+    </article>
+
+    <!-- 2 UI/UX -->
+    <article class="svc s2">
+      <div class="preview">
+        <div class="pv-uiux">
+          <!-- Figma top bar -->
+          <div class="figma-top">
+            <span class="flogo">F</span>
+            <span class="crumb"><strong>Atelier Nova</strong> <span class="sep">/</span> Design System v2.4</span>
+            <div class="right">
+              <span class="badge">SAVED</span>
+              <div class="avatar"></div>
+              <div class="avatar b"></div>
+              <div class="avatar c"></div>
+            </div>
+          </div>
+
+          <!-- Artboard sections -->
+          <div class="figma-board">
+            <!-- Colors -->
+            <div class="fig-section selected">
+              <div class="stitle">Color tokens</div>
+              <div class="fig-colors">
+                <div class="fig-tok" style="background:#5fc9ff" data-label="cyan"></div>
+                <div class="fig-tok" style="background:#ff5e8a" data-label="pink"></div>
+                <div class="fig-tok" style="background:#ffb547" data-label="amber"></div>
+                <div class="fig-tok" style="background:#c6f964" data-label="lime"></div>
+              </div>
+            </div>
+
+            <!-- Type scale -->
+            <div class="fig-section">
+              <div class="stitle">Type scale</div>
+              <div class="fig-type">
+                <div class="tline"><span class="name">H1</span><span class="h1">Aa</span><span class="meta">48 / 700</span></div>
+                <div class="tline"><span class="name">H2</span><span class="h2">Aa</span><span class="meta">32 / 600</span></div>
+                <div class="tline"><span class="name">P</span><span class="body">Aa Body text</span><span class="meta">14 / 400</span></div>
+              </div>
+            </div>
+
+            <!-- Components -->
+            <div class="fig-section">
+              <div class="stitle">Components</div>
+              <div class="fig-comps">
+                <span class="fig-btn">Button</span>
+                <span class="fig-btn ghost">Ghost</span>
+                <span class="fig-input">Input...</span>
+                <span class="fig-badge">Badge</span>
+                <span class="fig-card">Card · primary</span>
+              </div>
+            </div>
+
+            <!-- Spacing -->
+            <div class="fig-section">
+              <div class="stitle">Spacing</div>
+              <div class="fig-spacing">
+                <div class="fig-sp s1"><div class="bar"></div><span class="lbl">4</span></div>
+                <div class="fig-sp s2"><div class="bar"></div><span class="lbl">8</span></div>
+                <div class="fig-sp s3"><div class="bar"></div><span class="lbl">16</span></div>
+                <div class="fig-sp s4"><div class="bar"></div><span class="lbl">24</span></div>
+                <div class="fig-sp s5"><div class="bar"></div><span class="lbl">40</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Multi-user cursor -->
+          <div class="fig-cursor">
+            <svg viewBox="0 0 14 14" fill="none">
+              <path d="M2 1.5 L2 11 L4.5 8.5 L7 13 L9 12 L6.5 8 L10 7.5 Z" fill="#ff5e8a" stroke="#fff" stroke-width=".8"/>
+            </svg>
+            <span class="tag">Camille</span>
+          </div>
+        </div>
+      </div>
+      <div class="delay">Délai moyen · 1-2 semaines</div>
+      <h3>UI/UX &amp; <em>Product Design</em></h3>
+      <div class="tag">Avant de coder, on dessine. Avant de dessiner, on comprend.</div>
+      <p>Wireframes, prototypes Figma, design system. On valide chaque pixel avant qu'il ne devienne du code — c'est ça qui fait gagner des semaines.</p>
+      <div class="deliverables">
+        <span>Architecture</span><span>Wireframes</span><span>Prototype Figma</span><span>Design system</span><span>Tests utilisateurs</span>
+      </div>
+      <div class="stack"><span>STACK</span><strong>Figma · FigJam · Maze</strong></div>
+    </article>
+
+    <!-- 3 DEV -->
+    <article class="svc s3">
+      <div class="preview">
+        <div class="pv-code">
+          <div class="code-block">
+            <div><span class="c-1">/**</span></div>
+            <div><span class="c-1"> * @name</span> <span class="c-k">AtelierNova</span></div>
+            <div><span class="c-1"> * @stack</span> <span class="c-s">Astro · Tailwind · Sanity</span></div>
+            <div><span class="c-1"> */</span></div>
+            <div>&nbsp;</div>
+            <div><span class="c-k">const</span> <span class="c-f">site</span> <span class="c-1">=</span> <span class="c-1">{</span></div>
+            <div>&nbsp;&nbsp;<span class="c-v">name</span><span class="c-1">:</span> <span class="c-s">'Pétrin d&#39;Argent'</span><span class="c-1">,</span></div>
+            <div>&nbsp;&nbsp;<span class="c-v">live</span><span class="c-1">:</span> <span class="c-k">true</span></div>
+            <div><span class="c-1">};</span></div>
+          </div>
+          <div class="terminal">
+            <div><span class="arrow">›</span> <span class="ok">✓</span> build complete <span class="c-1">·</span> <span class="num">1.2s</span></div>
+            <div><span class="arrow">›</span> <span class="ok">✓</span> deploy: <span class="c-f">vercel</span></div>
+            <div><span class="arrow">›</span> <span class="ok">✓</span> pagespeed: <span class="num">98/100</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="delay">Délai moyen · 2-3 semaines</div>
+      <h3>Développement <em>web</em></h3>
+      <div class="tag">Du code propre, des sites rapides, un SEO qui tient.</div>
+      <p>Astro, Tailwind, headless CMS quand il faut. PageSpeed 95+, balisage propre, hébergement géré — pour un site qui ne devient pas obsolète à la livraison.</p>
+      <div class="deliverables">
+        <span>Astro / 11ty</span><span>Sanity / Strapi</span><span>SEO technique</span><span>Hébergement</span><span>CI/CD</span>
+      </div>
+      <div class="stack"><span>STACK</span><strong>Astro · Tailwind · Vercel</strong></div>
+    </article>
+
+    <!-- 4 MOTION -->
+    <article class="svc s4">
+      <div class="preview">
+        <div class="pv-motion">
+          <!-- Background starfield -->
+          <div class="starfield">
+            <div class="star big" style="top:12%;left:18%;animation-delay:0s"></div>
+            <div class="star" style="top:22%;left:64%;animation-delay:.4s"></div>
+            <div class="star" style="top:38%;left:8%;animation-delay:.9s"></div>
+            <div class="star big" style="top:48%;left:88%;animation-delay:1.3s"></div>
+            <div class="star" style="top:62%;left:32%;animation-delay:1.7s"></div>
+            <div class="star" style="top:75%;left:72%;animation-delay:2.1s"></div>
+            <div class="star big" style="top:84%;left:14%;animation-delay:.5s"></div>
+            <div class="star" style="top:30%;left:42%;animation-delay:1.5s"></div>
+            <div class="star" style="top:90%;left:55%;animation-delay:.8s"></div>
+            <div class="star" style="top:6%;left:80%;animation-delay:2.4s"></div>
+          </div>
+
+          <!-- Diagonal light beam sweeping -->
+          <div class="beam"></div>
+
+          <!-- Floating dust particles -->
+          <div class="dust" style="left:15%;animation-delay:0s"></div>
+          <div class="dust" style="left:38%;animation-delay:2s"></div>
+          <div class="dust" style="left:62%;animation-delay:4s"></div>
+          <div class="dust" style="left:84%;animation-delay:1s"></div>
+          <div class="dust" style="left:48%;animation-delay:5.5s"></div>
+
+          <!-- The tunnel itself -->
+          <div class="tunnel">
+            <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+            <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+            <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+            <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+          </div>
+          <div class="vanish"></div>
+        </div>
+      </div>
+      <div class="delay">Délai moyen · 3-5 jours</div>
+      <h3>Motion <em>design</em></h3>
+      <div class="tag">Ce détail qu'on remarque sans pouvoir le décrire.</div>
+      <p>Micro-interactions, transitions de page, animations qui guident le regard. Chaque pixel qui bouge a une raison de bouger.</p>
+      <div class="deliverables">
+        <span>GSAP</span><span>Framer Motion</span><span>Lottie</span><span>SVG anim</span><span>Scroll triggers</span>
+      </div>
+      <div class="stack"><span>STACK</span><strong>GSAP · Framer · Lottie</strong></div>
+    </article>
+
+  </div>
+
+</body>
+</html>

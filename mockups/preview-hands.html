@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Preview — Hands typing animation</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;background:linear-gradient(180deg,#1a1838 0%,#2a2452 50%,#3a2a5c 100%);color:#e8e6e0;font-family:'Geist Mono',monospace;overflow:hidden;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:30px}
+
+  .label{font-size:11px;text-transform:uppercase;letter-spacing:.4em;color:#7a7090;display:flex;align-items:center;gap:14px}
+  .label::before, .label::after{content:'';width:32px;height:1px;background:#7a7090;opacity:.6}
+
+  /* === Scene === */
+  .scene{position:relative;width:520px;height:560px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;perspective:1200px;padding-bottom:30px}
+
+  /* Monitor at top */
+  .monitor{position:absolute;top:0;left:50%;transform:translateX(-50%) perspective(900px) rotateX(8deg);width:480px;height:230px;border-radius:12px 12px 18px 18px;background:linear-gradient(180deg,#3a3a48 0%,#2a2a36 100%);padding:14px;box-shadow:0 30px 60px -10px rgba(0,0,0,.7),inset 0 -3px 6px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.05)}
+  .monitor::after{content:'';position:absolute;bottom:-12px;left:50%;transform:translateX(-50%);width:40px;height:14px;background:linear-gradient(180deg,#2a2a36,#1a1a24);border-radius:0 0 8px 8px;box-shadow:0 8px 16px rgba(0,0,0,.5)}
+  .screen{width:100%;height:100%;border-radius:6px;background:radial-gradient(ellipse at 50% 50%,#fff 0%,#f8eee0 60%,#f0d8a8 100%);box-shadow:inset 0 0 40px rgba(255,235,180,.6),inset 0 0 80px rgba(255,255,255,.3),0 0 60px rgba(255,235,180,.4);position:relative;overflow:hidden;animation:screenFlicker 4s ease-in-out infinite}
+  @keyframes screenFlicker{0%,100%{box-shadow:inset 0 0 40px rgba(255,235,180,.6),inset 0 0 80px rgba(255,255,255,.3),0 0 60px rgba(255,235,180,.4)}50%{box-shadow:inset 0 0 50px rgba(255,235,180,.8),inset 0 0 100px rgba(255,255,255,.5),0 0 80px rgba(255,235,180,.6)}}
+
+  /* Keyboard */
+  .keyboard{position:relative;width:440px;height:140px;background:linear-gradient(180deg,#3a4dd8 0%,#2a3aa8 100%);border-radius:14px 14px 22px 22px;padding:14px 18px;box-shadow:0 20px 40px -8px rgba(0,0,0,.55),inset 0 -4px 8px rgba(20,30,80,.6),inset 0 2px 0 rgba(255,255,255,.08);transform:perspective(900px) rotateX(28deg);transform-origin:center top;display:flex;flex-direction:column;gap:6px;z-index:1}
+  .row{display:flex;gap:5px;flex:1}
+  .key{flex:1;background:linear-gradient(180deg,#fff 0%,#e8d8c0 60%,#d4b8a0 100%);border-radius:5px;box-shadow:inset 0 -3px 0 rgba(120,80,60,.3),inset 0 1px 0 rgba(255,255,255,.7),0 2px 0 rgba(20,30,80,.4)}
+  .key.wide{flex:2}
+  .key.space{flex:6}
+
+  /* Hands wrapper */
+  .hands{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);width:520px;height:280px;z-index:5;pointer-events:none}
+
+  .hand{position:absolute;width:130px;height:170px;transform-origin:50% 90%}
+  .hand svg{width:100%;height:100%;filter:drop-shadow(0 8px 14px rgba(0,0,0,.4));overflow:visible}
+
+  .hand.left{bottom:0;left:90px;animation:handBobL 3s ease-in-out infinite}
+  .hand.right{bottom:0;right:90px;animation:handBobR 3.2s ease-in-out infinite}
+
+  /* Subtle whole-hand idle bob */
+  @keyframes handBobL{
+    0%, 100%{transform:translateY(0) rotate(-3deg)}
+    50%{transform:translateY(-4px) rotate(-4deg)}
+  }
+  @keyframes handBobR{
+    0%, 100%{transform:translateY(0) rotate(3deg)}
+    50%{transform:translateY(-4px) rotate(4deg)}
+  }
+
+  /* Individual finger animations */
+  .finger{transform-origin:50% 100%;will-change:transform}
+
+  /* Extended fingers (index, pinky) — full tap */
+  @keyframes fingerTap{
+    0%, 65%, 100%{transform:translateY(0)}
+    78%{transform:translateY(14px) scaleY(.92)}
+  }
+  .f-l-index{animation:fingerTap 1.1s cubic-bezier(.4,0,.2,1) infinite}
+  .f-l-pinky{animation:fingerTap 1.4s cubic-bezier(.4,0,.2,1) infinite;animation-delay:.45s}
+  .f-r-index{animation:fingerTap 1.25s cubic-bezier(.4,0,.2,1) infinite;animation-delay:.7s}
+  .f-r-pinky{animation:fingerTap 1.55s cubic-bezier(.4,0,.2,1) infinite;animation-delay:.2s}
+
+  /* Folded fingers (middle, ring) — subtle wiggle */
+  @keyframes fingerWiggle{
+    0%, 60%, 100%{transform:translateY(0) scale(1)}
+    75%{transform:translateY(3px) scale(1.06)}
+  }
+  .f-l-middle{animation:fingerWiggle .95s ease-in-out infinite;animation-delay:.15s}
+  .f-l-ring{animation:fingerWiggle 1.1s ease-in-out infinite;animation-delay:.55s}
+  .f-r-middle{animation:fingerWiggle 1.05s ease-in-out infinite;animation-delay:.85s}
+  .f-r-ring{animation:fingerWiggle 1.2s ease-in-out infinite;animation-delay:.35s}
+
+  /* Thumbs — visible thumbs that bend/tap like pressing space */
+  @keyframes thumbTap{
+    0%, 60%, 100%{transform:rotate(0deg) translateX(0)}
+    78%{transform:rotate(-18deg) translateX(-4px) translateY(2px)}
+  }
+  .f-l-thumb, .f-r-thumb{animation:thumbTap 1.3s cubic-bezier(.4,0,.2,1) infinite;transform-origin:0% 50%}
+  .f-l-thumb{animation-delay:.3s}
+  .f-r-thumb{animation-delay:.85s}
+
+  /* Caption */
+  .caption{font-family:'Geist Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.3em;color:#7a7090;text-align:center;line-height:1.8;max-width:520px;margin-top:12px}
+  .caption strong{color:#e8e6e0;font-weight:700;letter-spacing:.05em}
+</style>
+</head>
+<body>
+
+<div class="label">Preview · Hands typing loop</div>
+
+<div class="scene">
+  <!-- Monitor -->
+  <div class="monitor">
+    <div class="screen"></div>
+  </div>
+
+  <!-- Keyboard -->
+  <div class="keyboard">
+    <div class="row">
+      <div class="key"></div><div class="key"></div><div class="key"></div><div class="key"></div><div class="key"></div><div class="key"></div><div class="key"></div><div class="key"></div><div class="key"></div><div class="key"></div><div class="key"></div><div class="key"></div>
+    </div>
+    <div class="row">
+      <div class="key wide"></div><div class="key"></div><div class="key"></div><div class="key"></div><div class="key"></div><div class="key"></div><div class="key"></div><div class="key"></div><div class="key"></div><div class="key"></div>
+    </div>
+    <div class="row">
+      <div class="key wide"></div><div class="key"></div><div class="key"></div><div class="key"></div><div class="key"></div><div class="key"></div><div class="key"></div><div class="key"></div><div class="key wide"></div>
+    </div>
+    <div class="row">
+      <div class="key wide"></div><div class="key space"></div><div class="key wide"></div>
+    </div>
+  </div>
+
+  <!-- Hands -->
+  <div class="hands">
+    <!-- Left hand (rock-on) -->
+    <div class="hand left">
+      <svg viewBox="0 0 130 170" fill="none">
+        <defs>
+          <linearGradient id="skinL" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#ffd9c0"/>
+            <stop offset="1" stop-color="#e8b8a0"/>
+          </linearGradient>
+          <linearGradient id="palmL" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#ffe0c8"/>
+            <stop offset="1" stop-color="#d8a890"/>
+          </linearGradient>
+        </defs>
+        <!-- Wrist/forearm -->
+        <rect x="40" y="130" width="50" height="40" rx="14" fill="url(#palmL)"/>
+        <!-- Palm -->
+        <path d="M28 70 Q24 55 36 50 L86 48 Q102 50 100 70 L98 130 Q96 145 80 145 L48 145 Q32 145 30 130 Z" fill="url(#palmL)"/>
+        <!-- THUMB (visible, sticking out from palm) -->
+        <g class="finger f-l-thumb" style="transform-box:fill-box">
+          <!-- Thumb stem extending outward to the right -->
+          <rect x="98" y="70" width="38" height="22" rx="11" fill="url(#skinL)"/>
+          <!-- Thumb tip -->
+          <ellipse cx="135" cy="81" rx="7" ry="9" fill="#ffb8a8"/>
+        </g>
+        <!-- MIDDLE finger (folded bump - animated) -->
+        <g class="finger f-l-middle" style="transform-box:fill-box">
+          <ellipse cx="58" cy="50" rx="9" ry="14" fill="url(#skinL)"/>
+        </g>
+        <!-- RING finger (folded bump - animated) -->
+        <g class="finger f-l-ring" style="transform-box:fill-box">
+          <ellipse cx="74" cy="50" rx="9" ry="14" fill="url(#skinL)"/>
+        </g>
+        <!-- INDEX finger (animated) -->
+        <g class="finger f-l-index" style="transform-box:fill-box">
+          <rect x="34" y="6" width="18" height="78" rx="9" fill="url(#skinL)"/>
+          <ellipse cx="43" cy="10" rx="9" ry="6" fill="#ffb8a8"/>
+        </g>
+        <!-- PINKY finger (animated) -->
+        <g class="finger f-l-pinky" style="transform-box:fill-box">
+          <rect x="84" y="20" width="16" height="62" rx="8" fill="url(#skinL)"/>
+          <ellipse cx="92" cy="22" rx="8" ry="5" fill="#ffb8a8"/>
+        </g>
+        <!-- Subtle shading -->
+        <path d="M30 70 L30 130 Q32 142 44 144" stroke="#c89880" stroke-width="2" fill="none" opacity=".5"/>
+      </svg>
+    </div>
+
+    <!-- Right hand (mirrored via SVG scaleX) -->
+    <div class="hand right">
+      <svg viewBox="0 0 130 170" fill="none" style="transform:scaleX(-1)">
+        <defs>
+          <linearGradient id="skinR" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#ffd9c0"/>
+            <stop offset="1" stop-color="#e8b8a0"/>
+          </linearGradient>
+          <linearGradient id="palmR" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#ffe0c8"/>
+            <stop offset="1" stop-color="#d8a890"/>
+          </linearGradient>
+        </defs>
+        <rect x="40" y="130" width="50" height="40" rx="14" fill="url(#palmR)"/>
+        <path d="M28 70 Q24 55 36 50 L86 48 Q102 50 100 70 L98 130 Q96 145 80 145 L48 145 Q32 145 30 130 Z" fill="url(#palmR)"/>
+        <g class="finger f-r-thumb" style="transform-box:fill-box">
+          <rect x="98" y="70" width="38" height="22" rx="11" fill="url(#skinR)"/>
+          <ellipse cx="135" cy="81" rx="7" ry="9" fill="#ffb8a8"/>
+        </g>
+        <g class="finger f-r-middle" style="transform-box:fill-box">
+          <ellipse cx="58" cy="50" rx="9" ry="14" fill="url(#skinR)"/>
+        </g>
+        <g class="finger f-r-ring" style="transform-box:fill-box">
+          <ellipse cx="74" cy="50" rx="9" ry="14" fill="url(#skinR)"/>
+        </g>
+        <g class="finger f-r-index" style="transform-box:fill-box">
+          <rect x="34" y="6" width="18" height="78" rx="9" fill="url(#skinR)"/>
+          <ellipse cx="43" cy="10" rx="9" ry="6" fill="#ffb8a8"/>
+        </g>
+        <g class="finger f-r-pinky" style="transform-box:fill-box">
+          <rect x="84" y="20" width="16" height="62" rx="8" fill="url(#skinR)"/>
+          <ellipse cx="92" cy="22" rx="8" ry="5" fill="#ffb8a8"/>
+        </g>
+        <path d="M30 70 L30 130 Q32 142 44 144" stroke="#c89880" stroke-width="2" fill="none" opacity=".5"/>
+      </svg>
+    </div>
+  </div>
+</div>
+
+<div class="caption">
+  <strong>Hands typing loop</strong> · 2 mains rock-on en SVG · clavier bleu en CSS perspective ·<br>
+  écran lumineux qui flicker · animation tap-down/tap-up alternée 1.2s par main (offset .6s)
+</div>
+
+</body>
+</html>

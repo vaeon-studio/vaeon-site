@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Preview — Cybernetic Grid Shader</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600;700&family=Fraunces:ital,wght@0,400;1,300;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --bg:#0e0e10;
+    --ink:#f3f1ea;
+    --ink-2:#b9b6ad;
+    --ink-3:#7a7a82;
+    --line:rgba(243,241,234,.10);
+    --c-pink:#ff5e8a;
+    --c-amber:#ffb547;
+  }
+  html,body{background:var(--bg);color:var(--ink);font-family:'Space Grotesk',sans-serif;overflow-x:hidden}
+  .preview-note{position:fixed;top:16px;left:16px;z-index:100;padding:10px 14px;background:rgba(28,28,34,.85);backdrop-filter:blur(20px);border:1px solid var(--line);border-radius:8px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink-2);text-transform:uppercase;letter-spacing:.1em}
+
+  /* About stage — same structure as the real one */
+  .about-stage{position:relative;padding:140px 40px;min-height:100vh;display:flex;flex-direction:column;justify-content:center;overflow:hidden}
+
+  /* Shader canvas as background of the about section */
+  .shader-container{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+  .shader-container canvas{display:block;width:100%;height:100%}
+
+  /* Optional dark overlay so text stays readable */
+  .shader-overlay{position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 0%,rgba(14,14,16,.5) 70%,rgba(14,14,16,.85) 100%);z-index:1;pointer-events:none}
+
+  /* Content above the shader */
+  .about-inner{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:24px;width:100%}
+  .pill-tag{display:inline-flex;align-items:center;gap:10px;padding:10px 18px;border:1px solid var(--line);border-radius:999px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink-2);text-transform:uppercase;letter-spacing:.14em;background:rgba(28,28,34,.6);backdrop-filter:blur(10px)}
+  .about-text{text-align:center;max-width:1100px;margin:0 auto;font-weight:700;font-size:clamp(28px,4vw,52px);line-height:1.2;letter-spacing:-.02em;color:var(--ink)}
+  .about-text .dim{color:var(--ink-3)}
+  .about-text em{font-family:'Fraunces',serif;font-style:italic;font-weight:400;background:linear-gradient(110deg,#fff,#7a7a82);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .stats-row{margin-top:120px;width:100%;max-width:1400px;display:grid;grid-template-columns:repeat(3,1fr);gap:0}
+  .stat-cell{padding:0 20px}
+  .stat-cell .lbl{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--ink-2);font-weight:500;padding-bottom:14px;border-bottom:1px solid var(--line);margin-bottom:24px}
+  .stat-cell .num{font-weight:700;font-size:clamp(80px,12vw,180px);letter-spacing:-.045em;line-height:.9;background:linear-gradient(180deg,var(--ink) 0%, #5a5a60 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+</style>
+</head>
+<body>
+
+<div class="preview-note">Preview · Cybernetic Grid Shader sur la section À propos</div>
+
+<section class="about-stage">
+  <div class="shader-container" id="shader"></div>
+  <div class="shader-overlay" aria-hidden="true"></div>
+
+  <div class="about-inner">
+    <span class="pill-tag"><span>★</span> À propos</span>
+
+    <p class="about-text">
+      Atelier Nova aide les <em>marques engagées</em> à occuper leur place unique dans le paysage de la <em>réputation</em>, de la <em>reconnaissance</em> <span class="dim">et de l'authenticité</span>, à travers des solutions soignées et sensibles.
+    </p>
+
+    <div class="stats-row">
+      <div class="stat-cell">
+        <div class="lbl">Projets livrés</div>
+        <div class="num">42<span style="color:var(--ink-3)">+</span></div>
+      </div>
+      <div class="stat-cell">
+        <div class="lbl">Années d'expérience</div>
+        <div class="num">8<span style="color:var(--ink-3)">+</span></div>
+      </div>
+      <div class="stat-cell">
+        <div class="lbl">Clients satisfaits</div>
+        <div class="num">38<span style="color:var(--ink-3)">+</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+<script>
+(function(){
+  const container = document.getElementById('shader');
+  if (!container) return;
+
+  const renderer = new THREE.WebGLRenderer({ antialias:true, alpha:true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  container.appendChild(renderer.domElement);
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+  const clock = new THREE.Clock();
+
+  const vertexShader = `
+    void main() {
+      gl_Position = vec4(position, 1.0);
+    }
+  `;
+
+  const fragmentShader = `
+    precision highp float;
+    uniform vec2 iResolution;
+    uniform float iTime;
+    uniform vec2 iMouse;
+
+    float random(vec2 st) {
+      return fract(sin(dot(st.xy, vec2(12.9898, 78.233))) * 43758.5453123);
+    }
+
+    void main() {
+      vec2 uv    = (gl_FragCoord.xy - 0.5 * iResolution.xy) / iResolution.y;
+      vec2 mouse = (iMouse - 0.5 * iResolution.xy) / iResolution.y;
+
+      float t         = iTime * 0.2;
+      float mouseDist = length(uv - mouse);
+
+      float warp = sin(mouseDist * 20.0 - t * 4.0) * 0.1;
+      warp *= smoothstep(0.4, 0.0, mouseDist);
+      uv += warp;
+
+      vec2 gridUv = abs(fract(uv * 10.0) - 0.5);
+      float line  = pow(1.0 - min(gridUv.x, gridUv.y), 50.0);
+
+      vec3 gridColor = vec3(0.1, 0.5, 1.0);
+      vec3 color     = gridColor * line * (0.5 + sin(t * 2.0) * 0.2);
+
+      float energy = sin(uv.x * 20.0 + t * 5.0) * sin(uv.y * 20.0 + t * 3.0);
+      energy = smoothstep(0.8, 1.0, energy);
+      color += vec3(1.0, 0.2, 0.8) * energy * line;
+
+      float glow = smoothstep(0.1, 0.0, mouseDist);
+      color += vec3(1.0) * glow * 0.5;
+
+      color += random(uv + t * 0.1) * 0.05;
+
+      gl_FragColor = vec4(color, 1.0);
+    }
+  `;
+
+  const uniforms = {
+    iTime:       { value: 0 },
+    iResolution: { value: new THREE.Vector2() },
+    iMouse:      { value: new THREE.Vector2(window.innerWidth/2, window.innerHeight/2) }
+  };
+
+  const material = new THREE.ShaderMaterial({ vertexShader, fragmentShader, uniforms });
+  const geometry = new THREE.PlaneGeometry(2, 2);
+  scene.add(new THREE.Mesh(geometry, material));
+
+  function onResize() {
+    const w = container.clientWidth;
+    const h = container.clientHeight;
+    renderer.setSize(w, h);
+    uniforms.iResolution.value.set(w * renderer.getPixelRatio(), h * renderer.getPixelRatio());
+  }
+  window.addEventListener('resize', onResize);
+  onResize();
+
+  // Mouse position relative to the container (so the warp follows the cursor over the section)
+  window.addEventListener('mousemove', (e) => {
+    const rect = container.getBoundingClientRect();
+    const x = (e.clientX - rect.left) * renderer.getPixelRatio();
+    const y = (rect.height - (e.clientY - rect.top)) * renderer.getPixelRatio();
+    uniforms.iMouse.value.set(x, y);
+  });
+
+  renderer.setAnimationLoop(() => {
+    uniforms.iTime.value = clock.getElapsedTime();
+    renderer.render(scene, camera);
+  });
+})();
+</script>
+</body>
+</html>

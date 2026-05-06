@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Preview — Pizza & Scissors recreations</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{min-height:100%;background:#0e0e10;color:#f3f1ea;font-family:'Geist Mono',monospace;padding:60px 20px;display:flex;flex-direction:column;align-items:center;gap:36px}
+  .label{font-size:11px;text-transform:uppercase;letter-spacing:.4em;color:#7a7a82;display:flex;align-items:center;gap:14px}
+  .label::before, .label::after{content:'';width:32px;height:1px;background:#7a7a82;opacity:.6}
+
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:1200px;width:100%}
+  .card{background:#15151a;border:1px solid rgba(243,241,234,.10);border-radius:24px;overflow:hidden;display:flex;flex-direction:column;height:520px}
+  .stage{flex:1;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}
+  .name{padding:18px 22px;font-size:12px;text-transform:uppercase;letter-spacing:.32em;color:#f3f1ea;text-align:center;border-top:1px solid rgba(243,241,234,.08)}
+
+  /* === PIZZA STAGE (orange gradient bg like ref) === */
+  .stage-pizza{background:radial-gradient(ellipse at center top,#ff8a3a 0%,#d83a14 70%,#7a1a08 100%)}
+
+  .pizza-wrap{position:relative;width:340px;height:340px;animation:floatA 4s ease-in-out infinite alternate}
+  @keyframes floatA{from{transform:rotate(-3deg) translateY(0)}to{transform:rotate(2deg) translateY(-8px)}}
+  .pizza-wrap svg{width:100%;height:100%;filter:drop-shadow(0 30px 30px rgba(0,0,0,.4))}
+
+  /* === SCISSORS STAGE (purple bg like ref) === */
+  .stage-scissors{background:linear-gradient(135deg,#a89eff 0%,#9d8aff 100%)}
+
+  .scissors-wrap{position:relative;width:340px;height:340px;animation:floatB 4.5s ease-in-out infinite alternate}
+  @keyframes floatB{from{transform:rotate(-22deg) translateY(0)}to{transform:rotate(-18deg) translateY(-10px)}}
+  .scissors-wrap svg{width:100%;height:100%;filter:drop-shadow(0 24px 28px rgba(60,40,140,.35))}
+</style>
+</head>
+<body>
+
+<div class="label">Preview · Recreations CSS/SVG</div>
+
+<div class="grid">
+
+  <!-- ============ PIZZA SLICE (no wave) ============ -->
+  <div class="card">
+    <div class="stage stage-pizza">
+      <div class="pizza-wrap">
+        <svg viewBox="0 0 340 340" fill="none">
+          <defs>
+            <linearGradient id="crust" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#ffd07a"/>
+              <stop offset=".5" stop-color="#e89c3a"/>
+              <stop offset="1" stop-color="#a8580c"/>
+            </linearGradient>
+            <linearGradient id="crustEdge" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#ffe5a0"/>
+              <stop offset="1" stop-color="#c87a20"/>
+            </linearGradient>
+            <radialGradient id="cheese" cx="50%" cy="40%" r="60%">
+              <stop offset="0" stop-color="#fffae0"/>
+              <stop offset=".7" stop-color="#ffeac0"/>
+              <stop offset="1" stop-color="#e8c878"/>
+            </radialGradient>
+            <radialGradient id="pep" cx="35%" cy="30%" r="70%">
+              <stop offset="0" stop-color="#ff8090"/>
+              <stop offset=".5" stop-color="#d8344a"/>
+              <stop offset="1" stop-color="#7a1418"/>
+            </radialGradient>
+          </defs>
+
+          <!-- Slice triangle (back crust edge curved) -->
+          <path d="M 70 220 Q 60 240 80 250 L 250 250 Q 270 245 270 220 L 170 60 Q 168 50 160 56 Z"
+            fill="url(#crust)" stroke="#7a3810" stroke-width="2"/>
+
+          <!-- Crust edge (back rim, the chunky border) -->
+          <path d="M 70 215 Q 60 245 80 252 L 250 252 Q 270 247 268 218 Q 220 230 170 230 Q 120 230 70 215 Z"
+            fill="url(#crustEdge)" stroke="#7a3810" stroke-width="2"/>
+
+          <!-- Cheese topping (covers most of slice) -->
+          <path d="M 90 220 Q 86 232 96 234 L 240 234 Q 252 230 250 222 L 170 75 Q 166 70 160 75 Z"
+            fill="url(#cheese)" stroke="#c8a050" stroke-width="1" opacity=".95"/>
+
+          <!-- Cheese drips off the front edge -->
+          <path d="M 100 234 Q 95 248 102 252 Q 108 252 110 245 Q 112 240 110 234 Z" fill="url(#cheese)"/>
+          <path d="M 140 234 Q 136 256 145 262 Q 154 260 152 248 Q 150 240 148 234 Z" fill="url(#cheese)"/>
+          <path d="M 190 234 Q 188 252 195 256 Q 202 254 200 246 Q 198 240 198 234 Z" fill="url(#cheese)"/>
+          <path d="M 220 234 Q 218 246 224 250 Q 230 248 228 240 Q 226 236 226 234 Z" fill="url(#cheese)"/>
+
+          <!-- Pepperonis -->
+          <ellipse cx="135" cy="155" rx="22" ry="20" fill="url(#pep)" stroke="#5a0c10" stroke-width="1.5"/>
+          <ellipse cx="195" cy="145" rx="22" ry="20" fill="url(#pep)" stroke="#5a0c10" stroke-width="1.5"/>
+          <ellipse cx="115" cy="200" rx="20" ry="18" fill="url(#pep)" stroke="#5a0c10" stroke-width="1.5"/>
+          <ellipse cx="175" cy="195" rx="22" ry="20" fill="url(#pep)" stroke="#5a0c10" stroke-width="1.5"/>
+          <ellipse cx="225" cy="195" rx="20" ry="18" fill="url(#pep)" stroke="#5a0c10" stroke-width="1.5"/>
+
+          <!-- Pepperoni highlights -->
+          <ellipse cx="128" cy="146" rx="6" ry="4" fill="#ffb0b8" opacity=".7"/>
+          <ellipse cx="188" cy="138" rx="6" ry="4" fill="#ffb0b8" opacity=".7"/>
+          <ellipse cx="168" cy="186" rx="6" ry="4" fill="#ffb0b8" opacity=".7"/>
+
+          <!-- Basil leaves (small green specks) -->
+          <ellipse cx="160" cy="170" rx="5" ry="7" fill="#5a9a2c" stroke="#2a5a14" stroke-width="1" transform="rotate(20 160 170)"/>
+          <ellipse cx="205" cy="180" rx="4" ry="6" fill="#5a9a2c" stroke="#2a5a14" stroke-width="1" transform="rotate(-30 205 180)"/>
+          <ellipse cx="148" cy="220" rx="4" ry="6" fill="#5a9a2c" stroke="#2a5a14" stroke-width="1" transform="rotate(45 148 220)"/>
+
+          <!-- Cheese highlights/shine spots -->
+          <ellipse cx="155" cy="115" rx="14" ry="6" fill="#fff" opacity=".5"/>
+          <ellipse cx="220" cy="170" rx="10" ry="5" fill="#fff" opacity=".4"/>
+        </svg>
+      </div>
+    </div>
+    <div class="name">🍕 Pizza slice</div>
+  </div>
+
+  <!-- ============ SCISSORS ============ -->
+  <div class="card">
+    <div class="stage stage-scissors">
+      <div class="scissors-wrap">
+        <svg viewBox="0 0 340 340" fill="none">
+          <defs>
+            <linearGradient id="bladeA" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#fafbff"/>
+              <stop offset=".4" stop-color="#d8dcec"/>
+              <stop offset="1" stop-color="#8a8ea8"/>
+            </linearGradient>
+            <linearGradient id="bladeB" x1="1" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#fafbff"/>
+              <stop offset=".4" stop-color="#c0c4d8"/>
+              <stop offset="1" stop-color="#7a7e98"/>
+            </linearGradient>
+            <radialGradient id="handleA" cx="40%" cy="35%" r="65%">
+              <stop offset="0" stop-color="#b8a8ff"/>
+              <stop offset=".5" stop-color="#7a5cd8"/>
+              <stop offset="1" stop-color="#3a1c8a"/>
+            </radialGradient>
+            <radialGradient id="handleB" cx="40%" cy="35%" r="65%">
+              <stop offset="0" stop-color="#a898ff"/>
+              <stop offset=".5" stop-color="#6a4ec8"/>
+              <stop offset="1" stop-color="#2a0e7a"/>
+            </radialGradient>
+            <radialGradient id="pivot" cx="35%" cy="30%" r="70%">
+              <stop offset="0" stop-color="#d8c098"/>
+              <stop offset="1" stop-color="#7a5a30"/>
+            </radialGradient>
+          </defs>
+
+          <!-- Blade A (top-left, going up-left) - rounded leaf shape -->
+          <path d="M 170 160 Q 100 80 80 80 Q 60 90 70 120 Q 90 160 160 175 Z"
+            fill="url(#bladeA)" stroke="#5a5e78" stroke-width="2.5"/>
+          <!-- Blade A inner shadow -->
+          <path d="M 170 160 Q 110 85 88 88 Q 80 110 100 140 Q 130 165 165 170 Z"
+            fill="rgba(255,255,255,.25)" opacity=".5"/>
+
+          <!-- Blade B (top-right, going up-right) -->
+          <path d="M 170 160 Q 240 80 260 80 Q 280 90 270 120 Q 250 160 180 175 Z"
+            fill="url(#bladeB)" stroke="#5a5e78" stroke-width="2.5"/>
+          <!-- Blade B inner shadow -->
+          <path d="M 170 160 Q 230 85 252 88 Q 260 110 240 140 Q 210 165 175 170 Z"
+            fill="rgba(0,0,0,.1)" opacity=".4"/>
+
+          <!-- Pivot (chunky button) -->
+          <circle cx="170" cy="170" r="22" fill="#fff" stroke="#5a5e78" stroke-width="2"/>
+          <circle cx="170" cy="170" r="14" fill="url(#pivot)"/>
+          <circle cx="166" cy="166" r="3" fill="#fff" opacity=".8"/>
+
+          <!-- Handle A (bottom-left, purple ring with hole) -->
+          <ellipse cx="115" cy="240" rx="55" ry="48" fill="url(#handleA)" stroke="#3a1c7a" stroke-width="3"/>
+          <ellipse cx="115" cy="240" rx="28" ry="24" fill="#a89eff" stroke="#3a1c7a" stroke-width="2"/>
+
+          <!-- Handle B (bottom-right, purple ring with hole) -->
+          <ellipse cx="225" cy="240" rx="55" ry="48" fill="url(#handleB)" stroke="#2a0e6a" stroke-width="3"/>
+          <ellipse cx="225" cy="240" rx="28" ry="24" fill="#a89eff" stroke="#2a0e6a" stroke-width="2"/>
+
+          <!-- Connection between pivot and handles (the metal stems) -->
+          <path d="M 165 175 Q 150 200 130 215" stroke="#5a5e78" stroke-width="6" stroke-linecap="round"/>
+          <path d="M 175 175 Q 190 200 210 215" stroke="#5a5e78" stroke-width="6" stroke-linecap="round"/>
+
+          <!-- Highlights on handles -->
+          <ellipse cx="92" cy="218" rx="14" ry="20" fill="#fff" opacity=".4"/>
+          <ellipse cx="202" cy="218" rx="14" ry="20" fill="#fff" opacity=".45"/>
+
+          <!-- Highlights on blades (long thin) -->
+          <path d="M 90 90 Q 100 110 130 145" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".6" fill="none"/>
+          <path d="M 250 90 Q 240 110 210 145" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".55" fill="none"/>
+        </svg>
+      </div>
+    </div>
+    <div class="name">✂️ Ciseaux</div>
+  </div>
+
+</div>
+
+<p style="font-family:'Geist Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.3em;color:#7a7a82;text-align:center;line-height:1.8;max-width:680px;margin-top:8px">
+  Approximations SVG · gradients multi-couches pour profondeur · highlights et ombres pour effet 3D claymorphism<br>
+  Note : pure CSS/SVG ne peut pas matcher la qualité d'un rendu 3D Midjourney/Octane
+</p>
+
+</body>
+</html>

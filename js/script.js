@@ -1,0 +1,287 @@
+// === Custom cursor ===
+const cursor = document.getElementById('cursor');
+if (cursor) {
+  window.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+  });
+  document.querySelectorAll('a, button, .svc, .proj, .faq-q, .crow').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.classList.add('big');
+      let label = 'Voir';
+      if (el.matches('.proj')) label = 'Voir le projet';
+      else if (el.matches('.svc')) label = 'Service';
+      else if (el.matches('.faq-q')) label = 'Ouvrir';
+      else if (el.matches('.crow')) label = 'Voir le site';
+      else if (el.matches('button[type="submit"], .submit')) label = 'Envoyer';
+      else if (el.matches('a[href*="contact"], .cta, .pill-cta')) label = 'Démarrer';
+      cursor.setAttribute('data-label', label);
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.classList.remove('big');
+      cursor.setAttribute('data-label', '');
+    });
+  });
+}
+
+// === Cascade hero (8 heros sectoriels) ===
+// Chaque entrée représente un site mockupé dans /mockups, avec un aperçu SVG stylisé qui évoque l'identité visuelle de la marque.
+
+const sites = [
+  { name: "L'Olivier",      href: 'mockups/hero-1-restaurant.html', stripe: '#0a0908', ink: '#c9a96e' },
+  { name: 'Maison Lumière', href: 'mockups/hero-2-institut.html',   stripe: '#c89a8c', ink: '#3a2a26' },
+  { name: 'Mèche & Co',     href: 'mockups/hero-3-coiffeur.html',   stripe: '#d4ff3c', ink: '#0e0e0e' },
+  { name: 'Chez Léon',      href: 'mockups/hero-4-bistrot.html',    stripe: '#5e1f25', ink: '#f1e8d4' },
+  { name: 'Source Spa',     href: 'mockups/hero-5-spa.html',        stripe: '#5d6e57', ink: '#f5f1e8' },
+  { name: 'Atelier Coupe',  href: 'mockups/hero-6-architecte.html', stripe: '#c1462b', ink: '#f7f5f0' },
+  { name: 'Verveine',       href: 'mockups/hero-7-fleuriste.html',  stripe: '#3d4f2c', ink: '#faf6ee' },
+  { name: 'Cabinet Albret', href: 'mockups/hero-8-avocat.html',     stripe: '#a37f4a', ink: '#f5f1e8' },
+  { name: 'FLAME',          href: 'mockups/hero-9-fastfood.html',   stripe: '#e84016', ink: '#f4ecdc' },
+];
+
+const cascadeInner = document.getElementById('cascadeInner');
+if (cascadeInner) {
+  // Double the list for seamless infinite scroll
+  const list = [...sites, ...sites];
+  cascadeInner.innerHTML = list.map(s => `
+    <a class="crow" href="${s.href}" target="_blank" rel="noopener" aria-label="${s.name}">
+      <div class="shot"><iframe src="${s.href}" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true"></iframe></div>
+    </a>
+  `).join('');
+}
+
+// === Reveal animations ===
+const revealEls = document.querySelectorAll('[data-r]');
+if (revealEls.length) {
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: .1, rootMargin: '0px 0px -60px 0px' });
+  revealEls.forEach((el, i) => {
+    el.style.transitionDelay = ((i % 5) * 60) + 'ms';
+    io.observe(el);
+  });
+}
+
+// === FAQ ===
+const faqList = document.getElementById('faqList');
+if (faqList) {
+  faqList.querySelectorAll('.faq').forEach(faq => {
+    const q = faq.querySelector('.faq-q');
+    const a = faq.querySelector('.faq-a');
+    if (faq.classList.contains('open')) a.style.maxHeight = a.scrollHeight + 'px';
+    q.addEventListener('click', () => {
+      const open = faq.classList.toggle('open');
+      a.style.maxHeight = open ? a.scrollHeight + 'px' : '0px';
+    });
+  });
+}
+
+// === Form ===
+const form = document.getElementById('contactForm');
+if (form) {
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const ok = document.getElementById('ok');
+    if (ok) ok.classList.add('show');
+    setTimeout(() => e.target.reset(), 300);
+  });
+}
+
+// === Scramble effect on display titles (hero, page hero, sec-title, footer big, etc.) ===
+// On hover, each letter rapidly cycles through punctuation/numbers before resolving back.
+const SCRAMBLE_CHARS = '!@#$%&*+-=[]{}|;:<>?/~01234567';
+const SCRAMBLE_SELECTOR = '.hero h1, .page-hero h1, .sec-title, .footer-big h2, .contact-side h3, .cta-banner h2';
+const SCRAMBLE_EXCLUDE = '.small, em';
+
+function wrapTextNodes(host) {
+  const walker = document.createTreeWalker(host, NodeFilter.SHOW_TEXT, {
+    acceptNode(node) {
+      if (!node.textContent.trim()) return NodeFilter.FILTER_REJECT;
+      let p = node.parentElement;
+      while (p && p !== host) {
+        if (p.matches(SCRAMBLE_EXCLUDE)) return NodeFilter.FILTER_REJECT;
+        p = p.parentElement;
+      }
+      return NodeFilter.FILTER_ACCEPT;
+    }
+  });
+  const nodes = [];
+  while (walker.nextNode()) nodes.push(walker.currentNode);
+
+  nodes.forEach(node => {
+    const frag = document.createDocumentFragment();
+    for (const ch of node.textContent) {
+      if (ch === ' ' || ch === '\n' || ch === '\t') {
+        frag.appendChild(document.createTextNode(ch));
+      } else {
+        const span = document.createElement('span');
+        span.className = 'scrm';
+        span.dataset.original = ch;
+        span.textContent = ch;
+        frag.appendChild(span);
+      }
+    }
+    node.replaceWith(frag);
+  });
+}
+
+function scrambleHost(host) {
+  if (host._scrambling) return;
+  host._scrambling = true;
+
+  const letters = host.querySelectorAll('.scrm');
+  const totalFrames = 22;
+  let frame = 0;
+
+  const interval = setInterval(() => {
+    letters.forEach((letter, i) => {
+      const original = letter.dataset.original;
+      // Stagger resolution: earlier letters resolve sooner
+      const resolveAt = (i / letters.length) * totalFrames * 0.55 + 6;
+      if (frame >= resolveAt) {
+        letter.textContent = original;
+      } else {
+        letter.textContent = SCRAMBLE_CHARS[Math.floor(Math.random() * SCRAMBLE_CHARS.length)];
+      }
+    });
+    frame++;
+    if (frame > totalFrames) {
+      clearInterval(interval);
+      letters.forEach(l => l.textContent = l.dataset.original);
+      host._scrambling = false;
+    }
+  }, 35);
+}
+
+const scrambleHosts = [];
+document.querySelectorAll(SCRAMBLE_SELECTOR).forEach(host => {
+  host.classList.add('scrm-host');
+  wrapTextNodes(host);
+  host.addEventListener('mouseenter', () => scrambleHost(host));
+  scrambleHosts.push(host);
+});
+
+// Auto-scramble visible titles every 2 seconds, staggered to avoid all firing at once
+const SCRAMBLE_TICK = 2000;
+const SCRAMBLE_STAGGER = 140;
+
+function isInViewport(el) {
+  const r = el.getBoundingClientRect();
+  return r.bottom > 0 && r.top < window.innerHeight;
+}
+
+setInterval(() => {
+  if (document.hidden) return;
+  scrambleHosts.forEach((host, i) => {
+    if (!isInViewport(host)) return;
+    setTimeout(() => scrambleHost(host), i * SCRAMBLE_STAGGER);
+  });
+}, SCRAMBLE_TICK);
+
+// === Scroll progress bar — barber-pole stripes ===
+const scrollProgress = document.createElement('div');
+scrollProgress.className = 'scroll-progress';
+scrollProgress.setAttribute('aria-hidden', 'true');
+scrollProgress.innerHTML = `<div class="sp-track"><div class="sp-fill"></div></div>`;
+document.body.appendChild(scrollProgress);
+
+// (Nova Orb 3D keycap removed)
+let lastScroll = 0;
+let scrollVel = 0;
+let rafId = null;
+
+// === Particle text effect — full-screen section after hero ===
+const particleSectionCanvas = document.getElementById('particleSection');
+if (particleSectionCanvas && typeof window.initParticleText === 'function') {
+  // Size canvas internal pixels to match its on-screen display
+  const sizeCanvas = () => {
+    const rect = particleSectionCanvas.getBoundingClientRect();
+    particleSectionCanvas.width = Math.min(Math.max(Math.round(rect.width), 1000), 1920);
+    particleSectionCanvas.height = Math.min(Math.max(Math.round(rect.height), 600), 1080);
+  };
+  sizeCanvas();
+  window.initParticleText(particleSectionCanvas, [
+    'ATELIER NOVA',
+    'DESIGN',
+    'CODE',
+    'IDENTITÉ',
+    'BORDEAUX',
+    'SUR-MESURE',
+  ], { fontSize: 200, fontFamily: 'Geist Mono, monospace', wordInterval: 240 });
+}
+
+// Hero scroll-driven dive (cascade zooms forward as user scrolls through stage)
+const scrollStage = document.querySelector('.scroll-stage');
+const heroCascade = document.querySelector('.cascade');
+const heroFade = document.querySelector('.hero-fade');
+const heroFadeEls = document.querySelectorAll('[data-hero-fade]');
+const cascadeInnerEl = document.getElementById('cascadeInner');
+
+function updateHeroDive() {
+  if (!scrollStage || !heroCascade) return;
+  const rect = scrollStage.getBoundingClientRect();
+  const max = scrollStage.offsetHeight - window.innerHeight;
+  const progress = Math.max(0, Math.min(1, -rect.top / max));
+
+  // Cascade dives subtly: rotation -12° → -4°, scale 1 → 1.1 (no blur, no zoom into image)
+  const rot = -12 + progress * 8;
+  const scale = 1 + progress * 0.1;
+  heroCascade.style.setProperty('--cascade-rot', rot + 'deg');
+  heroCascade.style.setProperty('--cascade-scale', scale.toFixed(3));
+  if (cascadeInnerEl) cascadeInnerEl.style.animationPlayState = progress > 0.3 ? 'paused' : 'running';
+
+  // Hero text fades out gracefully
+  const textOpacity = Math.max(0, 1 - progress * 1.4);
+  heroFadeEls.forEach(el => el.style.opacity = textOpacity);
+  if (heroFade) heroFade.style.opacity = Math.max(0, 1 - progress * 1.4);
+}
+
+function updateOrb() {
+  const scroll = window.scrollY;
+  const max = Math.max(document.body.scrollHeight - window.innerHeight, 1);
+  const progress = Math.min(scroll / max, 1);
+  // Velocity tracking (kept for future hooks)
+  scrollVel = scrollVel * 0.85 + (scroll - lastScroll) * 0.4;
+  lastScroll = scroll;
+  // Scroll progress bar (set on parent so both fill + reaper inherit)
+  scrollProgress.style.setProperty('--p', progress);
+  rafId = null;
+}
+
+// === Manifesto scroll storytelling ===
+const manifestoSection = document.querySelector('.manifesto');
+const manifestoStatements = document.querySelectorAll('.statement[data-stm]');
+const manifestoDots = document.querySelectorAll('.manifesto-progress .mp-dot');
+const manifestoNum = document.querySelector('.manifesto-counter .mc-num');
+
+function updateManifesto() {
+  if (!manifestoSection || manifestoStatements.length === 0) return;
+  const rect = manifestoSection.getBoundingClientRect();
+  const max = manifestoSection.offsetHeight - window.innerHeight;
+  const progress = Math.max(0, Math.min(1, -rect.top / max));
+  const stmCount = manifestoStatements.length;
+  const idx = Math.min(stmCount - 1, Math.floor(progress * stmCount * 0.9999));
+  manifestoStatements.forEach((stm, i) => {
+    stm.classList.toggle('active', i === idx);
+  });
+  manifestoDots.forEach((dot, i) => dot.classList.toggle('active', i === idx));
+  if (manifestoNum) manifestoNum.textContent = String(idx + 1).padStart(2, '0');
+}
+
+function tick() {
+  updateOrb();
+  updateHeroDive();
+  updateManifesto();
+}
+
+function onScroll() {
+  if (rafId === null) rafId = requestAnimationFrame(tick);
+}
+
+window.addEventListener('scroll', onScroll, { passive: true });
+tick();

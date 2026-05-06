@@ -1,0 +1,68 @@
+# Dependencies
+node_modules/
+bower_components/
+
+# Build outputs / Next.js
+.next/
+out/
+dist/
+build/
+
+# Vercel
+.vercel
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+.env.development
+.env.production
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# IDE / Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+$RECYCLE.BIN/
+
+# Claude Code
+.claude/
+.claude.json
+.claude.json.backup*
+CLAUDE.local.md
+
+# Archives / installers (do not commit large binaries)
+*.exe
+*.msi
+*.dmg
+*.zip
+*.tar.gz
+*.tgz
+*.7z
+*.rar
+minimal.tar.gz
+
+# Specific large file in assets/
+assets/VSCodeUserSetup-*.exe
+
+# Prisma
+prisma/*.db
+
+# Misc
+*.tmp
+*.bak
+.cache/
+coverage/

@@ -1,0 +1,528 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Atelier Nova — Des sites à votre image</title>
+<meta name="description" content="Studio indépendant basé à Bordeaux. Sites vitrines sur-mesure pour artisans, commerçants et PME locales." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600;700&family=Fraunces:ital,wght@0,400;1,300;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css?v=10">
+</head>
+<body>
+
+<div class="cursor" id="cursor" data-label=""></div>
+
+<header class="nav">
+  <a href="index.html" class="brand"><span class="slash">/</span>Atelier Nova</a>
+  <nav class="links">
+    <a href="services.html">Services</a>
+    <a href="projets.html">Projets</a>
+    <a href="contact.html#faq">FAQ</a>
+  </nav>
+  <a href="contact.html" class="cta">Contact</a>
+</header>
+
+<main id="top">
+
+  <!-- HERO avec scroll-driven dive into cascade -->
+  <div class="scroll-stage">
+    <section class="hero">
+      <div class="cascade" aria-hidden="true">
+        <div class="cascade-inner" id="cascadeInner"></div>
+      </div>
+      <div class="hero-fade" aria-hidden="true"></div>
+
+      <h1 data-hero-fade>
+        Des sites<br>
+        <span class="small">à votre</span> <span class="ink-3">image.</span>
+      </h1>
+
+      <div class="hero-bottom" data-hero-fade>
+        <p class="hero-desc">
+          Atelier Nova conçoit, designe et code des <strong>sites vitrines sur-mesure</strong> pour les artisans, commerçants et PME locales — pour faire émerger une identité numérique forte qui convertit.
+        </p>
+        <div class="hero-actions">
+          <a href="contact.html" class="pill-cta">Démarrer un projet <span class="arrow">↗</span></a>
+          <a href="projets.html" class="pill-secondary">Voir les projets <span>→</span></a>
+          <span class="hero-fineprint">Réponse sous 24h ouvrées · Devis gratuit</span>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Manifesto — scroll-based storytelling between hero and particle section -->
+  <section class="manifesto">
+    <div class="manifesto-pin">
+      <div class="manifesto-bg" aria-hidden="true"></div>
+      <div class="manifesto-progress" aria-hidden="true">
+        <span class="mp-dot"></span><span class="mp-dot"></span><span class="mp-dot"></span><span class="mp-dot"></span>
+      </div>
+      <div class="manifesto-counter"><span class="mc-num">01</span><span class="mc-sep">/</span><span class="mc-total">04</span></div>
+
+      <div class="statement" data-stm="0">
+        <span class="stm-tag">Manifeste · 01</span>
+        <h3>Pas de <em>templates.</em></h3>
+        <p>Chaque projet repart d'une page blanche. Briefing, recherche, croquis. On ne cache pas un kit Webflow derrière une typo italique.</p>
+      </div>
+
+      <div class="statement" data-stm="1">
+        <span class="stm-tag">Manifeste · 02</span>
+        <h3>Pas de <em>promesses</em> magiques.</h3>
+        <p>SEO honnête, code propre, hébergement qui tient. Pas de "on vous met en première page Google" — juste du travail solide qui se voit dans les Core Web Vitals.</p>
+      </div>
+
+      <div class="statement" data-stm="2">
+        <span class="stm-tag">Manifeste · 03</span>
+        <h3>Pas de design qui <em>vieillit mal.</em></h3>
+        <p>On choisit ce qui tient dans 5 ans, pas ce qui buzz dans 5 mois. Typographies pérennes, palettes maîtrisées, structures claires.</p>
+      </div>
+
+      <div class="statement" data-stm="3">
+        <span class="stm-tag">Manifeste · 04</span>
+        <h3>Juste du <em>sur-mesure</em> qui dure.</h3>
+        <p>Pour des artisans qui font les choses bien. Et qui méritent un site à la hauteur de leur métier.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Particle text section — designed second page (canvas full bleed) -->
+  <section class="particle-section">
+    <canvas id="particleSection" class="particle-canvas" aria-label="Atelier Nova — particles"></canvas>
+    <div class="ps-bg" aria-hidden="true"></div>
+
+    <header class="ps-top">
+      <span class="ps-num">02</span>
+      <span class="ps-label">— Notre univers</span>
+      <span class="ps-meta">Bordeaux · Studio · 2025</span>
+    </header>
+
+    <div class="ps-center">
+      <p class="ps-tagline">Un studio qui mêle <em>design, code &amp; identité</em> pour bâtir des sites <em>qui durent</em>.</p>
+    </div>
+
+    <footer class="ps-bottom">
+      <span class="ps-hint">Survolez pour disperser · Mots qui changent toutes les 4s</span>
+      <span class="ps-scroll">Continuez ↓</span>
+    </footer>
+  </section>
+
+  <!-- SERVICES preview -->
+  <section id="services">
+    <div class="sec-head-center">
+      <span class="pill-tag" data-r><span class="icon">◐</span> Nos métiers</span>
+      <h2 class="sec-title" data-r>Quatre métiers,<br><em>un seul studio.</em></h2>
+      <p class="sec-aside" data-r style="text-align:center">De la première intuition au déploiement. Quatre disciplines réunies sous un même toit — parce que la cohérence ne se sous-traite pas.</p>
+    </div>
+
+    <div class="services">
+
+      <!-- 1 IDENTITÉ -->
+      <article class="svc s1" data-r>
+        <div class="preview">
+          <div class="pv-brand">
+            <div class="logo"><span class="star"></span>NOVA</div>
+            <div class="swatches">
+              <div class="sw" style="background:#ff5e8a" data-hex="PINK"></div>
+              <div class="sw" style="background:#ffb547" data-hex="AMBER"></div>
+              <div class="sw" style="background:#c6f964" data-hex="LIME"></div>
+              <div class="sw" style="background:#0e0e10;border-color:rgba(243,241,234,.4)" data-hex="INK"></div>
+            </div>
+            <div class="typo">
+              <div class="big">DISPLAY</div>
+              <div class="lbl">Geist Mono · 700</div>
+            </div>
+            <div class="typo">
+              <div class="sm">italique accent</div>
+              <div class="lbl">Fraunces · 300 ital</div>
+            </div>
+          </div>
+        </div>
+        <div class="delay">Délai moyen · 5 jours</div>
+        <h3>Identité de <em>marque</em></h3>
+        <div class="tag">Pour qu'on vous reconnaisse en 0,3 seconde.</div>
+        <p>Logo, système typographique, palette, ton de voix. Une vraie marque qu'on n'oublie pas — pas un habillage de surface.</p>
+        <div class="deliverables">
+          <span>Logo + variantes</span><span>Charte graphique</span><span>Palette</span><span>Typo</span><span>Tone of voice</span>
+        </div>
+        <div class="stack-row"><span>STACK</span><strong>Figma · Adobe · Notion</strong></div>
+      </article>
+
+      <!-- 2 UI/UX -->
+      <article class="svc s2" data-r>
+        <div class="preview">
+          <div class="pv-uiux">
+            <div class="figma-top">
+              <span class="flogo">F</span>
+              <span class="crumb"><strong>Atelier Nova</strong> <span class="sep">/</span> Design System v2.4</span>
+              <div class="right">
+                <span class="badge">SAVED</span>
+                <div class="avatar"></div><div class="avatar b"></div><div class="avatar c"></div>
+              </div>
+            </div>
+            <div class="figma-board">
+              <div class="fig-section selected">
+                <div class="stitle">Color tokens</div>
+                <div class="fig-colors">
+                  <div class="fig-tok" style="background:#5fc9ff" data-label="cyan"></div>
+                  <div class="fig-tok" style="background:#ff5e8a" data-label="pink"></div>
+                  <div class="fig-tok" style="background:#ffb547" data-label="amber"></div>
+                  <div class="fig-tok" style="background:#c6f964" data-label="lime"></div>
+                </div>
+              </div>
+              <div class="fig-section">
+                <div class="stitle">Type scale</div>
+                <div class="fig-type">
+                  <div class="tline"><span class="name">H1</span><span class="h1">Aa</span><span class="meta">48 / 700</span></div>
+                  <div class="tline"><span class="name">H2</span><span class="h2">Aa</span><span class="meta">32 / 600</span></div>
+                  <div class="tline"><span class="name">P</span><span class="body">Aa Body text</span><span class="meta">14 / 400</span></div>
+                </div>
+              </div>
+              <div class="fig-section">
+                <div class="stitle">Components</div>
+                <div class="fig-comps">
+                  <span class="fig-btn">Button</span>
+                  <span class="fig-btn ghost">Ghost</span>
+                  <span class="fig-input">Input...</span>
+                  <span class="fig-badge">Badge</span>
+                  <span class="fig-card">Card · primary</span>
+                </div>
+              </div>
+              <div class="fig-section">
+                <div class="stitle">Spacing</div>
+                <div class="fig-spacing">
+                  <div class="fig-sp s1"><div class="bar"></div><span class="lbl">4</span></div>
+                  <div class="fig-sp s2"><div class="bar"></div><span class="lbl">8</span></div>
+                  <div class="fig-sp s3"><div class="bar"></div><span class="lbl">16</span></div>
+                  <div class="fig-sp s4"><div class="bar"></div><span class="lbl">24</span></div>
+                  <div class="fig-sp s5"><div class="bar"></div><span class="lbl">40</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="fig-cursor">
+              <svg viewBox="0 0 14 14" fill="none">
+                <path d="M2 1.5 L2 11 L4.5 8.5 L7 13 L9 12 L6.5 8 L10 7.5 Z" fill="#ff5e8a" stroke="#fff" stroke-width=".8"/>
+              </svg>
+              <span class="tag">Camille</span>
+            </div>
+          </div>
+        </div>
+        <div class="delay">Délai moyen · 1-2 semaines</div>
+        <h3>UI/UX &amp; <em>Product Design</em></h3>
+        <div class="tag">Avant de coder, on dessine. Avant de dessiner, on comprend.</div>
+        <p>Wireframes, prototypes Figma, design system. On valide chaque pixel avant qu'il ne devienne du code — c'est ça qui fait gagner des semaines.</p>
+        <div class="deliverables">
+          <span>Architecture</span><span>Wireframes</span><span>Prototype Figma</span><span>Design system</span><span>Tests utilisateurs</span>
+        </div>
+        <div class="stack-row"><span>STACK</span><strong>Figma · FigJam · Maze</strong></div>
+      </article>
+
+      <!-- 3 DEV -->
+      <article class="svc s3" data-r>
+        <div class="preview">
+          <div class="pv-code-block">
+            <div class="cb">
+              <div><span class="c-1">/**</span></div>
+              <div><span class="c-1"> * @name</span> <span class="c-k">AtelierNova</span></div>
+              <div><span class="c-1"> * @stack</span> <span class="c-s">Astro · Tailwind · Sanity</span></div>
+              <div><span class="c-1"> */</span></div>
+              <div>&nbsp;</div>
+              <div><span class="c-k">const</span> <span class="c-f">site</span> <span class="c-1">=</span> <span class="c-1">{</span></div>
+              <div>&nbsp;&nbsp;<span class="c-v">name</span><span class="c-1">:</span> <span class="c-s">'Pétrin d&#39;Argent'</span><span class="c-1">,</span></div>
+              <div>&nbsp;&nbsp;<span class="c-v">live</span><span class="c-1">:</span> <span class="c-k">true</span></div>
+              <div><span class="c-1">};</span></div>
+            </div>
+            <div class="terminal">
+              <div><span class="arrow">›</span> <span class="ok">✓</span> build complete <span class="c-1">·</span> <span class="num">1.2s</span></div>
+              <div><span class="arrow">›</span> <span class="ok">✓</span> deploy: <span class="c-f">vercel</span></div>
+              <div><span class="arrow">›</span> <span class="ok">✓</span> pagespeed: <span class="num">98/100</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="delay">Délai moyen · 2-3 semaines</div>
+        <h3>Développement <em>web</em></h3>
+        <div class="tag">Du code propre, des sites rapides, un SEO qui tient.</div>
+        <p>Astro, Tailwind, headless CMS quand il faut. PageSpeed 95+, balisage propre, hébergement géré — pour un site qui ne devient pas obsolète à la livraison.</p>
+        <div class="deliverables">
+          <span>Astro / 11ty</span><span>Sanity / Strapi</span><span>SEO technique</span><span>Hébergement</span><span>CI/CD</span>
+        </div>
+        <div class="stack-row"><span>STACK</span><strong>Astro · Tailwind · Vercel</strong></div>
+      </article>
+
+      <!-- 4 MOTION -->
+      <article class="svc s4" data-r>
+        <div class="preview">
+          <div class="pv-tunnel">
+            <div class="starfield">
+              <div class="star big" style="top:12%;left:18%;animation-delay:0s"></div>
+              <div class="star" style="top:22%;left:64%;animation-delay:.4s"></div>
+              <div class="star" style="top:38%;left:8%;animation-delay:.9s"></div>
+              <div class="star big" style="top:48%;left:88%;animation-delay:1.3s"></div>
+              <div class="star" style="top:62%;left:32%;animation-delay:1.7s"></div>
+              <div class="star" style="top:75%;left:72%;animation-delay:2.1s"></div>
+              <div class="star big" style="top:84%;left:14%;animation-delay:.5s"></div>
+              <div class="star" style="top:30%;left:42%;animation-delay:1.5s"></div>
+              <div class="star" style="top:90%;left:55%;animation-delay:.8s"></div>
+              <div class="star" style="top:6%;left:80%;animation-delay:2.4s"></div>
+            </div>
+            <div class="beam"></div>
+            <div class="dust" style="left:15%;animation-delay:0s"></div>
+            <div class="dust" style="left:38%;animation-delay:2s"></div>
+            <div class="dust" style="left:62%;animation-delay:4s"></div>
+            <div class="dust" style="left:84%;animation-delay:1s"></div>
+            <div class="dust" style="left:48%;animation-delay:5.5s"></div>
+            <div class="tunnel">
+              <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+              <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+              <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+              <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+            </div>
+            <div class="vanish"></div>
+          </div>
+        </div>
+        <div class="delay">Délai moyen · 3-5 jours</div>
+        <h3>Motion <em>design</em></h3>
+        <div class="tag">Ce détail qu'on remarque sans pouvoir le décrire.</div>
+        <p>Micro-interactions, transitions de page, animations qui guident le regard. Chaque pixel qui bouge a une raison de bouger.</p>
+        <div class="deliverables">
+          <span>GSAP</span><span>Framer Motion</span><span>Lottie</span><span>SVG anim</span><span>Scroll triggers</span>
+        </div>
+        <div class="stack-row"><span>STACK</span><strong>GSAP · Framer · Lottie</strong></div>
+      </article>
+
+    </div>
+
+    <div class="all-projects" data-r style="margin-top:48px">
+      <a href="services.html">Tout savoir sur nos services <span class="arrow">→</span></a>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="a-propos" class="about-stage">
+    <div class="shader-bg" id="aboutShader" aria-hidden="true"></div>
+    <div class="shader-overlay" aria-hidden="true"></div>
+
+    <div class="sec-head-center">
+      <span class="pill-tag" data-r><span class="icon">★</span> À propos</span>
+    </div>
+
+    <p class="about-text" data-r>
+      Atelier Nova aide les <em>marques engagées</em> à occuper leur place unique dans le paysage de la <em>réputation</em>, de la <em>reconnaissance</em> <span class="dim">et de l'authenticité</span>, à travers des solutions soignées et sensibles.
+    </p>
+
+    <div class="stats-row">
+      <div class="stat-cell" data-r>
+        <div class="lbl">Projets livrés</div>
+        <div class="num">42<span style="color:var(--ink-3)">+</span></div>
+      </div>
+      <div class="stat-cell" data-r>
+        <div class="lbl">Années d'expérience</div>
+        <div class="num">8<span style="color:var(--ink-3)">+</span></div>
+      </div>
+      <div class="stat-cell" data-r>
+        <div class="lbl">Clients satisfaits</div>
+        <div class="num">38<span style="color:var(--ink-3)">+</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS preview -->
+  <section id="projects">
+    <div class="sec-head-center">
+      <span class="pill-tag" data-r><span class="icon">▲</span> Sélection</span>
+      <h2 class="sec-title" data-r>Travaux <em>récents.</em></h2>
+      <p class="sec-aside" data-r style="text-align:center">Trois cas concrets — artisans et commerçants locaux qui voulaient enfin un site à la hauteur de leur travail.</p>
+    </div>
+
+    <div class="projects">
+
+      <!-- 1 — FLAME -->
+      <article class="proj cryptik" data-r>
+        <div class="left">
+          <div class="meta">2025 · Bordeaux · 3 semaines</div>
+          <div class="tags"><span class="t">Identité</span><span class="t">E-commerce</span><span class="t">Intégration POS</span></div>
+          <div>
+            <div class="psub">Identité street food &amp; commande en ligne</div>
+            <div class="pname">FL<em>AME</em></div>
+            <div class="result">+450 commandes / semaine</div>
+          </div>
+        </div>
+        <div class="right">
+          <div class="screen-frame">
+            <div class="screen-chrome">
+              <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+              <span class="url">flame-burgers.fr</span>
+            </div>
+            <iframe src="mockups/hero-9-fastfood.html" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true"></iframe>
+          </div>
+        </div>
+        <a href="mockups/hero-9-fastfood.html" target="_blank" rel="noopener" class="arrow-btn">↗</a>
+      </article>
+
+      <!-- 2 — Verveine -->
+      <article class="proj refract" data-r>
+        <div class="left">
+          <div class="meta">2025 · Bordeaux · 5 semaines</div>
+          <div class="tags"><span class="t">Identité</span><span class="t">E-commerce</span><span class="t">Abonnements</span></div>
+          <div>
+            <div class="psub">Boutique fleurs &amp; abonnements hebdomadaires</div>
+            <div class="pname">Ver<em>veine</em></div>
+            <div class="result">200 abonnés actifs en 3 mois</div>
+          </div>
+        </div>
+        <div class="right">
+          <div class="screen-frame">
+            <div class="screen-chrome">
+              <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+              <span class="url">verveine.fr</span>
+            </div>
+            <iframe src="mockups/hero-7-fleuriste.html" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true"></iframe>
+          </div>
+        </div>
+        <a href="mockups/hero-7-fleuriste.html" target="_blank" rel="noopener" class="arrow-btn">↗</a>
+      </article>
+
+    </div>
+
+    <div class="all-projects" data-r>
+      <a href="projets.html">Voir tous les projets <span class="arrow">→</span></a>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section id="temoignages" class="testimonials">
+    <div class="sec-head-center">
+      <span class="pill-tag" data-r><span class="icon">✦</span> Témoignages</span>
+      <h2 class="sec-title" data-r>Ce qu'ils en <em>disent.</em></h2>
+      <p class="sec-aside" data-r style="text-align:center">Des artisans, commerçants et indépendants qui ont fait confiance à Atelier Nova pour passer à la vitesse supérieure.</p>
+    </div>
+
+    <div class="testi-grid" role="region" aria-label="Avis clients défilants">
+      <!-- Col 1 -->
+      <div class="testi-col">
+        <ul class="testi-list" style="--d:38s">
+          <li class="testi">
+            <blockquote>
+              <p>Site refait il y a 3 mois, on voit tout de suite la différence sur les commandes en ligne. Atelier Nova est carré, à l'écoute. Rien à redire.</p>
+              <footer>
+                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=150&h=150" alt="" loading="lazy" />
+                <div class="who"><cite>Camille Roux</cite><span class="role">Boulangerie · Bordeaux</span></div>
+              </footer>
+            </blockquote>
+          </li>
+          <li class="testi">
+            <blockquote>
+              <p>Mon ancien site faisait fuir les clients, j'exagère à peine. Là c'est limpide. Il a compris ce qu'il fallait dès le premier rdv.</p>
+              <footer>
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=150&h=150" alt="" loading="lazy" />
+                <div class="who"><cite>Antoine Vasseur</cite><span class="role">Architecte · Atelier Coupe</span></div>
+              </footer>
+            </blockquote>
+          </li>
+          <li class="testi">
+            <blockquote>
+              <p>Le rendu colle parfaitement à l'esprit du resto. Beaucoup de clients m'en parlent. Bon investissement.</p>
+              <footer>
+                <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=150&h=150" alt="" loading="lazy" />
+                <div class="who"><cite>Julien Rey</cite><span class="role">Restaurant L'Olivier</span></div>
+              </footer>
+            </blockquote>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Col 2 -->
+      <div class="testi-col col-2">
+        <ul class="testi-list" style="--d:46s">
+          <li class="testi">
+            <blockquote>
+              <p>Tout livré dans les temps, intégration de la caisse comprise. Communication carrée. On bosse encore ensemble pour la suite.</p>
+              <footer>
+                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=150&h=150" alt="" loading="lazy" />
+                <div class="who"><cite>Thomas Mercier</cite><span class="role">FLAME · Street food</span></div>
+              </footer>
+            </blockquote>
+          </li>
+          <li class="testi">
+            <blockquote>
+              <p>Brief assez vague de ma part au départ, et pourtant le résultat est exactement ce qu'il fallait. Vrai œil de designer.</p>
+              <footer>
+                <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=150&h=150" alt="" loading="lazy" />
+                <div class="who"><cite>Léa Dubreuil</cite><span class="role">Fleuriste · Verveine</span></div>
+              </footer>
+            </blockquote>
+          </li>
+          <li class="testi">
+            <blockquote>
+              <p>Pas juste un site, un vrai accompagnement. C'est ce qui fait la différence.</p>
+              <footer>
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=150&h=150" alt="" loading="lazy" />
+                <div class="who"><cite>Élodie Bernard</cite><span class="role">Source Spa · Bien-être</span></div>
+              </footer>
+            </blockquote>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Col 3 -->
+      <div class="testi-col col-3">
+        <ul class="testi-list" style="--d:42s">
+          <li class="testi">
+            <blockquote>
+              <p>J'aurais dû le faire faire plus tôt. Le site est beau et il convertit, je demandais pas plus.</p>
+              <footer>
+                <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=150&h=150" alt="" loading="lazy" />
+                <div class="who"><cite>Sarah Benhamou</cite><span class="role">Institut · Maison Lumière</span></div>
+              </footer>
+            </blockquote>
+          </li>
+          <li class="testi">
+            <blockquote>
+              <p>Site rapide, design soigné, suivi après livraison nickel. Aucune mauvaise surprise.</p>
+              <footer>
+                <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&q=80&w=150&h=150" alt="" loading="lazy" />
+                <div class="who"><cite>Fanny Lacombe</cite><span class="role">Salon Mèche &amp; Co</span></div>
+              </footer>
+            </blockquote>
+          </li>
+          <li class="testi">
+            <blockquote>
+              <p>Un rendu pro qui inspire confiance dès la home. Mes clients m'en parlent encore.</p>
+              <footer>
+                <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=150&h=150" alt="" loading="lazy" />
+                <div class="who"><cite>Marc Albret</cite><span class="role">Avocat · Cabinet Albret</span></div>
+              </footer>
+            </blockquote>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA banner -->
+  <div class="cta-banner" data-r>
+    <h2>Prêt à donner vie à <em>votre projet</em> ?</h2>
+    <p>Parlons de votre activité, vos objectifs, et bâtissons ensemble une présence en ligne à la hauteur.</p>
+    <a href="contact.html" class="pill-cta">Démarrer un projet <span class="arrow">↗</span></a>
+  </div>
+
+</main>
+
+<footer>
+  <div class="footer-big"><h2>À <em>bientôt,</em><br>j'espère ✦</h2></div>
+  <div class="footer-cols">
+    <div class="fcol"><h4>Atelier Nova</h4><p>Studio indépendant de design &amp; développement web, basé à Bordeaux. Sites sur-mesure pour artisans et PME.</p></div>
+    <div class="fcol"><h4>Pages</h4><a href="services.html">Services</a><a href="projets.html">Projets</a><a href="contact.html">Contact</a><a href="contact.html#faq">FAQ</a></div>
+    <div class="fcol"><h4>Contact</h4><a href="mailto:bonjour@ateliernova.fr">bonjour@ateliernova.fr</a><a href="tel:+33612345678">+33 6 12 34 56 78</a><a href="#">Instagram</a><a href="#">LinkedIn</a></div>
+    <div class="fcol"><h4>Légal</h4><a href="#">Mentions légales</a><a href="#">Politique de confidentialité</a><a href="#">Cookies</a></div>
+  </div>
+  <div class="copy"><span>© 2025 — 2026 Atelier Nova · Tous droits réservés</span><span>Conçu &amp; codé avec ✦ à Bordeaux</span></div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+<script src="js/particle-text-v2.js"></script>
+<script src="js/about-shader.js"></script>
+<script src="js/script.js"></script>
+</body>
+</html>

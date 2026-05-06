@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Contact &amp; FAQ — Atelier Nova</title>
+<meta name="description" content="Discutons de votre projet. Réponse sous 24h ouvrées, devis gratuit. Toutes les réponses aux questions fréquentes." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600;700&family=Fraunces:ital,wght@0,400;1,300;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="cursor" id="cursor" data-label=""></div>
+
+<header class="nav">
+  <a href="index.html" class="brand"><span class="slash">/</span>Atelier Nova</a>
+  <nav class="links">
+    <a href="services.html">Services</a>
+    <a href="projets.html">Projets</a>
+    <a href="contact.html#faq" aria-current="page">FAQ</a>
+  </nav>
+  <a href="contact.html" class="cta">Contact</a>
+</header>
+
+<main id="top">
+
+  <section class="page-hero">
+    <span class="pill-tag"><span class="icon">✉</span> Contact</span>
+    <h1>Parlons de votre<br><em>prochain projet.</em></h1>
+    <p>Décrivez-moi votre activité et vos objectifs — je reviens vers vous sous 24h ouvrées avec un premier retour et un devis détaillé.</p>
+  </section>
+
+  <section id="contact">
+    <div class="contact-wrap">
+      <div class="contact-side" data-r>
+        <h3>On en <em>discute</em> ?</h3>
+        <div class="contact-bits">
+          <div class="bit"><span class="k">Email</span><span class="v">bonjour@ateliernova.fr</span></div>
+          <div class="bit"><span class="k">Téléphone</span><span class="v">+33 6 12 34 56 78</span></div>
+          <div class="bit"><span class="k">Studio</span><span class="v">Bordeaux, France</span></div>
+          <div class="bit"><span class="k">Instagram</span><span class="v">@ateliernova.fr</span></div>
+          <div class="bit"><span class="k">Disponibilité</span><span class="v">2 places en mai 2026</span></div>
+        </div>
+      </div>
+
+      <form id="contactForm" autocomplete="off" data-r>
+        <h4>Remplissez ce formulaire</h4>
+        <div class="field"><label for="name">Votre nom</label><input id="name" type="text" placeholder="Entrez votre nom complet" /></div>
+        <div class="field"><label for="email">Votre email</label><input id="email" type="email" placeholder="Entrez votre adresse email" /></div>
+        <div class="field"><label for="company">Type d'activité</label>
+          <select id="company">
+            <option>Sélectionnez votre type d'activité</option>
+            <option>Artisan / Commerce local</option>
+            <option>PME / TPE</option>
+            <option>Profession libérale</option>
+            <option>Restaurant / Café</option>
+            <option>Studio / Indépendant</option>
+            <option>Autre</option>
+          </select>
+        </div>
+        <div class="field"><label for="needs">Service recherché</label>
+          <select id="needs">
+            <option>Sélectionnez le service souhaité</option>
+            <option>Site vitrine sur-mesure</option>
+            <option>Refonte de site existant</option>
+            <option>Identité visuelle</option>
+            <option>Landing page</option>
+            <option>Conseil &amp; audit</option>
+          </select>
+        </div>
+        <div class="field"><label for="msg">Plus à propos du projet</label><textarea id="msg" placeholder="Racontez-moi votre activité, vos clients, ce que vous aimeriez transmettre..."></textarea></div>
+        <button type="submit" class="submit">Envoyer le message <span>↗</span></button>
+        <div class="ok" id="ok">★ Message bien reçu — je vous réponds sous 24h ouvrées.</div>
+      </form>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <div class="sec-head-center">
+      <span class="pill-tag" data-r><span class="icon">?</span> FAQs</span>
+      <h2 class="sec-title" data-r>Questions <em>fréquentes</em></h2>
+    </div>
+
+    <div class="faq-list" id="faqList" data-r>
+      <div class="faq open">
+        <button class="faq-q">Quel est le délai habituel pour un projet ?<span class="plus">+</span></button>
+        <div class="faq-a" style="max-height:200px"><div class="faq-a-inner">Les délais varient selon le périmètre. La plupart des projets prennent <strong>3 à 5 semaines</strong>. Les apps complexes ou plateformes peuvent prendre plus longtemps.</div></div>
+      </div>
+      <div class="faq">
+        <button class="faq-q">Proposez-vous un suivi après mise en ligne ?<span class="plus">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">Oui — un <strong>forfait maintenance</strong> mensuel optionnel couvre les mises à jour, sauvegardes, petites modifs et la sécurité. Sinon, je reste joignable pour toute évolution.</div></div>
+      </div>
+      <div class="faq">
+        <button class="faq-q">Et si j'ai juste besoin de design, ou juste de dev ?<span class="plus">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">Tout à fait possible. Je travaille volontiers en <strong>design only</strong> (livraison Figma + design system) ou en <strong>développement only</strong> (intégration de maquettes existantes).</div></div>
+      </div>
+      <div class="faq">
+        <button class="faq-q">Travaillez-vous uniquement avec de grandes marques ?<span class="plus">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">Pas du tout. La majorité de mes clients sont des <strong>artisans, commerces et PME locales</strong>. Si votre activité existe vraiment et que vous y mettez du soin, on s'entendra.</div></div>
+      </div>
+      <div class="faq">
+        <button class="faq-q">Mon site sera-t-il bien référencé sur Google ?<span class="plus">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">Tous mes sites sont livrés avec un <strong>SEO local solide</strong> : structure technique propre, balises optimisées, fiche Google Business connectée. Pas de promesses magiques, juste les bonnes pratiques.</div></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="footer-big"><h2>À <em>bientôt,</em><br>j'espère ✦</h2></div>
+  <div class="footer-cols">
+    <div class="fcol"><h4>Atelier Nova</h4><p>Studio indépendant de design &amp; développement web, basé à Bordeaux. Sites sur-mesure pour artisans et PME.</p></div>
+    <div class="fcol"><h4>Pages</h4><a href="services.html">Services</a><a href="projets.html">Projets</a><a href="contact.html">Contact</a><a href="contact.html#faq">FAQ</a></div>
+    <div class="fcol"><h4>Contact</h4><a href="mailto:bonjour@ateliernova.fr">bonjour@ateliernova.fr</a><a href="tel:+33612345678">+33 6 12 34 56 78</a><a href="#">Instagram</a><a href="#">LinkedIn</a></div>
+    <div class="fcol"><h4>Légal</h4><a href="#">Mentions légales</a><a href="#">Politique de confidentialité</a><a href="#">Cookies</a></div>
+  </div>
+  <div class="copy"><span>© 2025 — 2026 Atelier Nova · Tous droits réservés</span><span>Conçu &amp; codé avec ✦ à Bordeaux</span></div>
+</footer>
+
+<script src="js/script.js"></script>
+</body>
+</html>

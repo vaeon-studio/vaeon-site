@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Preview — Glass Keycap 3D</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;background:radial-gradient(circle at 50% 40%,#1a1820 0%,#0a0908 60%,#000 100%);color:#e8e6e0;font-family:'Inter',sans-serif;overflow:hidden;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:36px}
+
+  .label{font-family:'Geist Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.4em;color:#5a5660;display:flex;align-items:center;gap:14px}
+  .label::before, .label::after{content:'';width:32px;height:1px;background:#5a5660;opacity:.6}
+
+  /* === Scene === */
+  .scene{width:540px;height:540px;position:relative;display:flex;align-items:center;justify-content:center;perspective:1600px}
+
+  /* Surrounding keys (faux keyboard context) */
+  .kb-context{position:absolute;inset:0;z-index:0;display:grid;grid-template-columns:repeat(5,1fr);grid-template-rows:repeat(5,1fr);gap:14px;padding:30px;transform:rotateX(50deg) rotateZ(-15deg) scale(1.2);transform-origin:center;opacity:.55}
+  .kb-context .ck{background:linear-gradient(160deg,#222226 0%,#16161a 60%,#0a0a0c 100%);border-radius:8px;box-shadow:inset 0 -4px 6px rgba(0,0,0,.6),inset 0 1px 1px rgba(255,255,255,.04);position:relative}
+  .kb-context .ck::before{content:'';position:absolute;inset:5px 5px 9px 5px;background:linear-gradient(180deg,#1a1a1e 0%,#0e0e10 100%);border-radius:5px;box-shadow:inset 0 1px 0 rgba(255,255,255,.05)}
+
+  /* === Keycap stage === */
+  .stage{position:relative;width:280px;height:280px;transform-style:preserve-3d;transform:rotateX(20deg) rotateY(-22deg);animation:stageBreathe 9s ease-in-out infinite alternate;z-index:5}
+  @keyframes stageBreathe{from{transform:rotateX(20deg) rotateY(-22deg)}to{transform:rotateX(17deg) rotateY(-18deg)}}
+
+  /* Floor shadow under keycap */
+  .floor-shadow{position:absolute;bottom:-30px;left:50%;width:340px;height:60px;background:radial-gradient(ellipse at center,rgba(0,255,200,.18) 0%,rgba(255,90,160,.12) 40%,transparent 75%);filter:blur(20px);transform:translateX(-50%) rotateX(85deg);transform-origin:center top}
+
+  /* === Glass keycap (4 faces + top + interior floor) === */
+  .keycap{position:absolute;inset:0;transform-style:preserve-3d}
+
+  /* Glass material — used by all faces */
+  .face{
+    position:absolute;
+    background:linear-gradient(160deg, rgba(180,200,230,.12) 0%, rgba(80,100,140,.08) 50%, rgba(40,60,100,.05) 100%);
+    border:1px solid rgba(200,220,255,.15);
+    backdrop-filter:blur(2px);
+    box-shadow:
+      inset 0 0 30px rgba(180,200,255,.08),
+      inset 0 2px 0 rgba(255,255,255,.18);
+  }
+
+  .kc-front{width:280px;height:240px;left:0;top:40px;transform:translateZ(140px)}
+  .kc-back{width:280px;height:240px;left:0;top:40px;transform:translateZ(-140px) rotateY(180deg);background:linear-gradient(160deg, rgba(80,100,140,.18) 0%, rgba(40,60,100,.1) 100%)}
+  .kc-left{width:280px;height:240px;left:0;top:40px;transform:rotateY(-90deg) translateZ(140px);background:linear-gradient(90deg, rgba(180,200,230,.18) 0%, rgba(80,100,140,.1) 100%);border-right:none}
+  .kc-right{width:280px;height:240px;left:0;top:40px;transform:rotateY(90deg) translateZ(140px);background:linear-gradient(-90deg, rgba(180,200,230,.18) 0%, rgba(80,100,140,.1) 100%);border-left:none}
+
+  /* Top — the cap with NOVA label */
+  .kc-top{
+    width:280px;height:280px;left:0;top:0;
+    transform:rotateX(90deg) translateZ(140px);
+    background:
+      radial-gradient(ellipse at 50% 50%, rgba(40,40,50,.95) 0%, rgba(20,20,28,.92) 70%, rgba(10,10,14,.95) 100%),
+      linear-gradient(160deg, rgba(80,100,140,.4) 0%, rgba(20,30,50,.6) 100%);
+    border:1px solid rgba(180,200,255,.25);
+    border-radius:18px;
+    box-shadow:
+      inset 0 0 60px rgba(0,255,200,.08),
+      inset 0 4px 8px rgba(255,255,255,.15),
+      0 0 80px rgba(0,200,255,.15);
+    display:flex;align-items:center;justify-content:center;
+    overflow:hidden;
+  }
+  .kc-top::before{content:'';position:absolute;top:8px;left:8px;right:8px;bottom:8px;border-radius:14px;border:1px solid rgba(180,220,255,.1);pointer-events:none}
+  .kc-top::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 30%, rgba(255,255,255,.18) 0%, transparent 40%);pointer-events:none}
+
+  /* NOVA label glowing on top */
+  .kc-label{font-family:'Geist Mono',monospace;font-weight:700;font-size:48px;letter-spacing:.18em;color:#5fffd4;text-shadow:
+    0 0 8px #5fffd4,
+    0 0 18px #5fffd4,
+    0 0 35px rgba(95,255,212,.6),
+    0 0 60px rgba(95,255,212,.4);
+    animation:labelPulse 3s ease-in-out infinite;
+    position:relative;z-index:2;
+  }
+  @keyframes labelPulse{0%,100%{opacity:1}50%{opacity:.75;text-shadow:0 0 6px #5fffd4,0 0 14px #5fffd4,0 0 28px rgba(95,255,212,.5),0 0 50px rgba(95,255,212,.3)}}
+
+  /* Floor of keycap (bottom inside the cap) */
+  .kc-floor{
+    width:280px;height:280px;left:0;top:0;
+    transform:rotateX(90deg) translateZ(-140px);
+    background:
+      radial-gradient(ellipse at 50% 30%, rgba(20,30,50,1) 0%, rgba(8,8,12,1) 70%, rgba(0,0,0,1) 100%),
+      linear-gradient(180deg, #0a0a0e 0%, #050507 100%);
+    border-radius:18px;
+    box-shadow:
+      inset 0 30px 50px rgba(0,255,200,.12),
+      inset 0 -4px 8px rgba(255,90,160,.08);
+    overflow:hidden;
+    position:absolute;
+  }
+  /* Grid pattern on floor */
+  .kc-floor::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(95,255,212,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(95,255,212,.05) 1px,transparent 1px);background-size:20px 20px;mask-image:radial-gradient(ellipse at 50% 60%, black 0%, transparent 80%)}
+
+  /* === INTERIOR SCENE — positioned ON the floor === */
+  .interior{position:absolute;width:280px;height:280px;left:0;top:0;transform:rotateX(90deg) translateZ(-138px);transform-style:preserve-3d}
+
+  /* Character (hooded silhouette) */
+  .char{position:absolute;left:128px;bottom:74px;width:30px;height:46px;transform:translateZ(2px) rotateX(-90deg);transform-origin:bottom}
+  .char-body{position:absolute;bottom:0;left:0;right:0;height:30px;background:linear-gradient(180deg,#3a3a44 0%,#1a1a20 100%);border-radius:14px 14px 6px 6px;box-shadow:0 2px 4px rgba(0,0,0,.6)}
+  .char-hood{position:absolute;bottom:22px;left:5px;width:20px;height:18px;background:linear-gradient(180deg,#48484e 0%,#26262c 100%);border-radius:50% 50% 30% 30%;box-shadow:0 1px 2px rgba(0,0,0,.5)}
+  .char-face{position:absolute;bottom:25px;left:9px;width:12px;height:8px;background:#0a0a0e;border-radius:50%}
+
+  /* Chair back */
+  .chair{position:absolute;left:122px;bottom:60px;width:42px;height:34px;transform:translateZ(2px) rotateX(-90deg);transform-origin:bottom;background:linear-gradient(180deg,#1a1a20 0%,#0e0e12 100%);border-radius:6px 6px 2px 2px;box-shadow:inset 0 0 4px rgba(0,0,0,.6)}
+
+  /* Desk */
+  .desk{position:absolute;left:50px;bottom:90px;width:180px;height:8px;transform:translateZ(2px) rotateX(-90deg);transform-origin:bottom;background:linear-gradient(180deg,#5a4030 0%,#3a2818 100%);border-radius:2px;box-shadow:0 4px 8px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,180,100,.2)}
+
+  /* Monitors (2) on desk */
+  .mon{position:absolute;bottom:96px;width:54px;height:38px;transform:translateZ(8px);background:linear-gradient(135deg,#0a0a14 0%,#161628 100%);border-radius:3px;box-shadow:0 0 0 2px #2a2a32,0 4px 8px rgba(0,0,0,.6),inset 0 0 12px rgba(95,201,255,.3);overflow:hidden;padding:4px;display:flex;flex-direction:column;gap:1px}
+  .mon.m1{left:78px}
+  .mon.m2{left:142px}
+  .mon-line{height:2px;background:#5fc9ff;border-radius:1px;box-shadow:0 0 4px #5fc9ff;animation:monFlicker 2s ease-in-out infinite}
+  .mon-line.short{width:60%}
+  .mon-line.shorter{width:40%}
+  .mon-line.green{background:#5fffd4;box-shadow:0 0 4px #5fffd4}
+  @keyframes monFlicker{0%,100%{opacity:.7}50%{opacity:1}}
+
+  /* Desk lamp */
+  .lamp{position:absolute;left:60px;bottom:96px;width:14px;height:30px;transform:translateZ(6px)}
+  .lamp-stem{position:absolute;bottom:0;left:6px;width:2px;height:24px;background:#3a3a44;transform-origin:bottom;transform:rotate(15deg)}
+  .lamp-head{position:absolute;top:0;left:0;width:14px;height:10px;background:linear-gradient(180deg,#5a5a64 0%,#2a2a32 100%);border-radius:50% 50% 0 0;transform:rotate(-20deg);transform-origin:bottom center}
+  .lamp-glow{position:absolute;top:8px;left:-22px;width:60px;height:60px;background:radial-gradient(circle at 50% 30%,rgba(255,180,100,.4) 0%,rgba(255,140,60,.15) 40%,transparent 70%);filter:blur(8px);animation:lampGlow 4s ease-in-out infinite alternate}
+  @keyframes lampGlow{from{opacity:.7}to{opacity:1}}
+
+  /* Server rack left */
+  .rack{position:absolute;width:30px;transform:translateZ(2px) rotateX(-90deg);transform-origin:bottom;background:linear-gradient(135deg,#1a1a20 0%,#0a0a12 100%);border-radius:3px;box-shadow:0 4px 8px rgba(0,0,0,.6),inset 0 0 4px rgba(255,90,160,.1);padding:4px 3px;display:flex;flex-direction:column;gap:3px}
+  .rack.r1{left:24px;bottom:60px;height:80px}
+  .rack.r2{right:24px;bottom:60px;height:70px}
+  .rack-led{height:4px;background:#3a3a44;border-radius:1px;display:flex;gap:2px;padding:1px}
+  .rack-led .l{flex:1;background:#5fffd4;box-shadow:0 0 3px #5fffd4;border-radius:0.5px;animation:racLed 2.5s ease-in-out infinite}
+  .rack-led .l.pink{background:#ff5ea8;box-shadow:0 0 3px #ff5ea8;animation-delay:.3s}
+  .rack-led .l.dim{background:#3a3a44;box-shadow:none}
+  @keyframes racLed{0%,100%{opacity:1}50%{opacity:.4}}
+
+  /* Cables — SVG */
+  .cables{position:absolute;inset:0;transform:translateZ(1px) rotateX(-90deg);transform-origin:center bottom;pointer-events:none}
+  .cables svg{width:100%;height:100%;overflow:visible;filter:drop-shadow(0 0 3px rgba(255,90,53,.3))}
+
+  /* Inner ambient glow */
+  .inner-glow{position:absolute;width:280px;height:280px;left:0;top:0;transform:rotateX(90deg) translateZ(-100px);background:radial-gradient(ellipse at 50% 60%,rgba(95,255,212,.15) 0%,transparent 50%);pointer-events:none}
+
+  /* === Particles === */
+  .particles{position:absolute;inset:-50px;z-index:6;pointer-events:none}
+  .dot{position:absolute;width:3px;height:3px;border-radius:999px;background:#5fffd4;box-shadow:0 0 6px #5fffd4;animation:dotFloat 6s ease-in-out infinite}
+  .dot:nth-child(1){top:10%;left:80%;animation-delay:0s}
+  .dot:nth-child(2){top:30%;left:5%;animation-delay:1s;background:#ff5ea8;box-shadow:0 0 6px #ff5ea8}
+  .dot:nth-child(3){top:70%;left:90%;animation-delay:2.5s}
+  .dot:nth-child(4){top:55%;left:0%;animation-delay:4s;background:#ff5ea8;box-shadow:0 0 6px #ff5ea8}
+  .dot:nth-child(5){top:15%;left:50%;animation-delay:1.8s}
+  .dot:nth-child(6){top:85%;left:40%;animation-delay:3.2s}
+  @keyframes dotFloat{0%,100%{transform:translateY(0) scale(1);opacity:.4}50%{transform:translateY(-20px) scale(1.4);opacity:1}}
+
+  /* Outer rim glow */
+  .rim-glow{position:absolute;width:340px;height:340px;left:50%;top:50%;transform:translate(-50%,-50%);background:radial-gradient(circle at 50% 50%,rgba(95,255,212,.15) 0%,rgba(255,90,160,.08) 40%,transparent 65%);filter:blur(30px);z-index:1;animation:rimPulse 5s ease-in-out infinite alternate}
+  @keyframes rimPulse{from{opacity:.6;transform:translate(-50%,-50%) scale(1)}to{opacity:1;transform:translate(-50%,-50%) scale(1.1)}}
+
+  /* Caption */
+  .caption{font-family:'Geist Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.3em;color:#5a5660;text-align:center;line-height:1.8;max-width:560px}
+  .caption strong{color:#e8e6e0;font-weight:700;letter-spacing:.05em}
+</style>
+</head>
+<body>
+
+<div class="label">Preview · Glass keycap 3D</div>
+
+<div class="scene">
+  <!-- Surrounding keyboard context -->
+  <div class="kb-context">
+    <div class="ck"></div><div class="ck"></div><div class="ck"></div><div class="ck"></div><div class="ck"></div>
+    <div class="ck"></div><div class="ck"></div><div class="ck"></div><div class="ck"></div><div class="ck"></div>
+    <div class="ck"></div><div class="ck"></div><div class="ck"></div><div class="ck"></div><div class="ck"></div>
+    <div class="ck"></div><div class="ck"></div><div class="ck"></div><div class="ck"></div><div class="ck"></div>
+    <div class="ck"></div><div class="ck"></div><div class="ck"></div><div class="ck"></div><div class="ck"></div>
+  </div>
+
+  <div class="rim-glow"></div>
+  <div class="floor-shadow"></div>
+
+  <div class="stage">
+    <div class="keycap">
+      <!-- Glass faces -->
+      <div class="face kc-back"></div>
+      <div class="face kc-left"></div>
+      <div class="face kc-right"></div>
+      <div class="face kc-front"></div>
+      <div class="kc-floor"></div>
+
+      <!-- Interior scene (laid on floor) -->
+      <div class="interior">
+        <!-- Inner ambient -->
+
+        <!-- Server racks back -->
+        <div class="rack r1">
+          <div class="rack-led"><div class="l"></div><div class="l pink"></div><div class="l dim"></div></div>
+          <div class="rack-led"><div class="l pink"></div><div class="l"></div><div class="l"></div></div>
+          <div class="rack-led"><div class="l"></div><div class="l dim"></div><div class="l pink"></div></div>
+          <div class="rack-led"><div class="l dim"></div><div class="l"></div><div class="l"></div></div>
+          <div class="rack-led"><div class="l"></div><div class="l pink"></div><div class="l"></div></div>
+          <div class="rack-led"><div class="l pink"></div><div class="l"></div><div class="l dim"></div></div>
+        </div>
+        <div class="rack r2">
+          <div class="rack-led"><div class="l pink"></div><div class="l"></div><div class="l"></div></div>
+          <div class="rack-led"><div class="l"></div><div class="l dim"></div><div class="l pink"></div></div>
+          <div class="rack-led"><div class="l"></div><div class="l"></div><div class="l"></div></div>
+          <div class="rack-led"><div class="l dim"></div><div class="l pink"></div><div class="l"></div></div>
+          <div class="rack-led"><div class="l"></div><div class="l"></div><div class="l pink"></div></div>
+        </div>
+
+        <!-- Desk -->
+        <div class="desk"></div>
+
+        <!-- Monitors on desk -->
+        <div class="mon m1">
+          <div class="mon-line"></div>
+          <div class="mon-line short green"></div>
+          <div class="mon-line"></div>
+          <div class="mon-line shorter"></div>
+          <div class="mon-line short"></div>
+          <div class="mon-line green"></div>
+          <div class="mon-line shorter"></div>
+        </div>
+        <div class="mon m2">
+          <div class="mon-line short"></div>
+          <div class="mon-line"></div>
+          <div class="mon-line green shorter"></div>
+          <div class="mon-line"></div>
+          <div class="mon-line short"></div>
+          <div class="mon-line green"></div>
+          <div class="mon-line shorter"></div>
+        </div>
+
+        <!-- Lamp -->
+        <div class="lamp">
+          <div class="lamp-glow"></div>
+          <div class="lamp-stem"></div>
+          <div class="lamp-head"></div>
+        </div>
+
+        <!-- Chair + character -->
+        <div class="chair"></div>
+        <div class="char">
+          <div class="char-hood"></div>
+          <div class="char-body"></div>
+          <div class="char-face"></div>
+        </div>
+
+        <!-- Cables -->
+        <div class="cables">
+          <svg viewBox="0 0 280 280">
+            <path d="M55 90 Q 30 110, 24 140 T 24 200" stroke="#ff6b35" stroke-width="2" fill="none" opacity=".7"/>
+            <path d="M225 90 Q 250 110, 256 140 T 256 200" stroke="#ff6b35" stroke-width="2" fill="none" opacity=".7"/>
+            <path d="M105 100 Q 80 130, 60 150" stroke="#5fc9ff" stroke-width="1.5" fill="none" opacity=".5"/>
+            <path d="M175 100 Q 200 130, 220 150" stroke="#5fc9ff" stroke-width="1.5" fill="none" opacity=".5"/>
+          </svg>
+        </div>
+
+        <div class="inner-glow"></div>
+      </div>
+
+      <!-- Top cap with label -->
+      <div class="kc-top">
+        <span class="kc-label">NOVA</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Particles -->
+  <div class="particles">
+    <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+    <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+  </div>
+</div>
+
+<div class="caption">
+  <strong>Glass keycap</strong> · 5 faces 3D translucides · label NOVA néon cyan pulsant<br>
+  Scène intérieure : dev encapuchonné, 2 monitors avec code animé, lampe de bureau warm glow,<br>
+  serveurs latéraux LED, câbles SVG, sol grid · clavier en arrière-plan · particules + rim glow
+</div>
+
+</body>
+</html>

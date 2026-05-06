@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Preview — 3D shape (clean CSS)</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;background:#0e0e10;color:#f3f1ea;font-family:'Geist Mono',monospace;overflow:hidden;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:30px}
+
+  .label{font-size:11px;text-transform:uppercase;letter-spacing:.4em;color:#7a7a82;display:flex;align-items:center;gap:14px}
+  .label::before, .label::after{content:'';width:32px;height:1px;background:#7a7a82;opacity:.6}
+
+  /* === 3D shape stage (mimics card preview area) === */
+  .stage{width:520px;height:340px;background:linear-gradient(135deg,#15151a 0%,#1c1c22 100%);border-radius:24px;border:1px solid rgba(243,241,234,.10);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;perspective:900px}
+
+  /* Soft halo */
+  .halo{position:absolute;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(255,181,71,.32) 0%,rgba(255,94,138,.18) 40%,transparent 70%);filter:blur(40px);animation:haloPulse 5s ease-in-out infinite alternate;z-index:0}
+  @keyframes haloPulse{from{opacity:.7;transform:scale(.95)}to{opacity:1;transform:scale(1.1)}}
+
+  /* Floor reflection */
+  .floor{position:absolute;bottom:60px;left:50%;width:200px;height:30px;background:radial-gradient(ellipse at center,rgba(255,181,71,.4),rgba(255,94,138,.2) 50%,transparent 80%);filter:blur(14px);transform:translateX(-50%);z-index:0}
+
+  /* === The 3D Orb === */
+  .orb-wrap{position:relative;width:200px;height:200px;transform-style:preserve-3d;animation:orbFloat 4s ease-in-out infinite alternate;z-index:2}
+  @keyframes orbFloat{from{transform:translateY(0) rotate(-2deg)}to{transform:translateY(-12px) rotate(2deg)}}
+
+  /* Main sphere (glass + chromatic gradient + animated highlight) */
+  .orb{position:absolute;inset:0;border-radius:50%;
+    background:
+      radial-gradient(circle at var(--hx,30%) var(--hy,28%),
+        rgba(255,255,255,.95) 0%,
+        rgba(255,217,184,.85) 8%,
+        rgba(255,158,181,.65) 22%,
+        rgba(164,127,255,.45) 45%,
+        rgba(91,58,168,.85) 75%,
+        rgba(20,10,40,1) 100%);
+    box-shadow:
+      inset -16px -22px 48px rgba(20,10,40,.7),
+      inset 8px 12px 28px rgba(255,255,255,.18),
+      0 30px 50px -10px rgba(91,58,168,.6),
+      0 0 80px rgba(255,158,181,.25);
+    animation:orbSpin 7s linear infinite;
+  }
+  @keyframes orbSpin{
+    0%{--hx:30%;--hy:28%}
+    25%{--hx:55%;--hy:22%}
+    50%{--hx:70%;--hy:32%}
+    75%{--hx:50%;--hy:48%}
+    100%{--hx:30%;--hy:28%}
+  }
+
+  /* Bright spec highlight (small white dot on top-left) */
+  .spec{position:absolute;top:18%;left:25%;width:38px;height:24px;border-radius:50%;background:radial-gradient(ellipse at 30% 30%,rgba(255,255,255,1) 0%,rgba(255,255,255,.4) 40%,transparent 70%);filter:blur(2px);transform:rotate(-25deg);z-index:3;animation:specPulse 3s ease-in-out infinite}
+  @keyframes specPulse{0%,100%{opacity:.8}50%{opacity:1}}
+
+  /* Tiny refraction glint */
+  .glint{position:absolute;top:24%;left:32%;width:10px;height:10px;border-radius:50%;background:#fff;filter:blur(1px);opacity:.95;z-index:4}
+
+  /* Inner ring (subtle inner edge for glass thickness) */
+  .ring{position:absolute;inset:8%;border-radius:50%;border:1px solid rgba(255,255,255,.15);box-shadow:inset 0 0 30px rgba(255,255,255,.05);z-index:1;pointer-events:none}
+
+  /* Floating particles around */
+  .particles{position:absolute;inset:0;z-index:5;pointer-events:none}
+  .p{position:absolute;width:5px;height:5px;border-radius:50%;animation:partFloat 5s ease-in-out infinite}
+  .p.p1{top:15%;right:18%;background:#5fc9ff;box-shadow:0 0 10px #5fc9ff;animation-delay:0s}
+  .p.p2{top:62%;left:14%;background:#ff5ea8;box-shadow:0 0 10px #ff5ea8;animation-delay:1.2s;width:4px;height:4px}
+  .p.p3{bottom:18%;right:22%;background:#ffb547;box-shadow:0 0 10px #ffb547;animation-delay:2.4s}
+  .p.p4{top:42%;left:8%;background:#c6f964;box-shadow:0 0 10px #c6f964;animation-delay:3.6s;width:3px;height:3px}
+  @keyframes partFloat{0%,100%{transform:translateY(0) scale(1);opacity:.5}50%{transform:translateY(-16px) scale(1.4);opacity:1}}
+
+  /* Caption */
+  .caption{font-family:'Geist Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.3em;color:#7a7a82;text-align:center;line-height:1.8;max-width:540px}
+  .caption strong{color:#f3f1ea;font-weight:700;letter-spacing:.05em}
+</style>
+</head>
+<body>
+
+<div class="label">Preview · 3D shape clean CSS</div>
+
+<div class="stage">
+  <div class="halo"></div>
+  <div class="floor"></div>
+
+  <div class="orb-wrap">
+    <div class="orb"></div>
+    <div class="ring"></div>
+    <div class="spec"></div>
+    <div class="glint"></div>
+  </div>
+
+  <div class="particles">
+    <div class="p p1"></div>
+    <div class="p p2"></div>
+    <div class="p p3"></div>
+    <div class="p p4"></div>
+  </div>
+</div>
+
+<div class="caption">
+  <strong>Glass orb 3D</strong> · gradient chromatique multi-couches (cream → peach → rose → lavande → violet sombre)<br>
+  Highlight qui tourne autour de la sphère (7s) · spec dot fixe top-left · ring intérieure (épaisseur du verre)<br>
+  Float vertical 4s · halo pulsant · 4 particules orbitant cyan/pink/amber/lime
+</div>
+
+</body>
+</html>
