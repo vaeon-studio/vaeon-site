@@ -7,7 +7,7 @@
 <meta name="description" content="Studio indépendant basé à Bordeaux. Sites vitrines sur-mesure pour artisans, commerçants et PME locales." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600;700&family=Fraunces:ital,wght@0,400;1,300;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=chillax@400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css?v=10">
 </head>
 <body>
@@ -17,9 +17,7 @@
 <header class="nav">
   <a href="index.html" class="brand"><span class="slash">/</span>Atelier Nova</a>
   <nav class="links">
-    <a href="services.html">Services</a>
-    <a href="projets.html">Projets</a>
-    <a href="contact.html#faq">FAQ</a>
+    <a href="projets.html">Maquettes</a>
   </nav>
   <a href="contact.html" class="cta">Contact</a>
 </header>
@@ -34,7 +32,7 @@
       </div>
       <div class="hero-fade" aria-hidden="true"></div>
 
-      <h1 data-hero-fade>
+      <h1 data-hero-fade data-matrix>
         Des sites<br>
         <span class="small">à votre</span> <span class="ink-3">image.</span>
       </h1>
@@ -59,28 +57,23 @@
       <div class="manifesto-progress" aria-hidden="true">
         <span class="mp-dot"></span><span class="mp-dot"></span><span class="mp-dot"></span><span class="mp-dot"></span>
       </div>
-      <div class="manifesto-counter"><span class="mc-num">01</span><span class="mc-sep">/</span><span class="mc-total">04</span></div>
 
       <div class="statement" data-stm="0">
-        <span class="stm-tag">Manifeste · 01</span>
         <h3>Pas de <em>templates.</em></h3>
         <p>Chaque projet repart d'une page blanche. Briefing, recherche, croquis. On ne cache pas un kit Webflow derrière une typo italique.</p>
       </div>
 
       <div class="statement" data-stm="1">
-        <span class="stm-tag">Manifeste · 02</span>
         <h3>Pas de <em>promesses</em> magiques.</h3>
         <p>SEO honnête, code propre, hébergement qui tient. Pas de "on vous met en première page Google" — juste du travail solide qui se voit dans les Core Web Vitals.</p>
       </div>
 
       <div class="statement" data-stm="2">
-        <span class="stm-tag">Manifeste · 03</span>
         <h3>Pas de design qui <em>vieillit mal.</em></h3>
         <p>On choisit ce qui tient dans 5 ans, pas ce qui buzz dans 5 mois. Typographies pérennes, palettes maîtrisées, structures claires.</p>
       </div>
 
       <div class="statement" data-stm="3">
-        <span class="stm-tag">Manifeste · 04</span>
         <h3>Juste du <em>sur-mesure</em> qui dure.</h3>
         <p>Pour des artisans qui font les choses bien. Et qui méritent un site à la hauteur de leur métier.</p>
       </div>
@@ -91,12 +84,6 @@
   <section class="particle-section">
     <canvas id="particleSection" class="particle-canvas" aria-label="Atelier Nova — particles"></canvas>
     <div class="ps-bg" aria-hidden="true"></div>
-
-    <header class="ps-top">
-      <span class="ps-num">02</span>
-      <span class="ps-label">— Notre univers</span>
-      <span class="ps-meta">Bordeaux · Studio · 2025</span>
-    </header>
 
     <div class="ps-center">
       <p class="ps-tagline">Un studio qui mêle <em>design, code &amp; identité</em> pour bâtir des sites <em>qui durent</em>.</p>
@@ -111,7 +98,6 @@
   <!-- SERVICES preview -->
   <section id="services">
     <div class="sec-head-center">
-      <span class="pill-tag" data-r><span class="icon">◐</span> Nos métiers</span>
       <h2 class="sec-title" data-r>Quatre métiers,<br><em>un seul studio.</em></h2>
       <p class="sec-aside" data-r style="text-align:center">De la première intuition au déploiement. Quatre disciplines réunies sous un même toit — parce que la cohérence ne se sous-traite pas.</p>
     </div>
@@ -153,58 +139,60 @@
       <article class="svc s2" data-r>
         <div class="preview">
           <div class="pv-uiux">
-            <div class="figma-top">
-              <span class="flogo">F</span>
-              <span class="crumb"><strong>Atelier Nova</strong> <span class="sep">/</span> Design System v2.4</span>
-              <div class="right">
-                <span class="badge">SAVED</span>
-                <div class="avatar"></div><div class="avatar b"></div><div class="avatar c"></div>
+            <div class="ui-bg" aria-hidden="true">
+              <span class="ui-blob b1"></span>
+              <span class="ui-blob b2"></span>
+              <span class="ui-blob b3"></span>
+            </div>
+            <div class="ui-glass">
+              <div class="ui-head">
+                <div class="ui-avatar"></div>
+                <span class="ui-title">UI Kit</span>
+                <span class="ui-menu">≡</span>
+              </div>
+              <div class="ui-toggles">
+                <span class="ui-pill">Default</span>
+                <span class="ui-pill active">Active</span>
+              </div>
+              <div class="ui-drop">
+                <span>Colors</span><span class="caret">▾</span>
+              </div>
+              <div class="ui-drop sub">
+                <span>Selected</span><span class="caret">▾</span>
+              </div>
+              <div class="ui-icon-row">
+                <span class="ui-ico">≡</span>
+                <span class="ui-ico">◐</span>
+                <span class="ui-ico">▤</span>
+                <span class="ui-ico">+</span>
+                <span class="ui-ico-circle"></span>
+              </div>
+              <div class="ui-slider">
+                <span class="lbl">On</span>
+                <div class="track"><div class="fill"></div></div>
+                <div class="ui-switch"><div class="knob"></div></div>
+              </div>
+              <div class="ui-slider">
+                <span class="lbl">Off</span>
+                <div class="track"><div class="fill off"></div></div>
+              </div>
+              <div class="ui-modal">
+                <div class="m-head">
+                  <div class="ui-avatar sm"></div>
+                  <span>Modal</span>
+                  <span class="dots">···</span>
+                </div>
+                <div class="m-row"><span>○ Notice</span><span>▾</span></div>
+                <div class="m-row"><span>○ Logout</span><span>▾</span></div>
+                <div class="m-row"><span>○ Listen</span><span>▾</span></div>
               </div>
             </div>
-            <div class="figma-board">
-              <div class="fig-section selected">
-                <div class="stitle">Color tokens</div>
-                <div class="fig-colors">
-                  <div class="fig-tok" style="background:#5fc9ff" data-label="cyan"></div>
-                  <div class="fig-tok" style="background:#ff5e8a" data-label="pink"></div>
-                  <div class="fig-tok" style="background:#ffb547" data-label="amber"></div>
-                  <div class="fig-tok" style="background:#c6f964" data-label="lime"></div>
-                </div>
-              </div>
-              <div class="fig-section">
-                <div class="stitle">Type scale</div>
-                <div class="fig-type">
-                  <div class="tline"><span class="name">H1</span><span class="h1">Aa</span><span class="meta">48 / 700</span></div>
-                  <div class="tline"><span class="name">H2</span><span class="h2">Aa</span><span class="meta">32 / 600</span></div>
-                  <div class="tline"><span class="name">P</span><span class="body">Aa Body text</span><span class="meta">14 / 400</span></div>
-                </div>
-              </div>
-              <div class="fig-section">
-                <div class="stitle">Components</div>
-                <div class="fig-comps">
-                  <span class="fig-btn">Button</span>
-                  <span class="fig-btn ghost">Ghost</span>
-                  <span class="fig-input">Input...</span>
-                  <span class="fig-badge">Badge</span>
-                  <span class="fig-card">Card · primary</span>
-                </div>
-              </div>
-              <div class="fig-section">
-                <div class="stitle">Spacing</div>
-                <div class="fig-spacing">
-                  <div class="fig-sp s1"><div class="bar"></div><span class="lbl">4</span></div>
-                  <div class="fig-sp s2"><div class="bar"></div><span class="lbl">8</span></div>
-                  <div class="fig-sp s3"><div class="bar"></div><span class="lbl">16</span></div>
-                  <div class="fig-sp s4"><div class="bar"></div><span class="lbl">24</span></div>
-                  <div class="fig-sp s5"><div class="bar"></div><span class="lbl">40</span></div>
-                </div>
-              </div>
-            </div>
-            <div class="fig-cursor">
-              <svg viewBox="0 0 14 14" fill="none">
-                <path d="M2 1.5 L2 11 L4.5 8.5 L7 13 L9 12 L6.5 8 L10 7.5 Z" fill="#ff5e8a" stroke="#fff" stroke-width=".8"/>
-              </svg>
-              <span class="tag">Camille</span>
+            <div class="ui-ann">
+              <div class="ann"><span class="ann-dot c"></span><span>Color tokens</span></div>
+              <div class="ann"><span class="ann-dot p"></span><span>Type scale</span></div>
+              <div class="ann"><span class="ann-ico">A</span><span>Hover states</span></div>
+              <div class="ann"><span class="ann-ico">↑</span><span>Hover elevates</span></div>
+              <div class="ann"><span class="ann-spinner"></span><span>Loading state</span></div>
             </div>
           </div>
         </div>
@@ -254,31 +242,59 @@
       <article class="svc s4" data-r>
         <div class="preview">
           <div class="pv-tunnel">
-            <div class="starfield">
-              <div class="star big" style="top:12%;left:18%;animation-delay:0s"></div>
-              <div class="star" style="top:22%;left:64%;animation-delay:.4s"></div>
-              <div class="star" style="top:38%;left:8%;animation-delay:.9s"></div>
-              <div class="star big" style="top:48%;left:88%;animation-delay:1.3s"></div>
-              <div class="star" style="top:62%;left:32%;animation-delay:1.7s"></div>
-              <div class="star" style="top:75%;left:72%;animation-delay:2.1s"></div>
-              <div class="star big" style="top:84%;left:14%;animation-delay:.5s"></div>
-              <div class="star" style="top:30%;left:42%;animation-delay:1.5s"></div>
-              <div class="star" style="top:90%;left:55%;animation-delay:.8s"></div>
-              <div class="star" style="top:6%;left:80%;animation-delay:2.4s"></div>
+            <div class="ml-bg" aria-hidden="true">
+              <span class="ml-blob b1"></span>
+              <span class="ml-blob b2"></span>
+              <span class="ml-blob b3"></span>
             </div>
-            <div class="beam"></div>
-            <div class="dust" style="left:15%;animation-delay:0s"></div>
-            <div class="dust" style="left:38%;animation-delay:2s"></div>
-            <div class="dust" style="left:62%;animation-delay:4s"></div>
-            <div class="dust" style="left:84%;animation-delay:1s"></div>
-            <div class="dust" style="left:48%;animation-delay:5.5s"></div>
-            <div class="tunnel">
-              <div class="ring"></div><div class="ring"></div><div class="ring"></div>
-              <div class="ring"></div><div class="ring"></div><div class="ring"></div>
-              <div class="ring"></div><div class="ring"></div><div class="ring"></div>
-              <div class="ring"></div><div class="ring"></div><div class="ring"></div>
+            <div class="ml-stage" aria-hidden="true">
+              <div class="ml-rotor">
+                <div class="ml-monitor" aria-hidden="true">
+                  <div class="ml-screen">
+                    <div class="ml-screen-bar">
+                      <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+                    </div>
+                    <div class="ml-screen-body">
+                      <div class="ml-code-line w1"></div>
+                      <div class="ml-code-line w2"></div>
+                      <div class="ml-code-line w3"></div>
+                      <div class="ml-code-line w4"></div>
+                      <div class="ml-screen-caret"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="ml-keyboard" aria-hidden="true">
+                  <div class="ml-key-row">
+                    <span class="key"></span><span class="key"></span><span class="key"></span><span class="key"></span><span class="key"></span><span class="key"></span><span class="key"></span><span class="key"></span><span class="key"></span><span class="key"></span>
+                  </div>
+                  <div class="ml-key-row">
+                    <span class="key"></span><span class="key"></span><span class="key active"></span><span class="key"></span><span class="key"></span><span class="key"></span><span class="key"></span><span class="key"></span><span class="key"></span>
+                  </div>
+                  <div class="ml-key-row">
+                    <span class="key wide"></span><span class="key"></span><span class="key"></span><span class="key"></span>
+                  </div>
+                </div>
+                <svg class="ml-cursor" viewBox="0 0 16 16" aria-hidden="true">
+                  <path d="M2 1.5 L2 12 L5 9 L7 13 L9 12 L7 8 L11 7.5 Z" fill="#fff" stroke="#5fc9ff" stroke-width=".6"/>
+                </svg>
+                <span class="ml-sym s1" aria-hidden="true">&lt;/&gt;</span>
+                <span class="ml-sym s2" aria-hidden="true">{ }</span>
+                <span class="ml-sym s3" aria-hidden="true">→</span>
+                <span class="ml-sym s4" aria-hidden="true">✦</span>
+              </div>
             </div>
-            <div class="vanish"></div>
+            <span class="ml-streak s1" aria-hidden="true"></span>
+            <span class="ml-streak s2" aria-hidden="true"></span>
+            <span class="ml-streak s3" aria-hidden="true"></span>
+            <div class="ml-dust" aria-hidden="true">
+              <span style="left:8%;top:20%;animation-delay:0s"></span>
+              <span style="left:30%;top:60%;animation-delay:1.5s"></span>
+              <span style="left:55%;top:35%;animation-delay:3s"></span>
+              <span style="left:75%;top:75%;animation-delay:.8s"></span>
+              <span style="left:90%;top:25%;animation-delay:2.2s"></span>
+              <span style="left:18%;top:80%;animation-delay:4s"></span>
+              <span style="left:48%;top:15%;animation-delay:5s"></span>
+            </div>
           </div>
         </div>
         <div class="delay">Délai moyen · 3-5 jours</div>
@@ -304,7 +320,6 @@
     <div class="shader-overlay" aria-hidden="true"></div>
 
     <div class="sec-head-center">
-      <span class="pill-tag" data-r><span class="icon">★</span> À propos</span>
     </div>
 
     <p class="about-text" data-r>
@@ -327,73 +342,58 @@
     </div>
   </section>
 
-  <!-- PROJECTS preview -->
-  <section id="projects">
+  <!-- MAQUETTES — 3 niveaux de site vitrine -->
+  <section id="maquettes">
     <div class="sec-head-center">
-      <span class="pill-tag" data-r><span class="icon">▲</span> Sélection</span>
-      <h2 class="sec-title" data-r>Travaux <em>récents.</em></h2>
-      <p class="sec-aside" data-r style="text-align:center">Trois cas concrets — artisans et commerçants locaux qui voulaient enfin un site à la hauteur de leur travail.</p>
+      <h2 class="sec-title" data-r>Maquettes.</h2>
+      <p class="sec-aside" data-r style="text-align:center">Du site qui pose les bases au site qui devient référence.</p>
     </div>
 
-    <div class="projects">
-
-      <!-- 1 — FLAME -->
-      <article class="proj cryptik" data-r>
-        <div class="left">
-          <div class="meta">2025 · Bordeaux · 3 semaines</div>
-          <div class="tags"><span class="t">Identité</span><span class="t">E-commerce</span><span class="t">Intégration POS</span></div>
-          <div>
-            <div class="psub">Identité street food &amp; commande en ligne</div>
-            <div class="pname">FL<em>AME</em></div>
-            <div class="result">+450 commandes / semaine</div>
-          </div>
+    <div class="maq-grid">
+      <article class="maq-vignette m-essentielle" data-r>
+        <div class="maq-thumb">
+          <span class="maq-num">01</span>
+          <div class="maq-thumb-bg"></div>
         </div>
-        <div class="right">
-          <div class="screen-frame">
-            <div class="screen-chrome">
-              <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-              <span class="url">flame-burgers.fr</span>
-            </div>
-            <iframe src="mockups/hero-9-fastfood.html" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true"></iframe>
-          </div>
+        <div class="maq-info">
+          <h3 class="maq-title">ESSENTIELLE</h3>
+          <p class="maq-tag"><em>Pour exister.</em></p>
+          <p class="maq-desc">Une présence en ligne propre, rapide, qui vous fait apparaître quand on vous cherche.</p>
+          <a href="essentielle.html" class="maq-cta">Découvrir <span class="arrow">→</span></a>
         </div>
-        <a href="mockups/hero-9-fastfood.html" target="_blank" rel="noopener" class="arrow-btn">↗</a>
       </article>
 
-      <!-- 2 — Verveine -->
-      <article class="proj refract" data-r>
-        <div class="left">
-          <div class="meta">2025 · Bordeaux · 5 semaines</div>
-          <div class="tags"><span class="t">Identité</span><span class="t">E-commerce</span><span class="t">Abonnements</span></div>
-          <div>
-            <div class="psub">Boutique fleurs &amp; abonnements hebdomadaires</div>
-            <div class="pname">Ver<em>veine</em></div>
-            <div class="result">200 abonnés actifs en 3 mois</div>
-          </div>
+      <article class="maq-vignette m-signature" data-r>
+        <div class="maq-thumb">
+          <span class="maq-num">02</span>
+          <div class="maq-thumb-bg"></div>
         </div>
-        <div class="right">
-          <div class="screen-frame">
-            <div class="screen-chrome">
-              <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-              <span class="url">verveine.fr</span>
-            </div>
-            <iframe src="mockups/hero-7-fleuriste.html" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true"></iframe>
-          </div>
+        <div class="maq-info">
+          <h3 class="maq-title">SIGNATURE</h3>
+          <p class="maq-tag"><em>Pour se démarquer.</em></p>
+          <p class="maq-desc">Identité forte, contenu vivant, une expérience qui fait dire "ah ouais, eux".</p>
+          <a href="signature.html" class="maq-cta">Découvrir <span class="arrow">→</span></a>
         </div>
-        <a href="mockups/hero-7-fleuriste.html" target="_blank" rel="noopener" class="arrow-btn">↗</a>
       </article>
 
-    </div>
-
-    <div class="all-projects" data-r>
-      <a href="projets.html">Voir tous les projets <span class="arrow">→</span></a>
+      <article class="maq-vignette m-iconique" data-r>
+        <div class="maq-thumb">
+          <span class="maq-num">03</span>
+          <div class="maq-thumb-bg"></div>
+        </div>
+        <div class="maq-info">
+          <h3 class="maq-title">ICONIQUE</h3>
+          <p class="maq-tag"><em>Pour marquer.</em></p>
+          <p class="maq-desc">Direction artistique, motion design, 3D — un objet web qui se partage et se cite.</p>
+          <a href="iconique.html" class="maq-cta">Découvrir <span class="arrow">→</span></a>
+        </div>
+      </article>
     </div>
   </section>
 
   <!-- TESTIMONIALS -->
   <section id="temoignages" class="testimonials">
     <div class="sec-head-center">
-      <span class="pill-tag" data-r><span class="icon">✦</span> Témoignages</span>
       <h2 class="sec-title" data-r>Ce qu'ils en <em>disent.</em></h2>
       <p class="sec-aside" data-r style="text-align:center">Des artisans, commerçants et indépendants qui ont fait confiance à Atelier Nova pour passer à la vitesse supérieure.</p>
     </div>
@@ -513,7 +513,7 @@
   <div class="footer-big"><h2>À <em>bientôt,</em><br>j'espère ✦</h2></div>
   <div class="footer-cols">
     <div class="fcol"><h4>Atelier Nova</h4><p>Studio indépendant de design &amp; développement web, basé à Bordeaux. Sites sur-mesure pour artisans et PME.</p></div>
-    <div class="fcol"><h4>Pages</h4><a href="services.html">Services</a><a href="projets.html">Projets</a><a href="contact.html">Contact</a><a href="contact.html#faq">FAQ</a></div>
+    <div class="fcol"><h4>Pages</h4><a href="services.html">Services</a><a href="projets.html">Maquettes</a><a href="contact.html">Contact</a><a href="contact.html#faq">FAQ</a></div>
     <div class="fcol"><h4>Contact</h4><a href="mailto:bonjour@ateliernova.fr">bonjour@ateliernova.fr</a><a href="tel:+33612345678">+33 6 12 34 56 78</a><a href="#">Instagram</a><a href="#">LinkedIn</a></div>
     <div class="fcol"><h4>Légal</h4><a href="#">Mentions légales</a><a href="#">Politique de confidentialité</a><a href="#">Cookies</a></div>
   </div>

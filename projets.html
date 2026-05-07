@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Projets — Atelier Nova</title>
-<meta name="description" content="Portfolio des projets récents d'Atelier Nova : sites vitrines, refontes et identités visuelles pour artisans et PME." />
+<title>Maquettes — Atelier Nova</title>
+<meta name="description" content="Trois niveaux de site vitrine, du sobre à l'iconique. Découvrez les maquettes interactives Atelier Nova." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600;700&family=Fraunces:ital,wght@0,400;1,300;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=chillax@400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -17,9 +17,7 @@
 <header class="nav">
   <a href="index.html" class="brand"><span class="slash">/</span>Atelier Nova</a>
   <nav class="links">
-    <a href="services.html">Services</a>
-    <a href="projets.html" aria-current="page">Projets</a>
-    <a href="contact.html#faq">FAQ</a>
+    <a href="projets.html" aria-current="page">Maquettes</a>
   </nav>
   <a href="contact.html" class="cta">Contact</a>
 </header>
@@ -27,90 +25,76 @@
 <main id="top">
 
   <section class="page-hero">
-    <span class="pill-tag"><span class="icon">▲</span> Portfolio</span>
-    <h1>Quelques <em>réalisations</em><br>récentes.</h1>
-    <p>Une sélection de sites conçus, designés et codés en interne — pour des artisans, commerçants et PME qui voulaient une présence en ligne à leur image.</p>
+    <h1>Trois niveaux,<br><em>une seule exigence.</em></h1>
+    <p>Du site qui pose les bases au site qui devient référence. Chaque maquette est navigable — explorez ce que vous obtiendrez à chaque niveau.</p>
   </section>
 
-  <section>
-    <div class="projects">
-
-      <!-- 1 — FLAME (fast food smash burger) -->
-      <article class="proj cryptik" data-r>
-        <div class="left">
-          <div class="meta">2025 · Bordeaux · 3 semaines</div>
-          <div class="tags"><span class="t">Identité</span><span class="t">E-commerce</span><span class="t">Intégration POS</span></div>
-          <div>
-            <div class="psub">Identité street food &amp; commande en ligne</div>
-            <div class="pname">FL<em>AME</em></div>
-            <div class="result">+450 commandes / semaine</div>
-          </div>
+  <section id="maquettes">
+    <div class="maq-grid">
+      <article class="maq-vignette m-essentielle" data-r>
+        <div class="maq-thumb">
+          <span class="maq-num">01</span>
+          <div class="maq-thumb-bg"></div>
         </div>
-        <div class="right">
-          <div class="screen-frame">
-            <div class="screen-chrome">
-              <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-              <span class="url">flame-burgers.fr</span>
-            </div>
-            <iframe src="mockups/hero-9-fastfood.html" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true"></iframe>
-          </div>
+        <div class="maq-info">
+          <h3 class="maq-title">ESSENTIELLE</h3>
+          <p class="maq-tag"><em>Pour exister.</em></p>
+          <p class="maq-desc">Une présence en ligne propre, rapide, qui vous fait apparaître quand on vous cherche. Hero, à propos, prestations, carte, formulaire — l'indispensable, bien fait.</p>
+          <a href="essentielle.html" class="maq-cta">Découvrir <span class="arrow">→</span></a>
         </div>
-        <a href="mockups/hero-9-fastfood.html" target="_blank" rel="noopener" class="arrow-btn">↗</a>
       </article>
 
-      <!-- 2 — Verveine (fleuriste) -->
-      <article class="proj refract" data-r>
-        <div class="left">
-          <div class="meta">2025 · Bordeaux · 5 semaines</div>
-          <div class="tags"><span class="t">Identité</span><span class="t">E-commerce</span><span class="t">Abonnements</span></div>
-          <div>
-            <div class="psub">Boutique fleurs &amp; abonnements hebdomadaires</div>
-            <div class="pname">Ver<em>veine</em></div>
-            <div class="result">200 abonnés actifs en 3 mois</div>
-          </div>
+      <article class="maq-vignette m-signature" data-r>
+        <div class="maq-thumb">
+          <span class="maq-num">02</span>
+          <div class="maq-thumb-bg"></div>
         </div>
-        <div class="right">
-          <div class="screen-frame">
-            <div class="screen-chrome">
-              <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-              <span class="url">verveine.fr</span>
-            </div>
-            <iframe src="mockups/hero-7-fleuriste.html" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true"></iframe>
-          </div>
+        <div class="maq-info">
+          <h3 class="maq-title">SIGNATURE</h3>
+          <p class="maq-tag"><em>Pour se démarquer.</em></p>
+          <p class="maq-desc">Identité forte, contenu vivant. CMS Sanity, galerie photos, blog autonome, micro-interactions, multi-langue. Pour les marques qui veulent qu'on se souvienne d'elles.</p>
+          <a href="signature.html" class="maq-cta">Découvrir <span class="arrow">→</span></a>
         </div>
-        <a href="mockups/hero-7-fleuriste.html" target="_blank" rel="noopener" class="arrow-btn">↗</a>
       </article>
 
-      <!-- 3 — Atelier Coupe (architecte) -->
-      <article class="proj petrin" data-r>
-        <div class="left">
-          <div class="meta">2025 · Bordeaux · 6 semaines</div>
-          <div class="tags"><span class="t">Portfolio</span><span class="t">CMS Headless</span><span class="t">Motion</span></div>
-          <div>
-            <div class="psub">Portfolio d'architecture &amp; études de projet</div>
-            <div class="pname">Atelier <em>Coupe</em></div>
-            <div class="result">4 concours remportés depuis livraison</div>
-          </div>
+      <article class="maq-vignette m-iconique" data-r>
+        <div class="maq-thumb">
+          <span class="maq-num">03</span>
+          <div class="maq-thumb-bg"></div>
         </div>
-        <div class="right">
-          <div class="screen-frame">
-            <div class="screen-chrome">
-              <span class="dot"></span><span class="dot"></span><span class="dot"></span>
-              <span class="url">ateliercoupe.archi</span>
-            </div>
-            <iframe src="mockups/hero-6-architecte.html" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true"></iframe>
-          </div>
+        <div class="maq-info">
+          <h3 class="maq-title">ICONIQUE</h3>
+          <p class="maq-tag"><em>Pour marquer.</em></p>
+          <p class="maq-desc">Direction artistique, motion design, 3D, scroll-driven, transitions cinématiques. Un objet web qui se partage, se cite, devient référence — pré-référencement Awwwards.</p>
+          <a href="iconique.html" class="maq-cta">Découvrir <span class="arrow">→</span></a>
         </div>
-        <a href="mockups/hero-6-architecte.html" target="_blank" rel="noopener" class="arrow-btn">↗</a>
       </article>
-
     </div>
   </section>
 
-  <!-- CTA banner -->
+  <section class="maquettes-explainer" data-r>
+    <div class="explainer-grid">
+      <div class="explainer-cell">
+        <span class="explainer-num">01</span>
+        <h3>Choisissez <em>votre niveau.</em></h3>
+        <p>Essentielle, Signature ou Iconique — selon votre activité, votre ambition et le rôle du site dans votre stratégie.</p>
+      </div>
+      <div class="explainer-cell">
+        <span class="explainer-num">02</span>
+        <h3>On <em>co-construit.</em></h3>
+        <p>Brief approfondi, recherche, croquis, design, dev. Vous validez à chaque étape — pas de surprise à la livraison.</p>
+      </div>
+      <div class="explainer-cell">
+        <span class="explainer-num">03</span>
+        <h3>On <em>livre.</em></h3>
+        <p>Site déployé, formation à la prise en main, accompagnement post-livraison. Et on reste joignables.</p>
+      </div>
+    </div>
+  </section>
+
   <div class="cta-banner" data-r>
     <h2>Votre projet est <em>le prochain</em> ?</h2>
-    <p>Échangeons sur votre activité, vos clients, vos ambitions — et donnons forme ensemble à votre futur site.</p>
+    <p>Décrivez votre activité, on revient vers vous sous 24h ouvrées avec un premier retour et un devis détaillé.</p>
     <a href="contact.html" class="pill-cta">Démarrer un projet <span class="arrow">↗</span></a>
   </div>
 
@@ -120,7 +104,7 @@
   <div class="footer-big"><h2>À <em>bientôt,</em><br>j'espère ✦</h2></div>
   <div class="footer-cols">
     <div class="fcol"><h4>Atelier Nova</h4><p>Studio indépendant de design &amp; développement web, basé à Bordeaux. Sites sur-mesure pour artisans et PME.</p></div>
-    <div class="fcol"><h4>Pages</h4><a href="services.html">Services</a><a href="projets.html">Projets</a><a href="contact.html">Contact</a><a href="contact.html#faq">FAQ</a></div>
+    <div class="fcol"><h4>Pages</h4><a href="services.html">Services</a><a href="projets.html">Maquettes</a><a href="contact.html">Contact</a><a href="contact.html#faq">FAQ</a></div>
     <div class="fcol"><h4>Contact</h4><a href="mailto:bonjour@ateliernova.fr">bonjour@ateliernova.fr</a><a href="tel:+33612345678">+33 6 12 34 56 78</a><a href="#">Instagram</a><a href="#">LinkedIn</a></div>
     <div class="fcol"><h4>Légal</h4><a href="#">Mentions légales</a><a href="#">Politique de confidentialité</a><a href="#">Cookies</a></div>
   </div>

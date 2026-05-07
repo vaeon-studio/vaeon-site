@@ -210,7 +210,6 @@ if (particleSectionCanvas && typeof window.initParticleText === 'function') {
     'DESIGN',
     'CODE',
     'IDENTITÉ',
-    'BORDEAUX',
     'SUR-MESURE',
   ], { fontSize: 200, fontFamily: 'Geist Mono, monospace', wordInterval: 240 });
 }
@@ -285,3 +284,79 @@ function onScroll() {
 
 window.addEventListener('scroll', onScroll, { passive: true });
 tick();
+
+// === Matrix text effect (Matrix-style scramble decode on [data-matrix] elements) ===
+function matrixifyText(root) {
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null);
+  const textNodes = [];
+  let n;
+  while ((n = walker.nextNode())) textNodes.push(n);
+
+  const charSpans = [];
+  textNodes.forEach(textNode => {
+    const frag = document.createDocumentFragment();
+    [...textNode.nodeValue].forEach(ch => {
+      const span = document.createElement('span');
+      span.className = 'mtx-char';
+      span.dataset.original = ch;
+      span.textContent = ch;
+      frag.appendChild(span);
+      if (ch.trim()) charSpans.push(span);
+    });
+    textNode.parentNode.replaceChild(frag, textNode);
+  });
+  return charSpans;
+}
+
+function runMatrixAnimation(charSpans, { initialDelay = 200, letterAnimationDuration = 500, letterInterval = 80 } = {}) {
+  setTimeout(() => {
+    charSpans.forEach((span, i) => {
+      setTimeout(() => {
+        span.textContent = Math.random() > 0.5 ? '1' : '0';
+        span.classList.add('mtx-on');
+        setTimeout(() => {
+          span.textContent = span.dataset.original;
+          span.classList.remove('mtx-on');
+        }, letterAnimationDuration);
+      }, i * letterInterval);
+    });
+  }, initialDelay);
+}
+
+document.querySelectorAll('[data-matrix]').forEach(el => {
+  const charSpans = matrixifyText(el);
+  runMatrixAnimation(charSpans, { initialDelay: 200, letterAnimationDuration: 500, letterInterval: 80 });
+});
+
+// === Demo tier pages — banner update + feature-tag reveal on scroll ===
+(function () {
+  const featureLabel = document.getElementById('currentFeature');
+  const sections = document.querySelectorAll('[data-feature]');
+  if (!sections.length) return;
+
+  const tagObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const tag = e.target.querySelector(':scope > .feature-tag');
+        if (tag) tag.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.15 });
+
+  const labelObserver = new IntersectionObserver((entries) => {
+    let best = null;
+    entries.forEach(e => {
+      if (e.isIntersecting && (!best || e.intersectionRatio > best.intersectionRatio)) {
+        best = e;
+      }
+    });
+    if (best && featureLabel) {
+      featureLabel.textContent = best.target.dataset.feature;
+    }
+  }, { threshold: [0.4, 0.6, 0.8] });
+
+  sections.forEach(s => {
+    tagObserver.observe(s);
+    labelObserver.observe(s);
+  });
+})();
