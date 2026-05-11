@@ -109,7 +109,7 @@ function initParticleText(canvas, words, opts = {}) {
   ];
   let frameCount = 0;
   let wordIndex = 0;
-  const mouse = { x: 0, y: 0, isPressed: false, isRightClick: false };
+  const mouse = { x: 0, y: 0, isPressed: false, isRightClick: false, isHovering: false };
   let rafId = null;
   let pickedColor = palette[0];
 
@@ -182,10 +182,11 @@ function initParticleText(canvas, words, opts = {}) {
       }
     }
 
-    if (mouse.isPressed && mouse.isRightClick) {
+    if (mouse.isHovering || (mouse.isPressed && mouse.isRightClick)) {
+      const radius = (mouse.isPressed && mouse.isRightClick) ? 110 : 70;
       particles.forEach(p => {
         const d = Math.sqrt((p.pos.x - mouse.x) ** 2 + (p.pos.y - mouse.y) ** 2);
-        if (d < 50) p.kill(canvas.width, canvas.height);
+        if (d < radius) p.kill(canvas.width, canvas.height);
       });
     }
 
@@ -210,12 +211,17 @@ function initParticleText(canvas, words, opts = {}) {
     const r = canvas.getBoundingClientRect();
     mouse.x = (e.clientX - r.left) * (canvas.width / r.width);
     mouse.y = (e.clientY - r.top) * (canvas.height / r.height);
+    mouse.isHovering = true;
   }
+  function onEnter() { mouse.isHovering = true; }
+  function onLeave() { mouse.isHovering = false; }
   function onCtx(e) { e.preventDefault(); }
 
   canvas.addEventListener('mousedown', onDown);
   canvas.addEventListener('mouseup', onUp);
   canvas.addEventListener('mousemove', onMove);
+  canvas.addEventListener('mouseenter', onEnter);
+  canvas.addEventListener('mouseleave', onLeave);
   canvas.addEventListener('contextmenu', onCtx);
 
   // Boot
@@ -229,6 +235,8 @@ function initParticleText(canvas, words, opts = {}) {
       canvas.removeEventListener('mousedown', onDown);
       canvas.removeEventListener('mouseup', onUp);
       canvas.removeEventListener('mousemove', onMove);
+      canvas.removeEventListener('mouseenter', onEnter);
+      canvas.removeEventListener('mouseleave', onLeave);
       canvas.removeEventListener('contextmenu', onCtx);
     }
   };
