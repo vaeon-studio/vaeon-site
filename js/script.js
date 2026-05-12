@@ -170,7 +170,7 @@ if (form) {
 // === Scramble effect on display titles (hero, page hero, sec-title, footer big, etc.) ===
 // On hover, each letter rapidly cycles through punctuation/numbers before resolving back.
 const SCRAMBLE_CHARS = '!@#$%&*+-=[]{}|;:<>?/~01234567';
-const SCRAMBLE_SELECTOR = '.hero h1, .page-hero h1, .sec-title, .footer-big h2, .contact-side h3, .cta-banner h2';
+const SCRAMBLE_SELECTOR = '.hero h1, .page-hero h1, .sec-title, .footer-big h2, .contact-side h3';
 const SCRAMBLE_EXCLUDE = '.small, em';
 
 function wrapTextNodes(host) {
