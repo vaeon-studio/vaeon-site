@@ -1,10 +1,85 @@
-// === Custom cursor ===
-const cursor = document.getElementById('cursor');
-if (cursor) {
-  window.addEventListener('mousemove', e => {
-    cursor.style.left = e.clientX + 'px';
-    cursor.style.top = e.clientY + 'px';
+// === Mobile burger menu (injecté sur toutes les pages) ===
+(function() {
+  const existingNav = document.querySelector('header.nav');
+  if (!existingNav) return;
+
+  // Read the existing nav links to clone them into the overlay
+  const linksEl = existingNav.querySelector('nav.links');
+  const ctaEl = existingNav.querySelector('a.cta');
+  const links = linksEl ? [...linksEl.querySelectorAll('a')].map(a => ({ href: a.getAttribute('href'), text: a.textContent.trim(), current: a.getAttribute('aria-current') === 'page' })) : [];
+  const ctaHref = ctaEl?.getAttribute('href') || '/contact.html';
+  const ctaText = ctaEl?.textContent.trim() || 'Contact';
+
+  // Build burger button
+  const burger = document.createElement('button');
+  burger.className = 'nav-burger';
+  burger.type = 'button';
+  burger.setAttribute('aria-label', 'Ouvrir le menu');
+  burger.setAttribute('aria-expanded', 'false');
+  burger.innerHTML = '<span></span><span></span><span></span>';
+  document.body.appendChild(burger);
+
+  // Build overlay menu
+  const overlay = document.createElement('nav');
+  overlay.className = 'nav-menu-overlay';
+  overlay.setAttribute('aria-label', 'Menu principal');
+  // Use absolute paths when current pathname is not in root, else relative
+  const pathDepth = (window.location.pathname.match(/\//g) || []).length;
+  const useAbs = pathDepth > 1; // /metiers/X/ has 3 slashes
+  const fixHref = (h) => {
+    if (!h) return '#';
+    if (h.startsWith('/') || h.startsWith('http')) return h;
+    return useAbs ? '/' + h : h;
+  };
+  const linksHtml = links.map(l => `<a href="${fixHref(l.href)}"${l.current ? ' aria-current="page"' : ''}>${l.text}</a>`).join('');
+  overlay.innerHTML = `
+    <a href="${useAbs ? '/index.html' : 'index.html'}" aria-label="Accueil ÆON" style="font-family:var(--display-mono);font-size:42px;margin-bottom:24px;letter-spacing:-.02em">ÆON</a>
+    ${linksHtml}
+    <a href="${fixHref(ctaHref)}" class="cta">${ctaText}</a>
+  `;
+  document.body.appendChild(overlay);
+
+  // Toggle logic
+  let isOpen = false;
+  const toggle = (force) => {
+    isOpen = force !== undefined ? force : !isOpen;
+    burger.classList.toggle('open', isOpen);
+    overlay.classList.toggle('open', isOpen);
+    burger.setAttribute('aria-expanded', String(isOpen));
+    burger.setAttribute('aria-label', isOpen ? 'Fermer le menu' : 'Ouvrir le menu');
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+  };
+
+  burger.addEventListener('click', () => toggle());
+  overlay.addEventListener('click', (e) => {
+    // Close on any link click
+    if (e.target.tagName === 'A') toggle(false);
   });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && isOpen) toggle(false);
+  });
+
+  // Close on resize to desktop
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 760 && isOpen) toggle(false);
+  });
+})();
+
+// === Custom cursor (GPU-accelerated, rAF-throttled) ===
+// Skip entirely on touch devices (perf gain : pas de listener mousemove inutile)
+const cursor = document.getElementById('cursor');
+const hasHover = window.matchMedia && window.matchMedia('(hover: hover)').matches;
+if (cursor && hasHover) {
+  let cx = 0, cy = 0, cursorRaf = null;
+  const updateCursor = () => {
+    cursor.style.transform = `translate3d(${cx}px, ${cy}px, 0) translate(-50%, -50%)`;
+    cursorRaf = null;
+  };
+  window.addEventListener('mousemove', e => {
+    cx = e.clientX;
+    cy = e.clientY;
+    if (!cursorRaf) cursorRaf = requestAnimationFrame(updateCursor);
+  }, { passive: true });
   document.querySelectorAll('a, button, .svc, .proj, .faq-q, .crow').forEach(el => {
     el.addEventListener('mouseenter', () => {
       cursor.classList.add('big');
@@ -128,6 +203,24 @@ function wrapTextNodes(host) {
     }
     node.replaceWith(frag);
   });
+
+  // Freeze each char's rendered width so scramble doesn't make the layout jitter
+  // (Chillax is sans-serif, not mono — chars like '!' vs 'W' have very different widths)
+  // Use document.fonts.ready to wait for the actual font, then lock widths.
+  const lockWidths = () => {
+    host.querySelectorAll('.scrm').forEach(span => {
+      const w = span.getBoundingClientRect().width;
+      if (w > 0) {
+        span.style.width = w + 'px';
+        span.style.textAlign = 'center';
+      }
+    });
+  };
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(lockWidths);
+  } else {
+    setTimeout(lockWidths, 100);
+  }
 }
 
 function scrambleHost(host) {
@@ -160,6 +253,7 @@ function scrambleHost(host) {
 
 const scrambleHosts = [];
 document.querySelectorAll(SCRAMBLE_SELECTOR).forEach(host => {
+  if (host.closest('.metier-page')) return; // skip métier pages — animation gêne la lecture
   host.classList.add('scrm-host');
   wrapTextNodes(host);
   host.addEventListener('mouseenter', () => scrambleHost(host));
@@ -206,7 +300,7 @@ if (particleSectionCanvas && typeof window.initParticleText === 'function') {
   };
   sizeCanvas();
   window.initParticleText(particleSectionCanvas, [
-    'ATELIER NOVA',
+    'ÆON',
     'DESIGN',
     'CODE',
     'IDENTITÉ',

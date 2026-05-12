@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Preview Intro A — Logo SVG complet | ÆON</title>
+<meta name="robots" content="noindex,nofollow" />
+<link rel="preload" href="/assets/og-square.svg" as="image" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;400&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  html,body{margin:0;background:#0e0e10;color:#f5f3ee;font-family:'Inter',system-ui,sans-serif;min-height:100vh}
+
+  /* === Placeholder du "site" derrière l'intro === */
+  .fake-site{padding:80px 40px;max-width:900px;margin:0 auto}
+  .fake-site h1{font-size:clamp(36px,5vw,72px);font-weight:200;letter-spacing:-.02em;margin:0 0 24px}
+  .fake-site p{font-size:18px;line-height:1.65;color:rgba(245,243,238,.7);max-width:560px}
+  .fake-site .badge{display:inline-block;font-size:11px;letter-spacing:.2em;color:#ff5e8a;text-transform:uppercase;border:1px solid rgba(255,94,138,.35);padding:6px 14px;border-radius:999px;margin-bottom:24px;font-weight:400}
+  .replay{position:fixed;bottom:24px;left:24px;background:#f5f3ee;color:#0e0e10;border:0;padding:12px 22px;border-radius:999px;font-family:inherit;font-size:13px;font-weight:500;cursor:pointer;z-index:5;letter-spacing:.05em}
+  .replay:hover{background:#fff}
+
+  /* === Intro overlay === */
+  .aeon-intro{position:fixed;inset:0;z-index:99999;background:#000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:32px;clip-path:circle(150% at 50% 50%);transition:clip-path 1s cubic-bezier(.65,0,.35,1)}
+  .aeon-intro.revealing{clip-path:circle(0% at 50% 50%)}
+  .aeon-intro.skipping{transition:opacity .25s;opacity:0;pointer-events:none}
+
+  .aeon-intro-logo{display:flex;align-items:center;justify-content:center}
+  .aeon-intro-logo img{width:min(30vw,420px);height:auto;display:block;animation:logoFloat 3s ease-in-out infinite alternate}
+  @media (max-width:760px){.aeon-intro-logo img{width:60vw}}
+  @keyframes logoFloat{from{transform:scale(1)}to{transform:scale(1.02)}}
+
+  .aeon-intro-bar{width:240px;height:2px;background:rgba(245,243,238,.12);border-radius:2px;overflow:hidden;position:relative;margin-top:8px}
+  .aeon-intro-bar-fill{position:absolute;left:0;top:0;height:100%;width:0%;background:linear-gradient(90deg,#f5f3ee,#fff);box-shadow:0 0 12px rgba(255,255,255,.35)}
+  .aeon-intro-status{font-size:11px;letter-spacing:.3em;color:rgba(245,243,238,.5);text-transform:uppercase;font-weight:400;margin-top:-12px}
+  .aeon-intro-skip{position:absolute;bottom:28px;right:28px;background:transparent;border:1px solid rgba(245,243,238,.22);color:rgba(245,243,238,.7);padding:12px 18px;font-size:11px;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;border-radius:999px;font-family:inherit;font-weight:500;opacity:0;transition:opacity .4s,border-color .25s,color .25s;min-height:44px;min-width:44px}
+  .aeon-intro-skip.visible{opacity:1}
+  .aeon-intro-skip:hover{border-color:rgba(245,243,238,.6);color:#fff}
+  .aeon-intro-skip span{margin-left:6px;opacity:.6}
+
+  @media (prefers-reduced-motion: reduce){
+    .aeon-intro{display:none !important}
+  }
+</style>
+</head>
+<body>
+
+<main class="fake-site">
+  <span class="badge">Preview Version A — Logo SVG complet</span>
+  <h1>Le site révélé.</h1>
+  <p>Une fois l'animation terminée, le contenu de la home prend cet espace. Tu peux rejouer l'intro avec le bouton en bas à gauche.</p>
+  <p style="margin-top:36px;font-size:14px;color:rgba(245,243,238,.4)">Version testée : <strong>logo cosmic SVG complet</strong> (75 KB, ton image gravée avec orbites, planète, étoiles, tagline). Préchargé en head donc s'affiche instantanément.</p>
+</main>
+
+<button class="replay" onclick="playIntro()">↻ Rejouer l'intro</button>
+
+<script>
+function playIntro() {
+  // Remove any existing overlay
+  document.querySelectorAll('.aeon-intro').forEach(n => n.remove());
+
+  const overlay = document.createElement('div');
+  overlay.className = 'aeon-intro';
+  overlay.setAttribute('role', 'dialog');
+  overlay.setAttribute('aria-label', "Animation d'intro");
+  overlay.setAttribute('aria-busy', 'true');
+  overlay.innerHTML = `
+    <div class="aeon-intro-logo"><img src="/assets/og-square.svg" alt="ÆON"></div>
+    <div class="aeon-intro-bar"><div class="aeon-intro-bar-fill"></div></div>
+    <div class="aeon-intro-status" aria-live="polite">Chargement</div>
+    <button class="aeon-intro-skip" aria-label="Passer l'intro et accéder au site">Passer l'intro <span>›</span></button>
+  `;
+  document.body.appendChild(overlay);
+
+  const isMobile = window.matchMedia('(max-width:760px)').matches;
+  const phase1 = isMobile ? 800 : 1200;
+  const fill = overlay.querySelector('.aeon-intro-bar-fill');
+  const skipBtn = overlay.querySelector('.aeon-intro-skip');
+
+  let cleaned = false;
+  const cleanup = (skip=false) => {
+    if (cleaned) return; cleaned = true;
+    overlay.classList.add(skip ? 'skipping' : 'revealing');
+    setTimeout(() => overlay.remove(), skip ? 280 : 1080);
+  };
+  const skip = () => cleanup(true);
+
+  skipBtn.addEventListener('click', e => { e.stopPropagation(); skip(); });
+  overlay.addEventListener('click', e => { if (e.target !== skipBtn && !skipBtn.contains(e.target)) skip(); });
+  const esc = e => { if (e.key === 'Escape') skip(); };
+  document.addEventListener('keydown', esc);
+
+  setTimeout(() => skipBtn.classList.add('visible'), 500);
+
+  const start = performance.now();
+  const tick = () => {
+    if (cleaned) return;
+    const elapsed = performance.now() - start;
+    const progress = Math.min(elapsed / phase1, 1);
+    fill.style.width = (progress * 100) + '%';
+    if (progress < 1) requestAnimationFrame(tick);
+    else cleanup(false);
+  };
+  requestAnimationFrame(tick);
+
+  // Safety
+  setTimeout(() => { if (!cleaned) cleanup(true); }, 4000);
+}
+
+// Auto-play on load
+window.addEventListener('load', () => setTimeout(playIntro, 300));
+</script>
+</body>
+</html>

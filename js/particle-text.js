@@ -1,5 +1,5 @@
 // === Particle Text Effect (vanilla JS port) ===
-// Original concept by KAINXU — ported to vanilla JS for Atelier Nova
+// Original concept by KAINXU — ported to vanilla JS for ÆON
 // Particles form words, then morph fluidly to the next word in the list.
 
 class Particle {

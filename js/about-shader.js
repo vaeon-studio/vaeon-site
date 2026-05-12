@@ -81,21 +81,33 @@
   window.addEventListener('resize', onResize);
   onResize();
 
-  // Track mouse relative to the section so the warp follows the cursor over the about block
-  window.addEventListener('mousemove', (e) => {
-    const rect = container.getBoundingClientRect();
-    const dpr = renderer.getPixelRatio();
-    const x = (e.clientX - rect.left) * dpr;
-    const y = (rect.height - (e.clientY - rect.top)) * dpr;
-    uniforms.iMouse.value.set(x, y);
-  });
-
   // Pause render when about section is off-screen (saves GPU)
   let isVisible = false;
+  let cachedRect = container.getBoundingClientRect();
   const io = new IntersectionObserver((entries) => {
     isVisible = entries[0].isIntersecting;
+    if (isVisible) cachedRect = container.getBoundingClientRect();
   }, { threshold: 0 });
   io.observe(container);
+  // Refresh cached rect on scroll/resize only when visible
+  const refreshRect = () => { if (isVisible) cachedRect = container.getBoundingClientRect(); };
+  window.addEventListener('scroll', refreshRect, { passive: true });
+  window.addEventListener('resize', refreshRect, { passive: true });
+
+  // Track mouse — only when section is visible, throttled with rAF, no synchronous layout read
+  let mouseRaf = null, mx = 0, my = 0;
+  window.addEventListener('mousemove', (e) => {
+    if (!isVisible) return;
+    mx = e.clientX; my = e.clientY;
+    if (mouseRaf) return;
+    mouseRaf = requestAnimationFrame(() => {
+      const dpr = renderer.getPixelRatio();
+      const x = (mx - cachedRect.left) * dpr;
+      const y = (cachedRect.height - (my - cachedRect.top)) * dpr;
+      uniforms.iMouse.value.set(x, y);
+      mouseRaf = null;
+    });
+  }, { passive: true });
 
   renderer.setAnimationLoop(() => {
     if (!isVisible) return;
