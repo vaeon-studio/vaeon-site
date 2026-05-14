@@ -33,7 +33,7 @@
   };
   const linksHtml = links.map(l => `<a href="${fixHref(l.href)}"${l.current ? ' aria-current="page"' : ''}>${l.text}</a>`).join('');
   overlay.innerHTML = `
-    <a href="${useAbs ? '/index.html' : 'index.html'}" aria-label="Accueil ÆON" style="font-family:var(--display-mono);font-size:42px;margin-bottom:24px;letter-spacing:-.02em">ÆON</a>
+    <a href="${useAbs ? '/index.html' : 'index.html'}" aria-label="Accueil VÆON" style="font-family:var(--display-mono);font-size:42px;margin-bottom:24px;letter-spacing:-.02em">VÆON</a>
     ${linksHtml}
     <a href="${fixHref(ctaHref)}" class="cta">${ctaText}</a>
   `;
@@ -156,15 +156,11 @@ if (faqList) {
   });
 }
 
-// === Form ===
-const form = document.getElementById('contactForm');
-if (form) {
-  form.addEventListener('submit', e => {
-    e.preventDefault();
-    const ok = document.getElementById('ok');
-    if (ok) ok.classList.add('show');
-    setTimeout(() => e.target.reset(), 300);
-  });
+// === Form (envoi réel via FormSubmit — pas de preventDefault) ===
+// Si l'URL contient ?sent=1 (redirection après envoi), on affiche le message de succès.
+if (new URLSearchParams(location.search).get('sent') === '1') {
+  const ok = document.getElementById('ok');
+  if (ok) ok.classList.add('show');
 }
 
 // === Scramble effect on display titles (hero, page hero, sec-title, footer big, etc.) ===
@@ -300,7 +296,7 @@ if (particleSectionCanvas && typeof window.initParticleText === 'function') {
   };
   sizeCanvas();
   window.initParticleText(particleSectionCanvas, [
-    'ÆON',
+    'VÆON',
     'DESIGN',
     'CODE',
     'IDENTITÉ',

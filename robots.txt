@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://aeon.fr/sitemap.xml
+Sitemap: https://vaeon.fr/sitemap.xml
