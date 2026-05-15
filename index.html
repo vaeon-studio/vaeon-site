@@ -23,37 +23,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://api.fontshare.com/v2/css?f[]=chillax@200,300,400,500,600,700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css?v=12">
-<style id="aeon-intro-css">
-  .aeon-intro{position:fixed;inset:0;z-index:99999;background:radial-gradient(ellipse at center,#0a0a14 0%,#000 80%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:40px;-webkit-clip-path:circle(150% at 50% 50%);clip-path:circle(150% at 50% 50%);transition:-webkit-clip-path 1.5s cubic-bezier(.65,0,.35,1),clip-path 1.5s cubic-bezier(.65,0,.35,1);overflow:hidden;-webkit-perspective:1200px;perspective:1200px;font-family:'Inter','Chillax',system-ui,sans-serif}
-  .aeon-intro.revealing{-webkit-clip-path:circle(0% at 50% 50%);clip-path:circle(0% at 50% 50%)}
-  .aeon-intro.skipping{transition:opacity .25s;opacity:0;pointer-events:none}
-  .aeon-intro::before{content:"";position:absolute;inset:-10%;background-image:radial-gradient(1.2px 1.2px at 10% 20%,#fff 0,transparent 50%),radial-gradient(1px 1px at 25% 80%,#fff 0,transparent 50%),radial-gradient(.8px .8px at 50% 15%,#fff 0,transparent 50%),radial-gradient(1.4px 1.4px at 70% 75%,#fff 0,transparent 50%),radial-gradient(.8px .8px at 85% 35%,#fff 0,transparent 50%),radial-gradient(1px 1px at 90% 90%,#fff 0,transparent 50%),radial-gradient(.8px .8px at 35% 50%,#fff 0,transparent 50%),radial-gradient(.7px .7px at 60% 25%,#fff 0,transparent 50%),radial-gradient(1px 1px at 15% 65%,#fff 0,transparent 50%),radial-gradient(.8px .8px at 80% 10%,#fff 0,transparent 50%),radial-gradient(.7px .7px at 5% 45%,#fff 0,transparent 50%),radial-gradient(.9px .9px at 95% 55%,#fff 0,transparent 50%),radial-gradient(1.1px 1.1px at 45% 90%,#fff 0,transparent 50%);opacity:.55;pointer-events:none;will-change:transform;animation:aeonStarsDrift 18s linear infinite}
-  @keyframes aeonStarsDrift{from{transform:translate3d(0,0,0)}to{transform:translate3d(-10px,-8px,0)}}
-  .aeon-intro-stage{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:36px;will-change:transform;transform-style:preserve-3d}
-  .aeon-intro-stage::before{content:"";position:absolute;top:50%;left:50%;width:min(54vw,560px);height:150px;margin-left:calc(min(54vw,560px) / -2);margin-top:-130px;border:1px solid rgba(255,255,255,.18);border-radius:50%;transform:rotate(-8deg);pointer-events:none;animation:aeonOrbitR 24s linear infinite}
-  .aeon-intro-stage::after{content:"";position:absolute;top:50%;left:50%;width:min(40vw,420px);height:90px;margin-left:calc(min(40vw,420px) / -2);margin-top:-100px;border:1px solid rgba(255,255,255,.12);border-radius:50%;transform:rotate(6deg);pointer-events:none;animation:aeonOrbitR 36s linear infinite reverse}
-  @keyframes aeonOrbitR{from{transform:rotate(0)}to{transform:rotate(360deg)}}
-  .aeon-intro-wordmark{position:relative;display:flex;align-items:center;justify-content:center;font-weight:200;font-size:clamp(72px,11vw,160px);letter-spacing:-.02em;color:#f5f3ee;line-height:1;z-index:2;text-shadow:0 0 60px rgba(255,255,255,.15);animation:aeonBreathe 2.6s ease-in-out infinite alternate}
-  .aeon-intro-wordmark .planet{display:inline-block;width:.85em;height:.85em;border-radius:50%;background:#000;box-shadow:inset -8px 0 14px -2px rgba(255,255,255,.85),0 0 18px 1px rgba(255,255,255,.12);margin:0 .04em;position:relative;top:.04em;animation:aeonPlanetPulse 2.6s ease-in-out infinite alternate}
-  @keyframes aeonBreathe{from{transform:scale(.985)}to{transform:scale(1.015)}}
-  @keyframes aeonPlanetPulse{from{box-shadow:inset -8px 0 14px -2px rgba(255,255,255,.7),0 0 14px 1px rgba(255,255,255,.08)}to{box-shadow:inset -10px 0 16px -2px rgba(255,255,255,.95),0 0 24px 3px rgba(255,255,255,.18)}}
-  .aeon-intro-tagline{font-size:clamp(9px,1vw,12px);letter-spacing:.45em;color:rgba(245,243,238,.5);text-transform:uppercase;font-weight:400;text-align:center;max-width:90%;margin-top:-16px;z-index:2;transition:opacity .5s,transform .5s}
-  .aeon-intro-bar{width:240px;height:2px;background:rgba(245,243,238,.1);border-radius:2px;overflow:hidden;position:relative;z-index:2;margin-top:8px;transition:opacity .4s}
-  .aeon-intro-bar-fill{position:absolute;left:0;top:0;height:100%;width:0%;background:#f5f3ee;box-shadow:0 0 12px rgba(255,255,255,.35);animation:aeonFill var(--aeon-phase1,2500ms) cubic-bezier(.65,0,.35,1) forwards}
-  @keyframes aeonFill{to{width:100%}}
-  .aeon-intro.zooming .aeon-intro-stage{animation:none;transform:scale(8) translateZ(0);transition:transform 1.5s cubic-bezier(.7,0,.3,1)}
-  .aeon-intro.zooming .aeon-intro-wordmark{animation:none}
-  .aeon-intro.zooming .aeon-intro-wordmark .planet{animation:none;box-shadow:inset -10px 0 16px -2px rgba(255,255,255,1),0 0 90px 30px rgba(255,255,255,.4)}
-  .aeon-intro.zooming .aeon-intro-tagline{opacity:0;transform:translateY(20px)}
-  .aeon-intro.zooming .aeon-intro-bar{opacity:0}
-  .aeon-intro.zooming::before{animation-duration:2s;transform:scale(1.4)}
-  .aeon-intro-skip{position:absolute;bottom:28px;right:28px;background:transparent;border:1px solid rgba(245,243,238,.22);color:rgba(245,243,238,.7);padding:12px 18px;font-size:11px;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;border-radius:999px;font-family:inherit;font-weight:500;opacity:0;transition:opacity .4s,border-color .25s,color .25s;min-height:44px;min-width:44px;z-index:3}
-  .aeon-intro-skip.visible{opacity:1}
-  .aeon-intro-skip:hover{border-color:rgba(245,243,238,.6);color:#fff}
-  .aeon-intro-skip span{margin-left:6px;opacity:.6}
-  body.aeon-intro-active{overflow:hidden}
-  @media (prefers-reduced-motion: reduce){.aeon-intro{display:none !important}}
-</style>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -105,7 +74,7 @@
 
 <div class="cursor" id="cursor" data-label=""></div>
 
-<a href="index.html" class="brand"><span class="slash">/</span>VÆON</a>
+<a href="index.html" class="brand">VÆON</a>
   <header class="nav">
   <nav class="links">
     <a href="metiers/">Métiers</a>
@@ -133,7 +102,7 @@
 
       <div class="hero-bottom" data-hero-fade>
         <p class="hero-desc">
-          VÆON conçoit, designe et code des <strong>sites vitrines sur-mesure</strong> pour les artisans, commerçants et PME locales — pour faire émerger une identité numérique forte qui convertit.
+          VÆON conçoit, design et développe des <strong>sites web sur-mesure</strong> pour les artisans, commerçants et PME locales — afin de créer une présence en ligne forte, moderne et pensée pour convertir.
         </p>
         <div class="hero-actions">
           <a href="contact.html" class="pill-cta">Démarrer un projet <span class="arrow">↗</span></a>
@@ -149,27 +118,22 @@
     <div class="manifesto-pin">
       <div class="manifesto-bg" aria-hidden="true"></div>
       <div class="manifesto-progress" aria-hidden="true">
-        <span class="mp-dot"></span><span class="mp-dot"></span><span class="mp-dot"></span><span class="mp-dot"></span>
+        <span class="mp-dot"></span><span class="mp-dot"></span><span class="mp-dot"></span>
       </div>
 
       <div class="statement" data-stm="0">
-        <h3>Pas de <em>templates.</em></h3>
-        <p>Chaque projet repart d'une page blanche. Briefing, recherche, croquis. On ne cache pas un kit Webflow derrière une typo italique.</p>
+        <h3>Du <em>sur-mesure.</em></h3>
+        <p>Chaque projet est conçu de zéro, avec une direction artistique, une structure et des animations pensées pour votre marque. Aucun template réutilisé, aucun site générique.</p>
       </div>
 
       <div class="statement" data-stm="1">
-        <h3>Pas de <em>promesses</em> magiques.</h3>
-        <p>SEO honnête, architecture légère, hébergement qui tient. Pas de "on vous met en première page Google" — juste du travail solide qui se voit dans les Core Web Vitals.</p>
+        <h3>Un SEO <em>durable.</em></h3>
+        <p>Architecture optimisée, site rapide et développement technique solide pour construire une visibilité durable. Les fondations SEO sont intégrées dès le développement.</p>
       </div>
 
       <div class="statement" data-stm="2">
-        <h3>Pas de design qui <em>vieillit mal.</em></h3>
-        <p>On choisit ce qui tient dans 5 ans, pas ce qui buzz dans 5 mois. Typographies pérennes, palettes maîtrisées, structures claires.</p>
-      </div>
-
-      <div class="statement" data-stm="3">
-        <h3>Des sites codés <em>pour durer.</em></h3>
-        <p>Pour les maisons, ateliers et commerces dont l'exigence ne s'arrête pas au produit.</p>
+        <h3>Des sites <em>codés.</em></h3>
+        <p>Pensés pour les marques, ateliers et commerces dont l'exigence dépasse le produit. Des sites rapides, fluides et conçus pour durer.</p>
       </div>
     </div>
   </section>
@@ -446,37 +410,37 @@
       <a href="metiers/restaurant/" class="metier-card" data-r>
         <span class="card-num">01</span>
         <h3>Restaurant</h3>
-        <p>Vidéos d'ambiance immersives, motion design sur la carte, réservation sans commission, click &amp; collect, photos qui donnent faim.</p>
+        <p>Univers visuel immersif, animations sur-mesure, mise en avant des plats, réservation directe et expérience pensée pour donner envie dès les premières secondes.</p>
         <span class="card-tag">Découvrir →</span>
       </a>
       <a href="metiers/pizzeria/" class="metier-card" data-r>
         <span class="card-num">02</span>
         <h3>Pizzeria</h3>
-        <p>Vidéos pizzaiolo en cuisine, menu animé, commande directe, intégration UberEats/Deliveroo, photos optimisées.</p>
+        <p>Motion design dynamique, menu interactif, commande directe, photos optimisées et identité visuelle pensée pour valoriser chaque produit.</p>
         <span class="card-tag">Découvrir →</span>
       </a>
       <a href="metiers/coiffeur/" class="metier-card" data-r>
         <span class="card-num">03</span>
         <h3>Coiffeur</h3>
-        <p>Vidéos avant/après en motion, galerie portfolio animée, prise de RDV sans Planity, équipe valorisée.</p>
+        <p>Avant/après animés, portfolio immersif, réservation simplifiée et site pensé pour mettre en valeur le savoir-faire et l'image du salon.</p>
         <span class="card-tag">Découvrir →</span>
       </a>
       <a href="metiers/barbershop/" class="metier-card" data-r>
         <span class="card-num">04</span>
         <h3>Barbershop</h3>
-        <p>Vidéo signature en hero, motion d'identité forte, RDV en direct, vente de produits, cartes cadeaux digitales.</p>
+        <p>Vidéo signature en hero, animations d'identité, prise de RDV rapide et expérience moderne pensée pour valoriser la marque du salon.</p>
         <span class="card-tag">Découvrir →</span>
       </a>
       <a href="metiers/avocat/" class="metier-card" data-r>
         <span class="card-num">05</span>
         <h3>Avocat</h3>
-        <p>Présentation équipe en vidéo, motion sur les articles de doctrine, conformité RIN/RGPD, prise de RDV.</p>
+        <p>Design sobre et premium, présentation claire du cabinet, animations discrètes et structure pensée pour inspirer confiance immédiatement.</p>
         <span class="card-tag">Découvrir →</span>
       </a>
       <a href="metiers/" class="metier-card" data-r style="background:transparent;border-style:dashed">
         <span class="card-num">+</span>
         <h3>Autres métiers</h3>
-        <p>Bar, salon, plombier, électricien, médecin, coach… La liste complète des activités couvertes.</p>
+        <p>Sites sur-mesure pour commerces, artisans et professions locales, avec une identité forte, des animations fluides et un SEO pensé durablement.</p>
         <span class="card-tag">Voir tous →</span>
       </a>
     </div>
@@ -489,7 +453,7 @@
   <section id="maquettes">
     <div class="sec-head-center">
       <h2 class="sec-title" data-r>Maquettes.</h2>
-      <p class="sec-aside" data-r style="text-align:center">Du site qui pose les bases au site qui devient référence.</p>
+      <p class="sec-aside" data-r style="text-align:center">Du site essentiel au site iconique.</p>
     </div>
 
     <div class="maq-grid">
@@ -501,8 +465,8 @@
         <div class="maq-info">
           <h3 class="maq-title">ESSENTIELLE</h3>
           <p class="maq-tag"><em>Pour exister.</em></p>
-          <p class="maq-desc">Une présence en ligne propre, rapide, qui vous fait apparaître quand on vous cherche.</p>
-          <a href="essentielle.html" class="maq-cta">Découvrir <span class="arrow">→</span></a>
+          <p class="maq-desc">Un site rapide, clair et bien référencé pour poser des bases solides en ligne.</p>
+          <a href="tarifs.html#essentiel" class="maq-cta">Découvrir <span class="arrow">→</span></a>
         </div>
       </article>
 
@@ -514,8 +478,8 @@
         <div class="maq-info">
           <h3 class="maq-title">SIGNATURE</h3>
           <p class="maq-tag"><em>Pour se démarquer.</em></p>
-          <p class="maq-desc">Identité forte, contenu vivant, une expérience qui se reconnaît au premier regard.</p>
-          <a href="signature.html" class="maq-cta">Découvrir <span class="arrow">→</span></a>
+          <p class="maq-desc">Une identité forte, des animations sur-mesure et une expérience qui marque dès le premier regard.</p>
+          <a href="tarifs.html#standard" class="maq-cta">Découvrir <span class="arrow">→</span></a>
         </div>
       </article>
 
@@ -527,8 +491,8 @@
         <div class="maq-info">
           <h3 class="maq-title">ICONIQUE</h3>
           <p class="maq-tag"><em>Pour marquer.</em></p>
-          <p class="maq-desc">Direction artistique, motion design, 3D — un objet web qui se partage et se cite.</p>
-          <a href="iconique.html" class="maq-cta">Découvrir <span class="arrow">→</span></a>
+          <p class="maq-desc">Direction artistique, motion design, 3D — une expérience web pensée pour marquer durablement.</p>
+          <a href="tarifs.html#premium" class="maq-cta">Découvrir <span class="arrow">→</span></a>
         </div>
       </article>
     </div>
@@ -646,7 +610,7 @@
   <!-- CTA banner -->
   <div class="cta-banner" data-r>
     <h2>Construisons une architecture web à la <em>hauteur</em> de votre activité.</h2>
-    <p>Architecture, visibilité, performance, image : construisons un système cohérent dès la base.</p>
+    <p>Architecture, visibilité, performance, image : construisons une présence digitale cohérente et pensée pour durer.</p>
     <a href="contact.html" class="pill-cta">Démarrer un projet <span class="arrow">↗</span></a>
   </div>
 
@@ -656,98 +620,18 @@
   <div class="footer-big"><h2>À <em>bientôt,</em><br>j'espère ✦</h2></div>
   <div class="footer-cols">
     <div class="fcol"><h4>VÆON</h4><p>Studio indépendant de design &amp; développement web basé à Toulouse. Architectures digitales sur-mesure pour commerces, maisons et marques exigeantes.</p></div>
-    <div class="fcol"><h4>Métiers</h4><a href="metiers/restaurant/">Restaurant</a><a href="metiers/pizzeria/">Pizzeria</a><a href="metiers/coiffeur/">Coiffeur</a><a href="metiers/barbershop/">Barbershop</a><a href="metiers/avocat/">Avocat</a></div>
-    <div class="fcol"><h4>Pages</h4><a href="services.html">Services</a><a href="projets.html">Maquettes</a><a href="tarifs.html">Tarifs</a><a href="agence-web-toulouse.html">Agence Toulouse</a><a href="process.html">Process</a><a href="a-propos.html">À propos</a><a href="blog/">Blog</a><a href="contact.html">Contact</a></div>
+    <div class="fcol"><h4>Métiers</h4><a href="metiers/restaurant/">Restaurant</a><a href="metiers/pizzeria/">Pizzeria</a><a href="metiers/coiffeur/">Coiffeur</a><a href="metiers/barbershop/">Barbershop</a><a href="metiers/institut-beaute-spa/">Institut &amp; Spa</a><a href="metiers/avocat/">Avocat</a></div>
+    <div class="fcol"><h4>Pages</h4><a href="services.html">Services</a><a href="projets.html">Maquettes</a><a href="tarifs.html">Tarifs</a><a href="agence-web-toulouse.html">Studio Web Toulouse</a><a href="process.html">Process</a><a href="a-propos.html">À propos</a><a href="blog/">Blog</a><a href="contact.html">Contact</a></div>
     <div class="fcol"><h4>Contact</h4><a href="mailto:contact@vaeon.fr">contact@vaeon.fr</a><a href="#">Instagram</a><a href="#">LinkedIn</a></div>
     <div class="fcol"><h4>Légal</h4><a href="/mentions-legales.html">Mentions légales</a><a href="/politique-confidentialite.html">Politique de confidentialité</a><a href="/cookies.html">Cookies</a></div>
   </div>
-  <div class="copy"><span>© 2025 — 2026 VÆON · Tous droits réservés</span><span>Conçu &amp; codé avec ✦ à Toulouse</span></div>
+  <div class="copy"><span>© 2025 — 2026 VÆON · Tous droits réservés</span><span>Design &amp; développement web à Toulouse</span></div>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
 <script src="js/particle-text.js?v=hover2"></script>
 <script src="js/about-shader.js"></script>
 <script src="js/script.js"></script>
-
-<!-- VAEON intro animation — joue 1× par session sur la home -->
-<script id="aeon-intro-js">
-(function(){
-  try {
-    // Conditions de bypass
-    if (sessionStorage.getItem('aeon-intro-played')) return;
-    var p = window.location.pathname;
-    if (p !== '/' && !/\/index\.html$/i.test(p)) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-    var run = function(){
-      // Sécurité : si overlay déjà existant
-      if (document.querySelector('.aeon-intro')) return;
-
-      var overlay = document.createElement('div');
-      overlay.className = 'aeon-intro';
-      overlay.setAttribute('role','dialog');
-      overlay.setAttribute('aria-label',"Animation d'intro");
-      overlay.setAttribute('aria-busy','true');
-      overlay.innerHTML =
-        '<div class="aeon-intro-stage">' +
-          '<div class="aeon-intro-wordmark" aria-label="VÆON">' +
-            '<span>Æ</span><span class="planet" aria-hidden="true"></span><span>N</span>' +
-          '</div>' +
-          '<div class="aeon-intro-tagline">DIGITAL EXPERIENCES ENGINEERED BEYOND STANDARDS.</div>' +
-          '<div class="aeon-intro-bar"><div class="aeon-intro-bar-fill"></div></div>' +
-        '</div>' +
-        '<button class="aeon-intro-skip" type="button" aria-label="Passer l\'intro et accéder au site">Passer l\'intro <span aria-hidden="true">›</span></button>';
-
-      document.body.appendChild(overlay);
-      document.body.classList.add('aeon-intro-active');
-
-      // Lock l'intro pour la session
-      sessionStorage.setItem('aeon-intro-played','true');
-
-      var isMobile = window.matchMedia('(max-width:760px)').matches;
-      var phase1 = isMobile ? 2200 : 2500;
-      var phase2 = 1500;
-      overlay.style.setProperty('--aeon-phase1', phase1 + 'ms');
-
-      var skipBtn = overlay.querySelector('.aeon-intro-skip');
-      var cleaned = false;
-      var phase2Timer, safetyTimer;
-
-      var finish = function(skip){
-        if (cleaned) return; cleaned = true;
-        clearTimeout(phase2Timer); clearTimeout(safetyTimer);
-        document.removeEventListener('keydown', onKey);
-        if (skip) {
-          overlay.classList.add('skipping');
-          setTimeout(function(){ overlay.remove(); document.body.classList.remove('aeon-intro-active'); }, 280);
-        } else {
-          overlay.classList.add('zooming');
-          overlay.classList.add('revealing');
-          setTimeout(function(){ overlay.remove(); document.body.classList.remove('aeon-intro-active'); }, phase2 + 100);
-        }
-      };
-
-      var onKey = function(e){ if (e.key === 'Escape') finish(true); };
-      skipBtn.addEventListener('click', function(e){ e.stopPropagation(); finish(true); });
-      overlay.addEventListener('click', function(e){
-        if (e.target !== skipBtn && !skipBtn.contains(e.target)) finish(true);
-      });
-      document.addEventListener('keydown', onKey);
-
-      setTimeout(function(){ skipBtn.classList.add('visible'); }, 600);
-
-      phase2Timer = setTimeout(function(){ finish(false); }, phase1);
-      safetyTimer = setTimeout(function(){ if (!cleaned) finish(true); }, phase1 + phase2 + 800);
-    };
-
-    if (document.body) run();
-    else document.addEventListener('DOMContentLoaded', run, { once: true });
-  } catch(e) {
-    // Fallback : pas d'intro, le site est déjà visible
-    console.warn('[aeon-intro] skipped:', e);
-  }
-})();
-</script>
 
 </body>
 </html>

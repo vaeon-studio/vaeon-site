@@ -143,18 +143,16 @@ if (revealEls.length) {
 }
 
 // === FAQ ===
-const faqList = document.getElementById('faqList');
-if (faqList) {
-  faqList.querySelectorAll('.faq').forEach(faq => {
-    const q = faq.querySelector('.faq-q');
-    const a = faq.querySelector('.faq-a');
-    if (faq.classList.contains('open')) a.style.maxHeight = a.scrollHeight + 'px';
-    q.addEventListener('click', () => {
-      const open = faq.classList.toggle('open');
-      a.style.maxHeight = open ? a.scrollHeight + 'px' : '0px';
-    });
+document.querySelectorAll('.faq-list .faq').forEach(faq => {
+  const q = faq.querySelector('.faq-q');
+  const a = faq.querySelector('.faq-a');
+  if (!q || !a) return;
+  if (faq.classList.contains('open')) a.style.maxHeight = a.scrollHeight + 'px';
+  q.addEventListener('click', () => {
+    const open = faq.classList.toggle('open');
+    a.style.maxHeight = open ? a.scrollHeight + 'px' : '0px';
   });
-}
+});
 
 // === Form (envoi réel via FormSubmit — pas de preventDefault) ===
 // Si l'URL contient ?sent=1 (redirection après envoi), on affiche le message de succès.
@@ -186,15 +184,22 @@ function wrapTextNodes(host) {
 
   nodes.forEach(node => {
     const frag = document.createDocumentFragment();
+    let wordWrap = null;
     for (const ch of node.textContent) {
       if (ch === ' ' || ch === '\n' || ch === '\t') {
+        wordWrap = null;
         frag.appendChild(document.createTextNode(ch));
       } else {
+        if (!wordWrap) {
+          wordWrap = document.createElement('span');
+          wordWrap.className = 'scrm-word';
+          frag.appendChild(wordWrap);
+        }
         const span = document.createElement('span');
         span.className = 'scrm';
         span.dataset.original = ch;
         span.textContent = ch;
-        frag.appendChild(span);
+        wordWrap.appendChild(span);
       }
     }
     node.replaceWith(frag);

@@ -49,11 +49,11 @@
     {
       "@type": "FAQPage",
       "mainEntity": [
-        {"@type":"Question","name":"Pourquoi des formules et pas un prix unique ?","acceptedAnswer":{"@type":"Answer","text":"Parce que les besoins d'un artisan qui veut un site vitrine simple ne sont pas ceux d'un restaurant qui veut prendre des commandes en ligne. Les trois formules correspondent à trois niveaux de périmètre fonctionnel, du sobre à l'ambitieux. Vous payez ce dont vous avez vraiment besoin."}},
-        {"@type":"Question","name":"Y a-t-il des frais cachés ?","acceptedAnswer":{"@type":"Answer","text":"Non. Le prix annoncé inclut le brief, la maquette, le développement, la mise en ligne, la formation à l'usage et 30 jours de support post-livraison. Seuls l'hébergement annuel (environ 60 € à 120 € par an) et le nom de domaine (~12 € par an) sont à votre charge. Le forfait maintenance mensuel est optionnel."}},
-        {"@type":"Question","name":"Que se passe-t-il si je veux dépasser la formule choisie ?","acceptedAnswer":{"@type":"Answer","text":"On en discute avant d'engager. Si une fonctionnalité hors formule devient indispensable en cours de projet, soit on bascule à la formule supérieure (avec un avenant chiffré clairement), soit on ajuste le périmètre pour rester dans la formule initiale. Pas de mauvaise surprise."}},
-        {"@type":"Question","name":"Peut-on payer en plusieurs fois ?","acceptedAnswer":{"@type":"Answer","text":"Oui. Standard : 50 % à la commande, 50 % à la livraison. Possibilité d'échelonner sur 3 mensualités sans frais pour les formules Standard et Premium. Pas de prêt extérieur — on s'arrange directement."}},
-        {"@type":"Question","name":"Pourquoi VÆON ne propose pas en dessous de 1 300 € ?","acceptedAnswer":{"@type":"Answer","text":"Parce que c'est le seuil incompressible pour un site sur mesure de qualité : brief sérieux, maquette défendue, architecture soignée, performance, accessibilité. En dessous, c'est du template repompé ou du travail bâclé — ce n'est pas notre métier."}}
+        {"@type":"Question","name":"Pourquoi des formules et pas un prix unique ?","acceptedAnswer":{"@type":"Answer","text":"Parce qu'un site destiné à présenter une activité locale n'a pas les mêmes besoins qu'une expérience plus avancée avec réservation, contenu dynamique ou e-commerce. Les trois formules correspondent à différents niveaux de périmètre, de complexité et d'ambition. Vous investissez uniquement dans ce dont votre projet a réellement besoin."}},
+        {"@type":"Question","name":"Y a-t-il des frais cachés ?","acceptedAnswer":{"@type":"Answer","text":"Non. Le périmètre, les livrables, les délais et les modalités de paiement sont définis avant le lancement du projet. Les seuls coûts externes éventuels concernent l'hébergement, le nom de domaine ou certains services tiers clairement mentionnés en amont."}},
+        {"@type":"Question","name":"Que se passe-t-il si je veux dépasser la formule choisie ?","acceptedAnswer":{"@type":"Answer","text":"Chaque formule correspond à un périmètre précis. Si le projet évolue en cours de route, des fonctionnalités ou pages supplémentaires peuvent être ajoutées via un ajustement de devis validé ensemble avant toute production."}},
+        {"@type":"Question","name":"Peut-on payer en plusieurs fois ?","acceptedAnswer":{"@type":"Answer","text":"Nous sommes actuellement en train de mettre en place une solution de paiement en plusieurs fois avec un partenaire dédié. Pour le moment, les modalités de règlement sont définies directement au devis selon le projet."}},
+        {"@type":"Question","name":"Pourquoi VÆON ne propose pas de sites en dessous de 1 300 € ?","acceptedAnswer":{"@type":"Answer","text":"Parce que chaque site est conçu sur-mesure et développé manuellement. Structure, animations, responsive, performances, SEO technique, intégration des contenus : chaque détail est travaillé et codé spécifiquement pour le projet. Ce niveau d'exécution demande plusieurs jours de conception et de développement."}}
       ]
     }
   ]
@@ -66,7 +66,7 @@
 
 <div class="cursor" id="cursor" data-label=""></div>
 
-<a href="/index.html" class="brand"><span class="slash">/</span>VÆON</a>
+<a href="/index.html" class="brand">VÆON</a>
   <header class="nav">
   <nav class="links">
     <a href="/metiers/">Métiers</a>
@@ -81,7 +81,7 @@
   <section class="page-hero">
     <span class="pill-tag"><span class="icon">€</span> Tarifs transparents</span>
     <h1>Tarifs <em>site internet</em></h1>
-    <p>Trois formules fixes, de 1 300 € à 4 500 €. Tout est défini en amont du devis : périmètre d'intervention, livrables et modalités de paiement. Pas d'« à partir de » qui se transforme en facture surprise.</p>
+    <p>Trois formules claires, de 1 300 € à 4 500 €. Périmètre, livrables et modalités de paiement sont définis en amont pour garantir un cadre transparent dès le départ.</p>
     <div class="hero-actions">
       <a href="/contact.html" class="pill-cta">Demander un devis <span class="arrow">↗</span></a>
     </div>
@@ -89,14 +89,14 @@
 
   <section>
     <div class="sec-head-center">
-      <h2 class="sec-title">Trois <em>formules</em>, trois ambitions</h2>
-      <p class="sec-aside">Chaque formule correspond à un périmètre fonctionnel précis. Vous choisissez selon le rôle réel du site dans votre activité.</p>
+      <h2 class="sec-title">Trois niveaux <em>d'ambition</em> 100% codés</h2>
+      <p class="sec-aside">Chaque formule correspond à un périmètre précis. Le choix dépend du rôle du site dans votre activité et de vos objectifs.</p>
     </div>
     <div class="tarif-grid">
-      <article class="tarif-card">
+      <article class="tarif-card" id="essentiel">
         <h3>Essentiel</h3>
         <p class="tarif-price">1 300 €</p>
-        <p class="tarif-cible">Pour artisans et petits commerces qui veulent un site vitrine propre, rapide et qui apparaît sur Google.</p>
+        <p class="tarif-cible">Pour artisans et commerces qui veulent une présence en ligne claire, rapide et bien référencée.</p>
         <ul>
           <li>5 à 7 pages</li>
           <li>Design sur mesure (pas de template)</li>
@@ -104,34 +104,34 @@
           <li>Optimisation SEO local</li>
           <li>Schéma LocalBusiness + Organization</li>
           <li>Fiche Google Business connectée</li>
-          <li>Performance Core Web Vitals au vert</li>
-          <li>Hébergement +60 €/an environ (en sus)</li>
+          <li>Performances Core Web Vitals optimisées</li>
+          <li>Hébergement premium (+60 €/an environ)</li>
         </ul>
       </article>
-      <article class="tarif-card featured">
+      <article class="tarif-card featured" id="standard">
         <h3>Standard</h3>
         <p class="tarif-price">2 000 €</p>
-        <p class="tarif-cible">Pour restaurants, salons, libéraux qui veulent un site qui fait gagner du temps au quotidien.</p>
+        <p class="tarif-cible">Pour restaurants, salons et professions libérales qui veulent une expérience fluide, pensée pour gagner du temps au quotidien.</p>
         <ul>
           <li>8 à 12 pages</li>
           <li>Tout Essentiel inclus</li>
           <li>Réservation / prise de RDV en direct</li>
           <li>Click &amp; collect ou commande en ligne</li>
-          <li>Back-office autonome pour les contenus</li>
+          <li>CMS autonome pour la gestion des contenus</li>
           <li>Blog autonome</li>
           <li>Multi-langue FR/EN possible</li>
           <li>Paiement Stripe / Lyf Pro intégré</li>
         </ul>
       </article>
-      <article class="tarif-card">
+      <article class="tarif-card" id="premium">
         <h3>Premium</h3>
         <p class="tarif-price">4 500 €</p>
-        <p class="tarif-cible">Pour pros exigeants et e-commerce qui veulent un site qui marque, premium pour TPE.</p>
+        <p class="tarif-cible">Pour marques, commerces et entreprises qui veulent une expérience digitale forte et différenciante.</p>
         <ul>
           <li>12+ pages, design poussé</li>
           <li>Tout Standard inclus</li>
-          <li>Direction artistique signée</li>
-          <li>Motion design et micro-interactions</li>
+          <li>Direction artistique avancée</li>
+          <li>Motion design &amp; micro-interactions</li>
           <li>Vente en ligne / cartes cadeaux</li>
           <li>Système de fidélité</li>
           <li>Espace client sécurisé (si besoin)</li>
@@ -149,13 +149,13 @@
     </div>
     <div class="metier-prose">
       <ul class="metier-list">
-        <li><strong>Brief approfondi</strong> — appel d'1 à 2 heures pour comprendre votre activité, vos contraintes, vos objectifs. Récap écrit transmis sous 24h.</li>
+        <li><strong>Brief approfondi</strong> — appel d'1 à 2 heures pour comprendre votre activité, vos contraintes, vos objectifs. Récapitulatif transmis sous 24h.</li>
         <li><strong>Maquette défendue</strong> — une seule piste créative pertinente, pas trois variantes pour vous faire choisir au feeling. On défend nos choix et on les ajuste sur retour précis.</li>
-        <li><strong>Développement codé sur mesure</strong> — pas de WordPress, pas de Wix, pas de thème acheté. Architecture maintenable, accessible (WCAG AA), performante (Core Web Vitals au vert).</li>
-        <li><strong>SEO technique</strong> — balises sémantiques complètes, JSON-LD structuré (Organization, LocalBusiness, Service, FAQPage selon les pages), sitemap.xml, robots.txt. Pas de promesse magique, juste les fondations.</li>
+        <li><strong>Développement codé sur mesure</strong> — pas de WordPress, pas de Wix, pas de thème acheté. Architecture maintenable, accessible (WCAG AA), performances Core Web Vitals optimisées.</li>
+        <li><strong>SEO technique</strong> — balises sémantiques complètes, JSON-LD structuré (Organization, LocalBusiness, Service, FAQPage selon les pages), sitemap.xml, robots.txt. Des fondations techniques pensées pour durer.</li>
         <li><strong>Fiche Google Business</strong> — création ou mise à jour, connexion avec le site, optimisation des photos et description.</li>
-        <li><strong>Formation à l'usage</strong> — 30 à 45 minutes en visio pour vous rendre autonome sur le back-office (sur Standard et Premium).</li>
-        <li><strong>30 jours de support post-livraison</strong> — pour les petits ajustements et bugs qui apparaissent en conditions réelles.</li>
+        <li><strong>Formation à la prise en main</strong> — 30 à 45 minutes en visio pour vous rendre autonome sur le CMS (sur Standard et Premium).</li>
+        <li><strong>30 jours de support post-livraison</strong> — pour accompagner les ajustements après mise en ligne.</li>
         <li><strong>AISO-native</strong> — contenu structuré pour être compris et cité par les moteurs de réponse IA (ChatGPT, Perplexity, Gemini). FAQ extractibles, entités nommées définies, phrases citables.</li>
       </ul>
     </div>
@@ -164,16 +164,16 @@
   <section>
     <div class="sec-head-center">
       <h2 class="sec-title">Ce qui n'est <em>pas inclus</em></h2>
-      <p class="sec-aside">La transparence va dans les deux sens.</p>
+      <p class="sec-aside">Un cadre clair dès le départ.</p>
     </div>
     <div class="metier-prose">
       <ul class="metier-list">
-        <li><strong>Hébergement annuel</strong> — environ 60 € à 120 € par an selon les options, payé directement à l'hébergeur (Vercel, Cloudflare, OVH...).</li>
-        <li><strong>Nom de domaine</strong> — environ 12 € par an, payé directement au registrar.</li>
-        <li><strong>Création de contenus rédactionnels</strong> — vous fournissez vos textes (descriptions, biographies, fiches produits). Nous pouvons accompagner la structuration, pas la rédaction complète (sauf forfait sur devis).</li>
-        <li><strong>Création de photos</strong> — vous fournissez vos photos. Nous pouvons orienter vers un photographe professionnel local en partenariat.</li>
-        <li><strong>Maintenance après les 30 jours</strong> — un forfait maintenance mensuel optionnel couvre les évolutions, mises à jour techniques et petites modifications.</li>
-        <li><strong>Campagnes Google Ads ou Meta Ads</strong> — ce n'est pas notre métier. On peut recommander des partenaires de confiance si besoin.</li>
+        <li><strong>Hébergement annuel</strong> — environ 60 € à 120 € par an selon les options, facturé directement par l'hébergeur (Vercel, Cloudflare, OVH...).</li>
+        <li><strong>Nom de domaine</strong> — environ 12 € par an, facturé directement par le registrar.</li>
+        <li><strong>Rédaction des contenus</strong> — vous fournissez vos textes (descriptions, biographies, fiches produits). Nous pouvons accompagner la structure éditoriale et les contenus stratégiques sur devis.</li>
+        <li><strong>Production photo</strong> — vous fournissez vos photos. Nous pouvons recommander des photographes partenaires selon votre activité.</li>
+        <li><strong>Maintenance évolutive</strong> — un accompagnement mensuel peut couvrir les évolutions, mises à jour techniques et ajustements continus.</li>
+        <li><strong>Campagnes Google Ads ou Meta Ads</strong> — les campagnes Google Ads ou Meta Ads ne sont pas incluses dans les formules. En revanche, chaque site est structuré avec des fondations techniques et SEO solides pour optimiser les futures performances d'acquisition.</li>
       </ul>
     </div>
   </section>
@@ -186,30 +186,30 @@
     <div class="faq-list">
       <div class="faq open">
         <button class="faq-q">Pourquoi des formules et pas un prix unique ?<span class="plus">+</span></button>
-        <div class="faq-a" style="max-height:280px"><div class="faq-a-inner">Parce que les besoins d'un artisan qui veut un site vitrine simple ne sont pas ceux d'un restaurant qui veut prendre des commandes en ligne. Les <strong>trois formules</strong> correspondent à trois niveaux de périmètre fonctionnel, du sobre à l'ambitieux. Vous payez ce dont vous avez vraiment besoin.</div></div>
+        <div class="faq-a" style="max-height:320px"><div class="faq-a-inner">Parce qu'un site destiné à présenter une activité locale n'a pas les mêmes besoins qu'une expérience plus avancée avec réservation, contenu dynamique ou e-commerce. Les <strong>trois formules</strong> correspondent à différents niveaux de périmètre, de complexité et d'ambition. Vous investissez uniquement dans ce dont votre projet a réellement besoin.</div></div>
       </div>
       <div class="faq">
         <button class="faq-q">Y a-t-il des frais cachés ?<span class="plus">+</span></button>
-        <div class="faq-a"><div class="faq-a-inner">Non. Le prix annoncé inclut le brief, la maquette, le développement, la mise en ligne, la formation à l'usage et <strong>30 jours de support post-livraison</strong>. Seuls l'hébergement annuel (environ 60 € à 120 € par an) et le nom de domaine (~12 € par an) sont à votre charge. Le forfait maintenance mensuel est optionnel.</div></div>
+        <div class="faq-a"><div class="faq-a-inner">Non. Le périmètre, les livrables, les délais et les modalités de paiement sont définis <strong>avant le lancement du projet</strong>. Les seuls coûts externes éventuels concernent l'hébergement, le nom de domaine ou certains services tiers clairement mentionnés en amont.</div></div>
+      </div>
+      <div class="faq">
+        <button class="faq-q">Pourquoi VÆON ne propose pas de sites en dessous de 1 300 € ?<span class="plus">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">Parce que chaque site est <strong>conçu sur-mesure et développé manuellement</strong>. Structure, animations, responsive, performances, SEO technique, intégration des contenus : chaque détail est travaillé et codé spécifiquement pour le projet. Ce niveau d'exécution demande plusieurs jours de conception et de développement.</div></div>
       </div>
       <div class="faq">
         <button class="faq-q">Que se passe-t-il si je veux dépasser la formule choisie ?<span class="plus">+</span></button>
-        <div class="faq-a"><div class="faq-a-inner">On en discute avant d'engager. Si une fonctionnalité hors formule devient indispensable en cours de projet, soit on bascule à la formule supérieure (avec un <strong>avenant chiffré clairement</strong>), soit on ajuste le périmètre pour rester dans la formule initiale. Pas de mauvaise surprise.</div></div>
+        <div class="faq-a"><div class="faq-a-inner">Chaque formule correspond à un périmètre précis. Si le projet évolue en cours de route, des fonctionnalités ou pages supplémentaires peuvent être ajoutées via un <strong>ajustement de devis</strong> validé ensemble avant toute production.</div></div>
       </div>
       <div class="faq">
         <button class="faq-q">Peut-on payer en plusieurs fois ?<span class="plus">+</span></button>
-        <div class="faq-a"><div class="faq-a-inner">Oui. Standard : <strong>50 % à la commande, 50 % à la livraison</strong>. Possibilité d'échelonner sur 3 mensualités sans frais pour les formules Standard et Premium. Pas de prêt extérieur — on s'arrange directement.</div></div>
-      </div>
-      <div class="faq">
-        <button class="faq-q">Pourquoi VÆON ne propose pas en dessous de 1 300 € ?<span class="plus">+</span></button>
-        <div class="faq-a"><div class="faq-a-inner">Parce que c'est le <strong>seuil incompressible</strong> pour un site sur mesure de qualité : brief sérieux, maquette défendue, architecture soignée, performance, accessibilité. En dessous, c'est du template repompé ou du travail bâclé — ce n'est pas notre métier.</div></div>
+        <div class="faq-a"><div class="faq-a-inner">Nous sommes actuellement en train de mettre en place une <strong>solution de paiement en plusieurs fois</strong> avec un partenaire dédié. Pour le moment, les modalités de règlement sont définies directement au devis selon le projet.</div></div>
       </div>
     </div>
   </section>
 
   <div class="cta-banner" data-r>
     <h2>Prêt à parler de <em>votre projet</em> ?</h2>
-    <p>Décrivez votre activité et vos objectifs, on revient sous 24h ouvrées avec un premier retour et un devis détaillé adapté à votre formule.</p>
+    <p>Décrivez votre activité et vos objectifs. Nous revenons vers vous sous 24h ouvrées avec un premier échange et une estimation adaptée à votre projet.</p>
     <a href="/contact.html" class="pill-cta">Demander un devis gratuit <span class="arrow">↗</span></a>
   </div>
 
@@ -219,12 +219,12 @@
   <div class="footer-big"><h2>À <em>bientôt,</em><br>j'espère ✦</h2></div>
   <div class="footer-cols">
     <div class="fcol"><h4>VÆON</h4><p>Studio indépendant de design &amp; développement web basé à Toulouse. Architectures digitales sur-mesure pour commerces, maisons et marques exigeantes.</p></div>
-    <div class="fcol"><h4>Métiers</h4><a href="/metiers/restaurant/">Restaurant</a><a href="/metiers/pizzeria/">Pizzeria</a><a href="/metiers/coiffeur/">Coiffeur</a><a href="/metiers/barbershop/">Barbershop</a><a href="/metiers/avocat/">Avocat</a></div>
-    <div class="fcol"><h4>Pages</h4><a href="/services.html">Services</a><a href="/projets.html">Maquettes</a><a href="/tarifs.html">Tarifs</a><a href="/agence-web-toulouse.html">Agence Toulouse</a><a href="/process.html">Process</a><a href="/a-propos.html">À propos</a><a href="/blog/">Blog</a><a href="/contact.html">Contact</a></div>
+    <div class="fcol"><h4>Métiers</h4><a href="/metiers/restaurant/">Restaurant</a><a href="/metiers/pizzeria/">Pizzeria</a><a href="/metiers/coiffeur/">Coiffeur</a><a href="/metiers/barbershop/">Barbershop</a><a href="/metiers/institut-beaute-spa/">Institut &amp; Spa</a><a href="/metiers/avocat/">Avocat</a></div>
+    <div class="fcol"><h4>Pages</h4><a href="/services.html">Services</a><a href="/projets.html">Maquettes</a><a href="/tarifs.html">Tarifs</a><a href="/agence-web-toulouse.html">Studio Web Toulouse</a><a href="/process.html">Process</a><a href="/a-propos.html">À propos</a><a href="/blog/">Blog</a><a href="/contact.html">Contact</a></div>
     <div class="fcol"><h4>Contact</h4><a href="mailto:contact@vaeon.fr">contact@vaeon.fr</a><a href="#">Instagram</a><a href="#">LinkedIn</a></div>
     <div class="fcol"><h4>Légal</h4><a href="/mentions-legales.html">Mentions légales</a><a href="/politique-confidentialite.html">Politique de confidentialité</a><a href="/cookies.html">Cookies</a></div>
   </div>
-  <div class="copy"><span>© 2025 — 2026 VÆON · Tous droits réservés</span><span>Conçu &amp; codé avec ✦ à Toulouse</span></div>
+  <div class="copy"><span>© 2025 — 2026 VÆON · Tous droits réservés</span><span>Design &amp; développement web à Toulouse</span></div>
 </footer>
 
 <script src="/js/script.js"></script>
