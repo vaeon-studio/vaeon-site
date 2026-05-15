@@ -1297,8 +1297,8 @@ form h4{font-weight:700;font-size:24px;letter-spacing:-.02em;margin-bottom:8px;c
 
 /* === Footer === */
 .footer-big{padding:100px 40px 0;text-align:left}
-.footer-big h2{font-family:var(--display-mono);font-weight:700;font-size:clamp(60px,14vw,200px);line-height:.92;letter-spacing:-.05em;color:var(--ink);text-transform:uppercase}
-.footer-big h2 em{font-family:var(--serif);font-style:italic;font-weight:300;text-transform:none;font-size:.92em;background:linear-gradient(110deg,var(--c-pink),var(--c-amber));-webkit-background-clip:text;background-clip:text;color:transparent}
+.footer-big h2{font-family:var(--display-mono);font-weight:700;font-size:clamp(48px,10vw,140px);line-height:1.15;letter-spacing:-.05em;color:var(--ink);text-transform:uppercase}
+.footer-big h2 em{display:inline-block;padding:.05em .12em .22em;margin:0 -.12em;font-family:var(--serif);font-style:italic;font-weight:300;text-transform:none;font-size:.92em;background:linear-gradient(110deg,var(--c-pink),var(--c-amber));-webkit-background-clip:text;background-clip:text;color:transparent;line-height:1.2}
 .footer-cols{padding:60px 40px 32px;display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr 1fr;gap:32px;border-top:1px solid var(--line);margin-top:80px}
 @media (max-width:1024px){.footer-cols{grid-template-columns:1fr 1fr 1fr;gap:24px}}
 @media (max-width:640px){.footer-cols{grid-template-columns:1fr 1fr;gap:20px}}
