@@ -1098,7 +1098,7 @@ section{padding:120px 40px;position:relative;z-index:2}
 .demo-newsletter-form input::placeholder{color:var(--ink-3)}
 .demo-newsletter-form button{padding:12px 22px;background:linear-gradient(135deg,var(--c-pink),var(--c-amber));color:#fff;font-weight:600;font-size:13px;border-radius:999px;border:0;cursor:pointer}
 .demo-footer-cols{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;padding-top:32px;border-top:1px solid var(--line);margin-bottom:32px}
-.demo-footer-cols .fcol h4{font-family:var(--mono);font-size:11px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.18em;margin-bottom:14px}
+.demo-footer-cols .fcol h3{font-family:var(--mono);font-size:11px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.18em;margin-bottom:14px}
 .demo-footer-cols .fcol a{display:block;color:var(--ink-2);font-size:13px;padding:4px 0;transition:color .2s}
 .demo-footer-cols .fcol a:hover{color:var(--ink)}
 @media (max-width:760px){.demo-footer-cols{grid-template-columns:repeat(2,1fr)}}
@@ -1302,7 +1302,7 @@ form h4{font-weight:700;font-size:24px;letter-spacing:-.02em;margin-bottom:8px;c
 .footer-cols{padding:60px 40px 32px;display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr 1fr;gap:32px;border-top:1px solid var(--line);margin-top:80px}
 @media (max-width:1024px){.footer-cols{grid-template-columns:1fr 1fr 1fr;gap:24px}}
 @media (max-width:640px){.footer-cols{grid-template-columns:1fr 1fr;gap:20px}}
-.fcol h4{font-family:var(--mono);font-size:11px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.14em;margin-bottom:16px}
+.fcol h3{font-family:var(--mono);font-size:11px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.14em;margin-bottom:16px}
 .fcol a, .fcol p{display:block;color:var(--ink-2);font-size:14px;line-height:1.8;font-weight:500;transition:color .2s}
 .fcol a:hover{color:var(--ink)}
 .copy{padding:24px 40px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:11px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.12em}

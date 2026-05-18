@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="45%" r="75%">
+      <stop offset="0%" stop-color="#1c1c22"/>
+      <stop offset="60%" stop-color="#15151a"/>
+      <stop offset="100%" stop-color="#0e0e10"/>
+    </radialGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ff5a1f" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#ff5a1f" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#ff5a1f" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Fond -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- Grille verticale très discrète -->
+  <g stroke="#3a3a40" stroke-width="1" opacity="0.14">
+    <line x1="200" y1="0" x2="200" y2="630"/>
+    <line x1="400" y1="0" x2="400" y2="630"/>
+    <line x1="600" y1="0" x2="600" y2="630"/>
+    <line x1="800" y1="0" x2="800" y2="630"/>
+    <line x1="1000" y1="0" x2="1000" y2="630"/>
+  </g>
+
+  <!-- Label haut gauche -->
+  <text x="80" y="80"
+        font-family="Helvetica, Arial, sans-serif"
+        font-size="18"
+        letter-spacing="3"
+        fill="#7a7a82"
+        font-weight="500">
+    STUDIO WEB · FRANCE
+  </text>
+
+  <!-- Marqueur orange (accent de marque) en haut droite -->
+  <circle cx="1120" cy="76" r="6" fill="#ff5a1f"/>
+
+  <!-- Wordmark central -->
+  <text x="600" y="335"
+        font-family="Helvetica, Arial, sans-serif"
+        font-size="200"
+        font-weight="700"
+        letter-spacing="-5"
+        fill="#f3f1ea"
+        text-anchor="middle">
+    VÆON
+  </text>
+
+  <!-- Sous-titre italique -->
+  <text x="600" y="420"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="40"
+        font-style="italic"
+        fill="#b9b6ad"
+        text-anchor="middle">
+    Sites web sur-mesure pour TPE premium
+  </text>
+
+  <!-- Accent line orange -->
+  <rect x="500" y="460" width="200" height="2" fill="url(#accent)"/>
+
+  <!-- Footer URL discret -->
+  <text x="600" y="570"
+        font-family="Helvetica, Arial, sans-serif"
+        font-size="20"
+        letter-spacing="5"
+        fill="#3a3a40"
+        text-anchor="middle"
+        font-weight="500">
+    VAEON.FR
+  </text>
+</svg>

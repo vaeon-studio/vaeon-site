@@ -66,3 +66,6 @@ prisma/*.db
 *.bak
 .cache/
 coverage/
+
+# Lighthouse reports (regenerated on demand via npx lighthouse)
+reports/
