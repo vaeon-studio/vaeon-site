@@ -1,0 +1,3246 @@
+/* =====================================================
+   STYLE.CSS — Barber Iconique (clone neutralisé du beaute-iconique)
+   Sections actuelles :
+     1. Header smart-contrast (transparent, change selon data-theme)
+     2. Hero (split / photo, scroll-driven)
+     3. Section 2 (titre éclaté + portrait magazine)
+   ⚠️ Variables couleurs/polices NEUTRES — à définir pour Barber (tag `TODO`).
+   ===================================================== */
+
+/* ============== RESET & ROOT ============== */
+*,*::before,*::after{box-sizing:border-box}
+*{margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+/* Pas de scroll-behavior:smooth — Lenis prend le relais */
+body{min-height:100vh;line-height:1.55;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+img,picture,video,svg{display:block;max-width:100%;height:auto}
+input,button,textarea,select{font:inherit;color:inherit}
+button{background:none;border:0;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+a{color:inherit;text-decoration:none;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+ul,ol{list-style:none}
+h1,h2,h3,h4{font-weight:400;line-height:1.05}
+:focus-visible{outline:1px solid var(--accent);outline-offset:3px}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}
+}
+
+:root{
+  /* === COULEURS — PALETTE NEUTRE PLACEHOLDER (TODO Barber) === */
+  --bg-creme:      #FFFFFF;   /* TODO: à définir pour Barber — fond principal */
+  --bg-creme-warm: #F5F5F5;   /* TODO: à définir pour Barber — fond secondaire */
+  --ink:           #1A1A1A;   /* TODO: à définir pour Barber — texte foncé */
+  --ink-soft:      #666666;   /* TODO: à définir pour Barber — texte secondaire */
+  --ink-white:     #FFFFFF;   /* TODO: à définir pour Barber — texte sur fond sombre */
+  --accent:        #808080;   /* TODO: à définir pour Barber — accent / couleur d'appel */
+
+  /* === TYPOGRAPHIE — STACK SYSTÈME PLACEHOLDER (TODO Barber) === */
+  --sans:  "Helvetica", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; /* TODO: police barber à définir */
+  --serif: "Georgia", "Times New Roman", serif;                                            /* TODO: police barber à définir */
+
+  /* === PLACEHOLDERS IMAGES === */
+  --placeholder-bg: #EFEFEF;
+  --placeholder-image: none;
+
+  --pad-x:    clamp(20px, 4vw, 56px);
+  --header-h: 64px;
+  --ease:     cubic-bezier(.7, 0, .3, 1);
+  --ease-soft: cubic-bezier(.2, .7, .2, 1);
+}
+
+/* === PLACEHOLDERS BARBER — neutralisation visuelle des images supprimées === */
+.placeholder-image{
+  background-color: var(--placeholder-bg);
+  background-image: linear-gradient(135deg, rgba(0,0,0,0.02) 25%, transparent 25%, transparent 50%, rgba(0,0,0,0.02) 50%, rgba(0,0,0,0.02) 75%, transparent 75%);
+  background-size: 16px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--sans);
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #BBBBBB;
+  min-height: 100%;
+  aspect-ratio: inherit;
+}
+
+body{
+  font-family:var(--sans);font-weight:300;
+  color:var(--ink);background:var(--bg-creme);
+  font-size:clamp(15px,1vw + .45rem,17px);
+  overflow-x:hidden;
+}
+
+/* ===========================================================
+   HEADER SMART-CONTRAST
+   - Fixé en haut, transparent par défaut
+   - data-header-theme="light"  → textes/icônes en var(--ink) (noir)
+   - data-header-theme="dark"   → textes/icônes en var(--ink-white) (blanc)
+   - .scrolled (>100px scroll) → léger backdrop-blur
+   =========================================================== */
+.site-header{
+  position:fixed;inset:0 0 auto 0;z-index:100;
+  height:var(--header-h);
+  display:grid;grid-template-columns:1fr auto 1fr;align-items:center;
+  padding:0 var(--pad-x);
+  background:transparent;
+  pointer-events:none;
+  transition:background .4s var(--ease-soft), backdrop-filter .4s var(--ease-soft);
+}
+.site-header > *{pointer-events:auto}
+
+/* Backdrop blur léger quand scroll > 100px */
+.site-header.scrolled{
+  backdrop-filter:saturate(140%) blur(10px);
+  -webkit-backdrop-filter:saturate(140%) blur(10px);
+  background:rgba(245,240,232,.04);
+}
+
+/* Burger */
+.burger{
+  justify-self:start;
+  width:36px;height:24px;position:relative;
+}
+.burger-line,
+.burger span{
+  position:absolute;left:0;right:0;height:1.5px;
+  transition:transform .35s var(--ease), top .35s var(--ease), opacity .25s var(--ease), background-color .4s var(--ease-soft);
+}
+.burger-line:nth-child(1),
+.burger span:nth-child(1){top:6px}
+.burger-line:nth-child(2),
+.burger span:nth-child(2){top:14px}
+.burger[aria-expanded="true"] .burger-line:nth-child(1),
+.burger[aria-expanded="true"] span:nth-child(1){top:11px;transform:rotate(45deg)}
+.burger[aria-expanded="true"] .burger-line:nth-child(2),
+.burger[aria-expanded="true"] span:nth-child(2){top:11px;transform:rotate(-45deg)}
+
+/* Logo center */
+.brand-center,
+.header-logo{
+  justify-self:center;
+  font-family:var(--serif);font-style:italic;font-weight:400;
+  font-size:1.25rem;letter-spacing:.32em;text-transform:uppercase;
+  user-select:none;
+  transition:color .4s var(--ease-soft);
+}
+
+/* CTA droite */
+.header-cta{
+  justify-self:end;
+  font-family:var(--sans);font-size:.7rem;font-weight:500;
+  letter-spacing:.18em;text-transform:uppercase;
+  padding-bottom:2px;
+  border-bottom:1px solid transparent;
+  transition:color .4s var(--ease-soft), border-color .35s var(--ease);
+}
+.header-cta:hover{border-bottom-color:currentColor}
+
+/* ──────── Smart-contrast : theme LIGHT (sur fond clair) ──────── */
+.site-header[data-header-theme="light"] .burger-line,
+.site-header[data-header-theme="light"] .burger span{
+  background-color:var(--ink);
+}
+.site-header[data-header-theme="light"] .brand-center,
+.site-header[data-header-theme="light"] .header-logo,
+.site-header[data-header-theme="light"] .header-cta{
+  color:var(--ink);
+}
+
+/* ──────── Smart-contrast : theme DARK (sur fond sombre) ──────── */
+.site-header[data-header-theme="dark"] .burger-line,
+.site-header[data-header-theme="dark"] .burger span{
+  background-color:var(--ink-white);
+}
+.site-header[data-header-theme="dark"] .brand-center,
+.site-header[data-header-theme="dark"] .header-logo,
+.site-header[data-header-theme="dark"] .header-cta{
+  color:var(--ink-white);
+}
+
+@media (max-width:600px){
+  .brand-center,.header-logo{font-size:1.05rem;letter-spacing:.28em}
+  .header-cta{display:none}
+}
+
+/* ===========================================================
+   HERO — section principale (split crème / photo)
+   =========================================================== */
+.hero-section{
+  position:relative;
+  width:100%;
+  height:100vh;
+  height:100svh;
+  min-height:600px;
+  overflow:hidden;
+}
+@supports (height:100dvh){.hero-section{height:100dvh}}
+
+/* PANNEAU GAUCHE — fond crème uni (50% → 0% au scroll) */
+.hero-bg-pane{
+  position:absolute;left:0;top:0;
+  width:50%;height:100%;
+  background:var(--bg-creme);
+  z-index:1;
+  will-change:width;
+  border-right:1px solid rgba(26,24,20,.06);
+}
+
+/* PANNEAU DROIT — photo (50% → 100% au scroll) */
+.hero-photo-pane{
+  position:absolute;right:0;top:0;
+  width:50%;height:100%;
+  z-index:0;
+  overflow:hidden;
+  background:var(--bg-creme-warm);
+  will-change:width;
+}
+.hero-photo-pane img,
+.hero-photo-pane .hero-photo-placeholder{
+  width:100%;height:100%;
+  object-fit:cover;object-position:center 25%;  /* cadre sur les yeux (1/4 haut du portrait) */
+  display:block;
+  will-change:transform;
+  image-rendering:high-quality;
+  image-rendering:-webkit-optimize-contrast;
+  -webkit-backface-visibility:hidden;
+  backface-visibility:hidden;
+  -webkit-transform:translateZ(0);
+  transform:translateZ(0);
+  filter:contrast(1.02) saturate(1.04);
+}
+
+.hero-photo-placeholder{
+  display:flex;align-items:center;justify-content:center;
+  background:var(--bg-creme-warm);
+  font-family:var(--serif);font-style:italic;font-weight:400;
+  color:var(--accent);font-size:1.4rem;letter-spacing:.05em;
+  text-align:center;padding:2rem;
+}
+
+/* CONTENT — eyebrow + sous-titre + scroll indicator */
+.hero-content{
+  position:absolute;
+  left:0;top:0;
+  width:50%;height:100%;
+  z-index:3;
+  padding:calc(var(--header-h) + clamp(20px, 4vw, 48px)) var(--pad-x) clamp(40px, 6vw, 72px);
+  display:flex;flex-direction:column;justify-content:space-between;
+  pointer-events:none;
+}
+.hero-content > *{pointer-events:auto}
+
+/* EYEBROW */
+.hero-eyebrow{
+  display:flex;align-items:center;gap:1rem;
+  font-family:var(--sans);font-size:.7rem;font-weight:500;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--ink);
+  will-change:opacity;
+}
+.hero-eyebrow-numero{font-variant-numeric:tabular-nums;color:var(--ink)}
+.hero-eyebrow-marque{
+  display:inline-block;
+  padding:5px 11px;
+  border:1px solid var(--ink);
+  letter-spacing:.2em;
+  font-weight:500;
+}
+
+/* TITRE PRINCIPAL — mix-blend-mode difference */
+.hero-title{
+  position:absolute;
+  left:0;right:0;
+  top:50%;
+  transform:translateY(-50%);
+  z-index:4;
+  font-family:var(--sans);font-style:normal;font-weight:300;
+  font-size:clamp(48px, 9vw, 140px);
+  line-height:1.05;letter-spacing:-0.005em;
+  text-transform:uppercase;
+  color:var(--ink-white);
+  text-align:left;
+  padding:0 var(--pad-x);
+  pointer-events:none;
+  mix-blend-mode:difference;
+  will-change:opacity;
+  margin-left:clamp(20px, 5vw, 80px);
+}
+
+/* SOUS-TITRE + DESCRIPTION */
+.hero-bottom{
+  display:flex;flex-direction:column;gap:1.4rem;
+  max-width:520px;
+  will-change:opacity;
+}
+.hero-sous-titre{
+  font-family:var(--serif);font-style:italic;font-weight:300;
+  font-size:clamp(1.2rem, .9rem + .9vw, 1.7rem);
+  line-height:1.25;color:var(--ink);
+  max-width:18ch;
+}
+.hero-description{
+  font-family:var(--serif);font-style:italic;font-weight:300;
+  font-size:clamp(15px, 1.6vw, 18px);
+  line-height:1.65;color:var(--ink-soft);
+  max-width:42ch;
+  padding-left:1rem;border-left:1px solid var(--ink-soft);
+  opacity:.85;
+}
+
+/* SCROLL INDICATOR */
+.hero-scroll-indicator{
+  position:absolute;
+  left:var(--pad-x);
+  bottom:clamp(28px, 4vh, 48px);
+  z-index:5;
+  display:flex;align-items:center;gap:.8rem;
+  font-family:var(--sans);font-size:.66rem;font-weight:500;
+  letter-spacing:.32em;text-transform:uppercase;
+  color:var(--ink);
+  writing-mode:vertical-rl;
+  transform:rotate(180deg);
+  will-change:opacity;
+}
+.hero-scroll-indicator::before{
+  content:"";
+  width:1px;height:48px;
+  background:var(--ink);
+  display:block;
+  animation:scroll-line 2.4s var(--ease-soft) infinite;
+}
+@keyframes scroll-line{
+  0%   {transform:scaleY(0);transform-origin:top}
+  50%  {transform:scaleY(1);transform-origin:top}
+  50.01%{transform-origin:bottom}
+  100% {transform:scaleY(0);transform-origin:bottom}
+}
+
+/* ============== HERO RESPONSIVE ============== */
+@media (min-width:768px) and (max-width:1023px){
+  .hero-bg-pane{width:40%}
+  .hero-photo-pane{width:60%}
+  .hero-content{width:40%}
+  .hero-title{font-size:clamp(56px, 11vw, 140px)}
+}
+
+@media (max-width:767px){
+  .hero-section{
+    height:100vh;height:100svh;min-height:560px;
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-end;
+    padding-bottom:96px;
+  }
+  .hero-bg-pane{display:none}
+  .hero-photo-pane{width:100%;height:100%;z-index:0}
+  .hero-photo-pane::after{
+    content:"";position:absolute;inset:0;z-index:1;
+    background:linear-gradient(180deg,
+      rgba(26,24,20,.25) 0%, rgba(26,24,20,.45) 50%, rgba(26,24,20,.75) 100%);
+  }
+  /* hero-title et hero-content passent en flow normal et s'empilent en bas */
+  .hero-title{
+    position:relative;left:auto;right:auto;top:auto;
+    transform:none;margin:0 0 1.25rem 0;
+    padding:0 var(--pad-x);
+    color:#fff;mix-blend-mode:normal;
+    text-shadow:0 4px 24px rgba(0,0,0,.45);
+    font-size:clamp(44px, 12vw, 80px);
+    line-height:1.05;
+    z-index:3;
+    pointer-events:auto;
+  }
+  .hero-content{
+    position:relative;
+    left:auto;top:auto;
+    width:100%;height:auto;
+    padding:0 var(--pad-x);
+    color:#fff;z-index:3;
+    display:block;
+    pointer-events:auto;
+  }
+  .hero-bottom{display:block;max-width:none;gap:0}
+  .hero-eyebrow,.hero-sous-titre,.hero-description{color:#fff}
+  .hero-eyebrow-marque{border-color:#fff;color:#fff}
+  .hero-description{
+    border-left-color:#fff;opacity:.92;max-width:none;
+    margin:0;
+  }
+  .hero-scroll-indicator{color:#fff;bottom:24px;z-index:5}
+  .hero-scroll-indicator::before{background:#fff}
+  .hero-content,.hero-title{
+    animation:hero-fade-in 1s var(--ease-soft) backwards;
+  }
+  .hero-title{animation-delay:.15s}
+  @keyframes hero-fade-in{
+    from{opacity:0;transform:translateY(20px)}
+    to{opacity:1;transform:translateY(0)}
+  }
+}
+
+@media (prefers-reduced-motion:reduce){
+  .hero-bg-pane{display:none}
+  .hero-photo-pane{width:100%}
+  .hero-title{opacity:0}
+  .hero-content{opacity:0}
+  .hero-scroll-indicator{display:none}
+}
+
+/* ===========================================================
+   SECTION 2 — TITRE ÉCLATÉ MAGAZINE (layout magazine)
+   =========================================================== */
+.section-personalise{
+  background:var(--bg-creme);
+  padding:clamp(80px, 12vw, 120px) 0 clamp(60px, 9vw, 80px);
+  position:relative;
+  overflow:hidden;
+}
+
+/* EYEBROW (numéro + ligne + label) */
+.personalise-eyebrow{
+  display:flex;align-items:center;gap:16px;
+  padding:0 var(--pad-x);
+  margin-bottom:clamp(48px, 7vw, 80px);
+  font-family:var(--sans);
+  font-size:12px;
+  letter-spacing:.32em;
+  color:var(--ink);
+  text-transform:uppercase;
+}
+.personalise-eyebrow .eyebrow-num{font-weight:500;font-variant-numeric:tabular-nums}
+.personalise-eyebrow .eyebrow-line{
+  display:inline-block;
+  width:60px;height:1px;
+  background:var(--ink);
+  flex-shrink:0;
+}
+.personalise-eyebrow .eyebrow-label{font-weight:400}
+
+/* TITRE STACK (chaque ligne sur sa propre ligne) */
+.personalise-title-stack{
+  position:relative;
+  padding:0 var(--pad-x);
+}
+.personalise-title{
+  margin:0;
+  font-family:var(--serif);
+  position:relative;
+  text-align:center;
+  display:flex;flex-direction:column;align-items:center;
+}
+
+/* Une "ligne" (peut contenir plusieurs mots côte à côte) */
+.title-line{
+  display:flex;
+  justify-content:center;
+  align-items:baseline;
+  gap:24px;
+  flex-wrap:wrap;
+  position:relative;
+  z-index:2;
+}
+
+/* Mot principal en gros majuscules (style "fill") */
+.title-word-fill{
+  font-size:clamp(48px, 8vw, 140px);
+  font-weight:500;
+  font-style:normal;
+  color:var(--ink);
+  letter-spacing:.02em;
+  line-height:1;
+  text-transform:uppercase;
+}
+
+/* Mot italique petit (style "italic-small") */
+.title-word-italic-small{
+  font-size:clamp(20px, 2.5vw, 36px);
+  font-weight:300;
+  font-style:italic;
+  color:var(--ink-soft);
+  line-height:1;
+  letter-spacing:0;
+}
+
+/* Spacing entre les lignes — basé sur l'index (généré en data-line-index)
+   Layout cible : la 3e ligne ("avec nos") chevauche le haut de la photo,
+   et la 4e ligne ("SOINS SIGNATURE") remonte derrière la photo. */
+.title-line[data-line-index="0"]{margin-bottom:0}
+.title-line[data-line-index="1"]{margin-bottom:24px}
+.title-line[data-line-index="2"]{
+  margin-bottom:-40px;       /* "avec nos" descend juste au-dessus de la photo */
+  position:relative;
+  z-index:3;
+}
+.title-line[data-line-index="3"]{
+  margin-top:-180px;         /* dernier mot remonte par-dessus la photo */
+  position:relative;
+  z-index:5;                  /* DEVANT la photo (effet Ever : titre lisible en surimpression) */
+  color:var(--ink);
+  opacity:1;
+  mix-blend-mode:multiply;    /* le titre fusionne avec la photo (effet "stamp" éditorial) */
+}
+
+/* Photo portrait au centre (dépasse au-dessus et en dessous) */
+.personalise-portrait{
+  position:relative;
+  z-index:2;
+  margin:32px auto;
+  width:clamp(280px, 38vw, 480px);
+  aspect-ratio:3/4;
+  overflow:hidden;
+  background:#D5CFC2;          /* fallback uni si l'image échoue */
+}
+.personalise-portrait::before{
+  content:'PORTRAIT À AJOUTER';
+  position:absolute;
+  inset:0;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--sans);
+  font-size:11px;
+  letter-spacing:.32em;
+  color:var(--ink-soft);
+  z-index:0;
+  pointer-events:none;
+}
+.portrait-img{
+  position:relative;z-index:1;
+  width:100%;height:100%;
+  object-fit:cover;
+  object-position:center top;
+  display:block;
+  background:#D5CFC2;
+  /* Mêmes règles anti-flou que le hero-photo */
+  image-rendering:high-quality;
+  image-rendering:-webkit-optimize-contrast;
+  -webkit-backface-visibility:hidden;
+  backface-visibility:hidden;
+  -webkit-transform:translateZ(0);
+  transform:translateZ(0);
+  filter:contrast(1.02) saturate(1.04);
+}
+/* Si la photo n'a pas de src OU a échoué → on cache l'img pour montrer le ::before placeholder */
+.portrait-img:not([src]),
+.portrait-img[src=""]{display:none}
+
+/* DESCRIPTION italique en bas */
+.personalise-description{
+  max-width:580px;
+  margin:clamp(48px, 7vw, 80px) auto 0;
+  padding:0 var(--pad-x);
+  text-align:center;
+}
+.personalise-description p{
+  font-family:var(--serif);
+  font-style:italic;
+  font-weight:300;
+  font-size:clamp(15px, 1.6vw, 18px);
+  line-height:1.6;
+  color:var(--ink-soft);
+  margin:0;
+}
+
+/* ============== SECTION 2 — TABLET (768-1023px) ============== */
+@media (min-width:768px) and (max-width:1023px){
+  .title-line[data-line-index="2"]{margin-bottom:-20px}
+  .title-line[data-line-index="3"]{margin-top:-60px}
+}
+
+/* ============== SECTION 2 — MOBILE (<768px) ============== */
+/* Pas de chevauchement : tout empilé verticalement, photo à sa place naturelle. */
+@media (max-width:767px){
+  .section-personalise{padding:80px 0 60px}
+  .personalise-eyebrow{
+    margin-bottom:48px;
+    padding:0 var(--pad-x);
+    flex-wrap:wrap;
+  }
+  .title-line{gap:12px}
+  .title-word-fill{font-size:clamp(36px, 11vw, 80px)}
+  .title-word-italic-small{font-size:clamp(16px, 4vw, 24px)}
+  /* Pas de chevauchement sur mobile */
+  .title-line[data-line-index="2"]{margin-bottom:16px}
+  .title-line[data-line-index="3"]{
+    margin-top:24px;
+    opacity:1;                 /* pleine couleur, plus derrière une photo */
+    z-index:auto;
+  }
+  .personalise-portrait{
+    width:min(70vw, 320px);
+    margin:20px auto;
+  }
+  .personalise-description{
+    margin-top:48px;
+  }
+}
+
+/* ============== SECTION 2 — Reduced motion ============== */
+@media (prefers-reduced-motion:reduce){
+  /* Tout visible, pas d'animation au scroll */
+  .personalise-eyebrow > *,
+  .title-line,
+  .personalise-portrait,
+  .personalise-description p{
+    opacity:1!important;
+    transform:none!important;
+  }
+}
+
+/* ============================================================
+   ============== SECTION 3 — L'EXPÉRIENCE / MÉTHODE ==============
+   Inspirée de "Why Lash Extensions at EVER?" :
+   - Titre central énorme sans-serif light en majuscules
+   - 3 raisons en colonnes (Inter italic title + Inter texte)
+   - Photos sépia latérales animées en scrub
+   - Fond crème chaud (continuité hero + section 2)
+   - Texture papier subtile en background
+   ============================================================ */
+
+.section-experience{
+  /* CSS vars animées par GSAP scrub : fond dark → cream, texte light → dark */
+  --section-bg:      #3A2E1C;          /* initial : brun chaud profond (DA Ever) */
+  --section-fg:      #F5F0E8;          /* initial : crème clair sur fond dark */
+  --section-fg-soft: rgba(245,240,232,.75);
+
+  background:var(--section-bg);
+  padding:180px 0;
+  position:relative;
+  overflow:hidden;
+  min-height:130vh;                    /* + grand pour laisser l'espace au parallax */
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+/* Texture papier subtile en background */
+.section-experience::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(166, 107, 92, 0.04) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(166, 107, 92, 0.03) 0%, transparent 50%);
+  pointer-events:none;
+}
+
+/* ─── PHOTOS SÉPIA LATÉRALES ─── */
+.experience-photo{
+  position:absolute;
+  width:clamp(200px, 24vw, 360px);
+  aspect-ratio:3/4;
+  overflow:hidden;
+  z-index:1;
+  opacity:1;                                /* géré par GSAP, sera mis à 0 puis 1 */
+  will-change:transform;
+  pointer-events:none;
+  background:#D5CFC2;  /* fallback couleur si photo manquante */
+}
+
+.experience-photo-left{
+  left:clamp(24px, 5vw, 100px);             /* marge depuis le bord gauche */
+  bottom:10%;
+}
+
+.experience-photo-right{
+  right:clamp(24px, 5vw, 100px);            /* marge depuis le bord droit */
+  top:10%;
+}
+
+/* Placeholder texte si photo manquante (visible quand .experience-photo-img n'a pas de src) */
+.experience-photo::before{
+  content:'PHOTO À AJOUTER';
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:var(--sans);
+  font-size:10px;
+  letter-spacing:0.32em;
+  color:#5C544A;
+  z-index:0;
+  text-align:center;
+}
+
+.experience-photo-img{
+  position:relative;
+  z-index:1;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+  display:block;
+  filter:sepia(40%) saturate(80%) brightness(0.95);
+}
+
+/* Si l'img n'a pas de src (onerror a retiré le src), elle est cachée
+   et le ::before "PHOTO À AJOUTER" reste visible */
+.experience-photo-img:not([src]),
+.experience-photo-img[src=""]{
+  display:none;
+}
+
+/* ─── CONTAINER CENTRAL ─── */
+.experience-container{
+  position:relative;
+  z-index:2;
+  max-width:980px;
+  margin:0 auto;
+  padding:0 32px;
+  text-align:center;
+}
+
+/* Eyebrow (marque) */
+.experience-eyebrow{
+  margin-bottom:48px;
+}
+.experience-brand{
+  font-family:var(--sans);
+  font-size:12px;
+  font-weight:500;
+  letter-spacing:0.32em;
+  text-transform:uppercase;
+  color:var(--section-fg-soft);            /* suit la transition de couleur scrub */
+}
+
+/* Titre central énorme — sans-serif light en majuscules */
+.experience-title{
+  font-family:var(--sans);
+  font-size:clamp(40px, 6vw, 88px);
+  font-weight:300;
+  line-height:1.05;
+  letter-spacing:-0.005em;
+  color:var(--section-fg);                  /* suit la transition de couleur scrub */
+  text-transform:uppercase;
+  margin:0 0 48px;
+}
+
+/* Sous-titre italique */
+.experience-subtitle{
+  max-width:580px;
+  margin:0 auto 96px;
+  font-family:var(--sans);
+  font-style:italic;
+  font-weight:300;
+  font-size:clamp(15px, 1.6vw, 18px);
+  line-height:1.65;
+  color:var(--section-fg-soft);             /* suit la transition de couleur scrub */
+}
+
+/* ─── GRILLE 3 RAISONS ─── */
+.experience-reasons{
+  display:grid;
+  grid-template-columns:repeat(3, 1fr);
+  gap:64px 48px;
+  max-width:880px;
+  margin:0 auto;
+}
+
+.experience-reason{
+  text-align:center;
+}
+
+.reason-title{
+  font-family:var(--sans);
+  font-style:italic;
+  font-weight:400;
+  font-size:clamp(22px, 2.4vw, 32px);
+  line-height:1.2;
+  color:var(--section-fg);                  /* suit la transition de couleur scrub */
+  margin:0 0 20px;
+}
+
+.reason-text{
+  font-family:var(--sans);
+  font-size:14px;
+  font-weight:400;
+  line-height:1.7;
+  color:var(--section-fg-soft);             /* suit la transition de couleur scrub */
+  margin:0;
+}
+
+/* ─── RESPONSIVE TABLETTE (768-1023px) ─── */
+@media (max-width:1023px){
+  .section-experience{
+    padding:120px 0;
+  }
+  .experience-photo-left{
+    width:140px;
+    bottom:4%;
+  }
+  .experience-photo-right{
+    width:140px;
+    top:4%;
+  }
+  .experience-reasons{
+    grid-template-columns:repeat(3, 1fr);
+    gap:48px 32px;
+  }
+}
+
+/* ─── RESPONSIVE MOBILE (< 768px) ─── */
+@media (max-width:767px){
+  .section-experience{
+    padding:80px 0;
+    min-height:auto;
+  }
+  /* Sur mobile, on cache les photos latérales (pas pertinent au touch) */
+  .experience-photo{
+    display:none;
+  }
+  .experience-eyebrow{
+    margin-bottom:32px;
+  }
+  .experience-title{
+    margin-bottom:32px;
+  }
+  .experience-subtitle{
+    margin-bottom:64px;
+  }
+  .experience-reasons{
+    grid-template-columns:1fr;
+    gap:48px;
+    max-width:480px;
+  }
+  .reason-title{
+    margin-bottom:16px;
+  }
+}
+
+/* ─── prefers-reduced-motion : photos visibles statiquement ─── */
+@media (prefers-reduced-motion:reduce){
+  .experience-photo{
+    opacity:1;
+    transform:none;
+  }
+}
+
+/* ============================================================
+   ============== SECTION 4 — INTERACTIVE FACE MAP ==============
+   Inspirée d'Ever : photo portrait full-bleed + 5 numéros interactifs
+   sur le visage + card flottante qui change selon hover/clic.
+   Fond sombre (data-theme="dark") → header smart-contrast bascule.
+   ============================================================ */
+
+.section-facemap{
+  position:relative;
+  width:100%;
+  height:100vh;
+  min-height:700px;
+  overflow:hidden;
+  /* Mode DARK : fond sombre + halo radial subtil terracotta
+     pour donner du volume derrière le portrait. */
+  background:
+    radial-gradient(ellipse at 70% 55%, rgba(212, 166, 149, 0.12) 0%, transparent 65%),
+    #1A1814;
+}
+
+/* ─── BACKGROUND PHOTO (PNG transparent — sujet détouré) ───
+   Z-index 2 (au-dessus du marquee) → la femme PASSE DEVANT le texte
+   défilant (effet Ever : le marquee défile DERRIÈRE la tête). */
+.facemap-bg{
+  position:absolute;
+  inset:0;
+  z-index:2;
+}
+
+/* Photo en aspect-ratio fixe = même taille calculable côté CSS et JS.
+   Plus d'object-fit:contain (qui rendait la zone réelle de la photo
+   imprévisible) → les points peuvent maintenant être positionnés
+   précisément en % de la photo (pas du conteneur). */
+.facemap-bg-img{
+  position:absolute;
+  right:0;
+  top:0;
+  height:100%;
+  width:auto;
+  /* aspect-ratio match les dimensions du PNG actuel (5473×3654 paysage). */
+  aspect-ratio:5473 / 3654;
+  z-index:1;
+  display:block;
+  filter:contrast(1.02) saturate(1.04);
+  transform:translateX(45%);
+
+  /* Fondu progressif sur le bord gauche pour adoucir la coupure
+     avec le fond crème (le reste de l'image reste net). */
+  -webkit-mask-image:linear-gradient(to right, transparent 0%, black 18%, black 100%);
+  mask-image:linear-gradient(to right, transparent 0%, black 18%, black 100%);
+}
+
+.facemap-bg-overlay{
+  /* Gradient crème en bas pour fader la photo dans le fond avant la card.
+     Masque la coupure brutale (épaule/bras) et crée une transition douce. */
+  position:absolute;
+  inset:0;
+  z-index:2;
+  pointer-events:none;
+  background:linear-gradient(
+    180deg,
+    rgba(26, 24, 20, 0) 0%,
+    rgba(26, 24, 20, 0) 60%,
+    rgba(26, 24, 20, 0.4) 75%,
+    rgba(26, 24, 20, 0.85) 88%,
+    #1A1814 100%
+  );
+}
+
+/* Gradient ::after retiré : la card n'est plus un bandeau pleine largeur,
+   donc plus besoin de fade au-dessus. Le gradient principal de
+   .facemap-bg-overlay (linear-gradient bottom) suffit pour adoucir le bas. */
+
+/* Fallback si photo manquante : le ::before "PHOTO PORTRAIT À AJOUTER"
+   ne s'affiche QUE si l'image n'a pas de src (utilise :has() qui est
+   supporté Chrome/Safari/Firefox récent). */
+.facemap-bg:has(.facemap-bg-img:not([src]))::before,
+.facemap-bg:has(.facemap-bg-img[src=""])::before{
+  content:'PHOTO PORTRAIT À AJOUTER';
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:var(--sans);
+  font-size:12px;
+  letter-spacing:0.32em;
+  color:#5C544A;
+  background:transparent;
+  z-index:0;
+  text-align:center;
+}
+.facemap-bg-img:not([src]),
+.facemap-bg-img[src=""]{
+  display:none;
+}
+
+/* ─── MARQUEE EN BACKGROUND ───
+   Z-index 1 (sous la photo z-index:2) → le texte défile DERRIÈRE
+   la femme détourée. Effet "BEAUTY IN EVERY DETAIL" qui passe
+   derrière la tête (signature Ever). */
+.facemap-marquee{
+  position:absolute;
+  top:50%;
+  left:0;
+  width:100%;
+  z-index:1;
+  overflow:hidden;
+  transform:translateY(-50%);
+  pointer-events:none;
+  opacity:0.3;
+}
+
+.facemap-marquee-track{
+  display:flex;
+  white-space:nowrap;
+  animation:facemap-marquee-scroll 20s linear infinite;
+}
+
+.facemap-marquee-track span{
+  font-family:var(--sans);
+  font-size:clamp(80px, 12vw, 200px);
+  font-weight:300;
+  /* line-height 1.15 nécessaire : avec line-height:1, les accents
+     Ô / Ê en uppercase sortent de la line-box et sont recadrés par
+     overflow:hidden du parent .facemap-marquee. */
+  line-height:1.15;
+  /* Mode DARK : marquee en blanc sur fond sombre */
+  color:#FFFFFF;
+  letter-spacing:-0.02em;
+  text-transform:uppercase;
+  padding-right:60px;
+  flex-shrink:0;
+}
+
+@keyframes facemap-marquee-scroll{
+  from{transform:translateX(0)}
+  to{transform:translateX(-50%)}
+}
+
+/* ─── NUMÉROS INTERACTIFS SUR LE VISAGE ───
+   Wrapper qui matche EXACTEMENT la zone de la photo (même aspect-ratio,
+   même position right:0). Comme ça les % des points (position.x/y dans
+   config.js) sont relatifs à la PHOTO, pas au conteneur de la section.
+   Les points tombent ainsi pile sur les traits du visage, peu importe
+   le viewport. */
+.facemap-points{
+  position:absolute;
+  right:0;
+  top:0;
+  height:100%;
+  width:auto;
+  aspect-ratio:4480 / 6720;   /* IDENTIQUE à .facemap-bg-img */
+  z-index:3;
+  pointer-events:none;
+}
+
+.facemap-point{
+  position:absolute;
+  width:56px;
+  height:56px;
+  border-radius:50%;
+  /* Mode LIGHT : numéros sombres semi-transparents (lisibles sur peau ET sur fond crème) */
+  background:rgba(26, 24, 20, 0.65);
+  border:1px solid rgba(245, 240, 232, 0.6);
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+  color:#FFFFFF;
+  font-family:var(--sans);
+  font-size:14px;
+  font-weight:500;
+  letter-spacing:0.04em;
+  cursor:pointer;
+  pointer-events:auto;
+  transform:translate(-50%, -50%);
+  transition:transform 0.3s ease, background-color 0.3s ease,
+             border-color 0.3s ease, opacity 0.3s ease;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  user-select:none;
+  box-shadow:0 4px 16px rgba(26, 24, 20, 0.15);
+}
+
+.facemap-point::before{
+  content:'';
+  position:absolute;
+  inset:-8px;
+  border-radius:50%;
+  border:1px solid rgba(26, 24, 20, 0.3);
+  opacity:0;
+  transition:opacity 0.3s ease;
+}
+
+.facemap-point:hover,
+.facemap-point.active{
+  /* Hover/actif : passe en accent terracotta */
+  background:#A66B5C;
+  color:#FFFFFF;
+  border-color:#A66B5C;
+  transform:translate(-50%, -50%) scale(1.1);
+}
+
+.facemap-point:hover::before,
+.facemap-point.active::before{
+  opacity:1;
+  animation:facemap-point-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes facemap-point-pulse{
+  0%, 100%{transform:scale(1);opacity:0.4}
+  50%{transform:scale(1.15);opacity:0}
+}
+
+/* ─── CARD RECTANGLE HORIZONTAL AGRANDI — CENTRÉE H, ANCRÉE EN BAS ───
+   Ancrée par le BAS de la section (bottom au lieu de top) pour
+   garantir qu'elle ne dépasse jamais. Centrée horizontalement,
+   à 24-48px du bord inférieur de la section.
+   Layout horizontal : photo carrée à gauche, contenu + bouton à droite. */
+.facemap-card{
+  position:absolute;
+  top:auto;
+  left:clamp(16px, 2vw, 32px);
+  right:auto;
+  bottom:clamp(24px, 4vh, 48px);
+  transform:none;
+  width:clamp(720px, 86vw, 1280px);
+  height:auto;
+  background:#FFFFFF;
+  backdrop-filter:none;
+  -webkit-backdrop-filter:none;
+  z-index:5;
+  display:flex;
+  flex-direction:row;
+  align-items:stretch;
+  border:none;
+  box-shadow:0 32px 80px rgba(26, 24, 20, 0.18);
+  overflow:hidden;
+  transition:opacity 0.3s ease;
+}
+
+/* Photo carrée à gauche de la card (1:1, plus grande maintenant) */
+.facemap-card-photo{
+  flex-shrink:0;
+  width:clamp(280px, 32vw, 360px);
+  aspect-ratio:1 / 1;
+  height:auto;
+  background:#D5CFC2;
+  position:relative;
+  overflow:hidden;
+}
+
+.facemap-card-photo img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+  display:block;
+  position:relative;
+  z-index:1;
+  transition:opacity 0.4s ease;
+}
+
+/* Fallback photo card manquante */
+.facemap-card-photo::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:#D5CFC2;
+  z-index:0;
+}
+
+/* Contenu textuel à droite de la photo (layout horizontal) */
+.facemap-card-content{
+  flex:1;
+  padding:36px 44px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  gap:14px;
+  max-width:none;
+  min-width:0;
+}
+
+.facemap-card-eyebrow{
+  font-family:var(--sans);
+  font-size:11px;
+  font-weight:500;
+  letter-spacing:0.32em;
+  text-transform:uppercase;
+  color:#A66B5C;
+  margin:0;
+  transition:opacity 0.3s ease;
+}
+
+.facemap-card-title{
+  font-family:var(--sans);
+  font-style:italic;
+  font-weight:400;
+  font-size:32px;
+  line-height:1.05;
+  color:#1A1814;
+  margin:0;
+  transition:opacity 0.3s ease;
+}
+
+.facemap-card-description{
+  font-family:var(--sans);
+  font-size:14px;
+  font-weight:400;
+  line-height:1.55;
+  color:#5C544A;
+  margin:0;
+  max-width:none;
+  transition:opacity 0.3s ease;
+}
+
+/* Traitements : label au-dessus de la liste (vertical compact) */
+.facemap-card-treatments{
+  display:block;
+  margin-top:4px;
+  transition:opacity 0.3s ease;
+}
+
+.treatments-label{
+  font-family:var(--sans);
+  font-size:10px;
+  font-weight:500;
+  letter-spacing:0.32em;
+  text-transform:uppercase;
+  color:#1A1814;
+  margin:0 0 4px;
+}
+
+.treatments-list{
+  font-family:var(--sans);
+  font-size:12px;
+  font-weight:400;
+  line-height:1.4;
+  color:#5C544A;
+  margin:0;
+}
+
+/* Bouton RÉSERVER en bas à droite du contenu (auto-width, pas pleine largeur) */
+.facemap-card-cta{
+  position:relative;
+  right:auto;
+  top:auto;
+  transform:none;
+  display:inline-flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-top:12px;
+  padding:14px 26px;
+  background:#1A1814;
+  color:#F5F0E8;
+  font-family:var(--sans);
+  font-size:11px;
+  font-weight:500;
+  letter-spacing:0.32em;
+  text-transform:uppercase;
+  text-decoration:none;
+  transition:background-color 0.3s ease, color 0.3s ease;
+  width:auto;
+  min-width:0;
+  align-self:flex-start;
+}
+
+.facemap-card-cta:hover{
+  background:#A66B5C;
+  color:#FFFFFF;
+}
+
+.cta-arrow{
+  font-size:16px;
+  letter-spacing:0;
+  transition:transform 0.3s ease;
+}
+
+.facemap-card-cta:hover .cta-arrow{
+  transform:translateX(4px);
+}
+
+/* État de transition (fade pendant changement de prestation) */
+.facemap-card.transitioning .facemap-card-eyebrow,
+.facemap-card.transitioning .facemap-card-title,
+.facemap-card.transitioning .facemap-card-description,
+.facemap-card.transitioning .facemap-card-treatments,
+.facemap-card.transitioning .facemap-card-photo img{
+  opacity:0;
+}
+
+/* ─── RESPONSIVE TABLETTE (< 1024px) ─── */
+@media (max-width:1023px){
+  .section-facemap{
+    height:auto;
+    min-height:auto;
+  }
+  .facemap-bg{
+    position:relative;
+    height:80vh;
+    min-height:500px;
+  }
+  .facemap-marquee{top:40%}
+  /* Card devient flow normal (sous la photo), vertical, centrée */
+  .facemap-card{
+    position:relative;
+    top:auto;
+    left:auto;
+    right:auto;
+    bottom:auto;
+    transform:none;
+    flex-direction:column;
+    width:calc(100% - 48px);
+    max-width:480px;
+    height:auto;
+    margin:24px auto;
+  }
+  .facemap-card-photo{
+    width:100%;
+    aspect-ratio:1 / 1;
+    height:auto;
+  }
+  .facemap-card-content{
+    padding:24px;
+  }
+  .facemap-card-cta{
+    align-self:stretch;
+    width:100%;
+  }
+}
+
+/* ─── RESPONSIVE MOBILE (< 768px) ─── */
+@media (max-width:767px){
+  /* Photo affichée à son ratio naturel (landscape 5473×3654) en pleine largeur :
+     la tête est entièrement visible et les % de position (calibrés sur l'image
+     naturelle dans config.js) tombent pile sur les traits sans crop. */
+  .facemap-bg{
+    height:auto;
+    aspect-ratio:5473 / 3654;
+    min-height:0;
+    max-height:none;
+    width:100%;
+  }
+  .facemap-bg-img{
+    position:relative;
+    width:100%;
+    height:auto;
+    right:auto;
+    left:0;
+    aspect-ratio:5473 / 3654;
+    transform:none;
+    -webkit-mask-image:none;
+    mask-image:none;
+    object-fit:contain;
+  }
+  .facemap-points{
+    width:100%;
+    height:auto;
+    right:auto;
+    left:0;
+    aspect-ratio:5473 / 3654;
+  }
+  .facemap-marquee{
+    /* La section facemap est nettement plus courte sur mobile → recentre. */
+    top:50%;
+  }
+  .facemap-point{
+    width:40px;
+    height:40px;
+    font-size:12px;
+  }
+  .facemap-marquee-track span{
+    font-size:clamp(60px, 18vw, 100px);
+  }
+  .facemap-card{
+    width:calc(100% - 32px);
+    margin:20px auto 32px;
+  }
+  .facemap-card-content{
+    padding:20px;
+    gap:10px;
+  }
+  .facemap-card-title{
+    font-size:22px;
+  }
+  .facemap-card-cta{
+    padding:14px 18px;
+    font-size:12px;
+  }
+}
+
+/* ═══════════════════════════════════════════════
+   MODE ÉDITION FACE MAP (Ctrl+E pour activer)
+   ═══════════════════════════════════════════════ */
+
+/* Bannière en haut quand mode édition actif */
+.facemap-edit-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 56px;
+  padding: 0 24px;
+  background: #1A1814;
+  color: #F5F0E8;
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 500;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+}
+
+.facemap-edit-banner strong {
+  color: #C9A961;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.facemap-edit-banner kbd {
+  display: inline-block;
+  padding: 4px 10px;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.facemap-edit-banner .banner-close {
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: #F5F0E8;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 16px;
+  transition: background-color 0.2s ease;
+}
+
+.facemap-edit-banner .banner-close:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* Push down du body quand bannière active */
+body.facemap-editing {
+  padding-top: 56px;
+}
+
+/* Style des numéros quand mode édition actif (state-driven via body class) */
+body.facemap-editing .facemap-point {
+  outline: 2px dashed #C9A961;
+  outline-offset: 6px;
+  background: rgba(201, 169, 97, 0.5) !important;
+  border-color: #C9A961 !important;
+  cursor: grab !important;
+  z-index: 1000 !important;
+  transform: translate(-50%, -50%) scale(1.1);
+  transition: outline 0.2s ease, background-color 0.2s ease;
+}
+
+body.facemap-editing .facemap-point:hover {
+  background: rgba(201, 169, 97, 0.8) !important;
+}
+
+body.facemap-editing .facemap-point.dragging {
+  cursor: grabbing !important;
+  outline-color: #FFFFFF;
+  background: rgba(255, 255, 255, 0.9) !important;
+  color: #1A1814 !important;
+  transform: translate(-50%, -50%) scale(1.2);
+}
+
+/* Popup de sauvegarde */
+.facemap-save-popup {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  z-index: 99998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.facemap-save-popup .popup-content {
+  background: #F5F0E8;
+  padding: 36px 40px;
+  max-width: 640px;
+  width: 100%;
+  max-height: 80vh;
+  overflow-y: auto;
+  border-radius: 4px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4);
+}
+
+.facemap-save-popup h3 {
+  font-family: var(--sans);
+  font-style: italic;
+  font-size: 28px;
+  font-weight: 400;
+  margin: 0 0 12px;
+  color: #1A1814;
+}
+
+.facemap-save-popup .popup-instructions {
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 400;
+  color: #5C544A;
+  line-height: 1.6;
+  margin: 0 0 20px;
+}
+
+.facemap-save-popup .popup-instructions code {
+  background: rgba(26, 24, 20, 0.08);
+  padding: 2px 8px;
+  border-radius: 3px;
+  font-family: monospace;
+  font-size: 12px;
+  color: #1A1814;
+}
+
+.facemap-save-popup pre {
+  background: #1A1814;
+  color: #C9A961;
+  padding: 20px 24px;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 12px;
+  line-height: 1.7;
+  overflow-x: auto;
+  margin: 0 0 20px;
+  white-space: pre;
+}
+
+.facemap-save-popup pre code {
+  background: none;
+  padding: 0;
+  color: inherit;
+  font-family: inherit;
+}
+
+.facemap-save-popup .popup-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.facemap-save-popup button {
+  padding: 12px 24px;
+  border: 1px solid #1A1814;
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.facemap-save-popup .popup-copy {
+  background: #1A1814;
+  color: #F5F0E8;
+}
+
+.facemap-save-popup .popup-copy:hover {
+  background: #A66B5C;
+  border-color: #A66B5C;
+}
+
+.facemap-save-popup .popup-copy.copied {
+  background: #2D7A4A;
+  border-color: #2D7A4A;
+}
+
+.facemap-save-popup .popup-close {
+  background: transparent;
+  color: #1A1814;
+}
+
+.facemap-save-popup .popup-close:hover {
+  background: rgba(26, 24, 20, 0.08);
+}
+
+/* ─── REVEAL CSS-only des numéros + card (déclenché par .is-revealed) ───
+   Les points et la card sont visibles à l'état natif (état final).
+   La classe .is-revealed (ajoutée par animations.js au scroll) ajoute
+   simplement une transition douce d'apparition. Si JS échoue / ScrollTrigger
+   ne fire pas, les éléments restent visibles (pas de bug "stuck à scale:0"). */
+.section-facemap .facemap-point,
+.section-facemap .facemap-card{
+  /* État final naturel : visible. */
+  opacity:1;
+}
+/* État initial seulement si JS active le système de reveal en ajoutant
+   data-pending au load. Sans cette donnée, les éléments restent visibles. */
+.section-facemap[data-reveal-pending="true"]:not(.is-revealed) .facemap-point{
+  opacity:0;
+  transform:translate(-50%, -50%) scale(0.6);
+  transition:opacity .5s ease, transform .5s cubic-bezier(.34, 1.56, .64, 1);
+}
+.section-facemap[data-reveal-pending="true"]:not(.is-revealed) .facemap-card{
+  opacity:0;
+  transform:translateY(40px);
+  transition:opacity .8s ease, transform .8s cubic-bezier(.4, 0, .2, 1);
+}
+/* Cascade des points avec stagger 100ms */
+.section-facemap.is-revealed .facemap-point{
+  transition:opacity .6s ease, transform .6s cubic-bezier(.34, 1.56, .64, 1);
+}
+.section-facemap.is-revealed .facemap-point:nth-child(1){transition-delay:.1s}
+.section-facemap.is-revealed .facemap-point:nth-child(2){transition-delay:.2s}
+.section-facemap.is-revealed .facemap-point:nth-child(3){transition-delay:.3s}
+.section-facemap.is-revealed .facemap-point:nth-child(4){transition-delay:.4s}
+.section-facemap.is-revealed .facemap-point:nth-child(5){transition-delay:.5s}
+.section-facemap.is-revealed .facemap-card{
+  transition:opacity 1s ease .3s, transform 1s cubic-bezier(.4, 0, .2, 1) .3s;
+}
+
+/* ─── prefers-reduced-motion ─── */
+@media (prefers-reduced-motion:reduce){
+  .facemap-marquee-track{animation:none}
+  .facemap-point::before{animation:none}
+  .section-facemap[data-reveal-pending="true"] .facemap-point,
+  .section-facemap[data-reveal-pending="true"] .facemap-card{
+    opacity:1;
+    transform:none;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   ============== SECTION 5 — GALERIE RÉVÉLATION ==============
+   Effet bouche zoom : 4 phases en une section pinned.
+   1. Hero au repos (fond bordeaux + bouche faiblement visible)
+   2. Spot lumineux au mouvement souris (mix-blend-mode: screen)
+   3. Au scroll : pin + zoom de la bouche scale 1 → 30
+   4. Galerie crème apparaît après le zoom
+   ═══════════════════════════════════════════════════════════ */
+
+.section-revelation{
+  position:relative;
+  width:100%;
+  /* Hauteur 3x viewport pour le pin + zoom progressif */
+  height:300vh;
+  /* Couleur de fond pilotée par config.js → sectionRevelation.fondColor.
+     Fallback brun chaud (continuité avec Section 3). */
+  background:var(--revelation-bg, #3A2E1C);
+}
+
+/* ─── Stage qui sera pin par ScrollTrigger ─── */
+.revelation-stage{
+  position:relative;
+  width:100%;
+  height:100vh;
+  overflow:hidden;
+  background:var(--revelation-bg, #3A2E1C);
+  cursor:none;  /* curseur caché sur la zone torche (le spot doré le remplace) */
+}
+
+/* Override : sur la galerie qui apparaît au scroll, on rétablit le curseur
+   pour permettre la navigation (clic flèches, scroll horizontal du carousel). */
+.revelation-gallery,
+.revelation-gallery *{
+  cursor:auto;
+}
+.revelation-gallery .gallery-arrow,
+.revelation-gallery a,
+.revelation-gallery button{
+  cursor:pointer;
+}
+
+/* ─── Spot lumineux qui suit la souris ─── */
+.revelation-spot{
+  position:absolute;
+  top:0;
+  left:0;
+  width:600px;
+  height:600px;
+  border-radius:50%;
+  pointer-events:none;
+  z-index:2;
+  /* Spot rose-or doux */
+  background:radial-gradient(
+    circle,
+    rgba(212, 165, 116, 0.55) 0%,
+    rgba(212, 165, 116, 0.3) 25%,
+    rgba(166, 107, 92, 0.2) 50%,
+    rgba(166, 107, 92, 0.05) 75%,
+    transparent 100%
+  );
+  filter:blur(40px);
+  mix-blend-mode:screen;
+  transform:translate(-50%, -50%);
+  /* Position initiale hors écran (avant le 1er mousemove) */
+  will-change:transform;
+}
+
+/* ─── Logo bouche SVG ─── */
+/* ═══════════════════════════════════════════════════════════
+   EFFET TORCHE — photo cachée révélée par le curseur
+   Le wrapper devient un layer full-stage avec masque radial
+   dynamique. Position du masque pilotée par --reveal-x/y
+   (mis à jour en JS depuis la position de la souris).
+   ═══════════════════════════════════════════════════════════ */
+.revelation-photo{
+  position:absolute;
+  inset:0;
+  z-index:3;                                /* au-dessus du fond, en-dessous du spot */
+  --reveal-x: 50%;
+  --reveal-y: 50%;
+  --reveal-size: 320px;                     /* zone révélée plus grande pour être bien visible dès le départ */
+  /* Le mask = un disque où la photo est visible, sinon transparent.
+     Bord soft (gradient de 75% → 100%) pour fondu naturel. */
+  -webkit-mask-image: radial-gradient(
+    circle var(--reveal-size) at var(--reveal-x) var(--reveal-y),
+    rgba(0,0,0,1) 0%,
+    rgba(0,0,0,1) 55%,
+    rgba(0,0,0,0) 100%
+  );
+  mask-image: radial-gradient(
+    circle var(--reveal-size) at var(--reveal-x) var(--reveal-y),
+    rgba(0,0,0,1) 0%,
+    rgba(0,0,0,1) 55%,
+    rgba(0,0,0,0) 100%
+  );
+  pointer-events:none;                      /* le curseur traverse la photo */
+}
+
+.revelation-photo-img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center 30%;               /* cadre sur les yeux/visage */
+  display:block;
+  /* Photo légèrement chaude/dorée pour matcher l'ambiance brune */
+  filter:saturate(1.05) contrast(1.05) brightness(1.02);
+}
+
+/* MOT GÉANT en arrière-plan — typographie éditoriale ultra-light
+   visible partout en très faible opacité, donne profondeur + identité. */
+.revelation-bigword{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%, -50%);
+  margin:0;
+  z-index:1;                                /* sous tout */
+  font-family:var(--sans);
+  font-weight:200;
+  font-size:clamp(120px, 18vw, 280px);
+  letter-spacing:0.12em;
+  color:rgba(255,255,255,0.07);             /* fantôme, à peine visible */
+  pointer-events:none;
+  white-space:nowrap;
+  text-transform:uppercase;
+  /* Léger blur pour effet "vapeur" */
+  filter:blur(0.5px);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   LEGACY — anciennes règles .revelation-mouth conservées comme
+   fallback (au cas où le SVG soit réinjecté). Cachées par défaut.
+   ═══════════════════════════════════════════════════════════ */
+.revelation-mouth-wrapper.legacy-mouth{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%, -50%);
+  width:400px;
+  height:200px;
+  z-index:3;
+  pointer-events:none;
+  will-change:transform;
+}
+
+.revelation-mouth{
+  width:100%;
+  height:100%;
+  display:block;
+  /* Très peu visible au repos */
+  opacity:0.08;
+  transition:opacity 0.4s ease;
+  filter:drop-shadow(0 0 30px rgba(212, 165, 116, 0.3));
+}
+
+/* Quand le spot lumineux est proche, la bouche devient bien visible */
+.revelation-mouth.illuminated{
+  opacity:0.95;
+}
+
+/* ─── Hint texte invitation ─── */
+.revelation-hint{
+  position:absolute;
+  bottom:48px;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:4;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:12px;
+  font-family:var(--sans);
+  font-size:11px;
+  font-weight:400;
+  letter-spacing:0.32em;
+  text-transform:uppercase;
+  color:#D4A574;
+  opacity:0.6;
+  pointer-events:none;
+  animation:hint-pulse 2.5s ease-in-out infinite;
+  margin:0;
+}
+
+.hint-arrow{
+  font-size:18px;
+  letter-spacing:0;
+}
+
+@keyframes hint-pulse{
+  0%, 100%{opacity:0.4;transform:translateX(-50%) translateY(0)}
+  50%{opacity:0.8;transform:translateX(-50%) translateY(4px)}
+}
+
+/* ─── Galerie qui apparaît après le zoom ─── */
+.revelation-gallery{
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100vh;
+  background:var(--bg-creme);        /* palette barber sombre commune (charbon chaud) */
+  z-index:5;
+  opacity:0;
+  pointer-events:none;
+  display:flex;
+  flex-direction:column;
+  padding:clamp(24px,3vw,40px) 0 0;
+  will-change:opacity;
+}
+
+.revelation-gallery.visible{
+  opacity:1;
+  pointer-events:auto;
+}
+
+.gallery-header{
+  position:relative;
+  z-index:1;                       /* passe au-dessus de .gradient-blobs (z:0 absolute) */
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  padding:0 64px;
+  margin-bottom:48px;
+}
+
+.gallery-eyebrow{
+  font-family:var(--sans);
+  font-size:11px;
+  font-weight:500;
+  letter-spacing:0.32em;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin:0 0 16px;
+}
+
+.gallery-title{
+  font-family:var(--sans);
+  font-style:italic;
+  font-weight:400;
+  font-size:clamp(36px, 5vw, 64px);
+  line-height:1;
+  color:var(--ink);
+  margin:0;
+}
+
+.gallery-nav{
+  display:flex;
+  gap:12px;
+}
+
+.gallery-arrow{
+  width:56px;
+  height:56px;
+  border-radius:50%;
+  border:1px solid var(--ink);
+  background:transparent;
+  color:var(--ink);
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:background-color 0.3s ease, color 0.3s ease;
+}
+
+.gallery-arrow:hover{
+  background:var(--ink);
+  color:var(--bg-creme);
+}
+
+.gallery-arrow:disabled{
+  opacity:0.3;
+  cursor:not-allowed;
+}
+
+.gallery-arrow:disabled:hover{
+  background:transparent;
+  color:var(--ink);
+}
+
+/* Carousel scroll-snap */
+.gallery-carousel{
+  position:relative;
+  z-index:1;                       /* passe au-dessus de .gradient-blobs */
+  flex:1;
+  overflow-x:auto;
+  overflow-y:hidden;
+  scroll-snap-type:x mandatory;
+  scroll-behavior:smooth;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:none;
+  padding:0 64px 48px;
+}
+
+.gallery-carousel::-webkit-scrollbar{
+  display:none;
+}
+
+.gallery-track{
+  display:flex;
+  gap:24px;
+  width:max-content;
+  height:100%;
+}
+
+.gallery-item{
+  flex:0 0 auto;
+  width:clamp(320px, 35vw, 480px);
+  height:100%;
+  scroll-snap-align:start;
+  display:flex;
+  flex-direction:column;
+}
+
+.gallery-img-wrapper{
+  flex:1;
+  overflow:hidden;
+  background:#D5CFC2;
+  position:relative;
+  margin-bottom:16px;
+}
+
+/* Fallback "PHOTO À AJOUTER" visible quand img n'a pas de src */
+.gallery-img-wrapper::before{
+  content:'PHOTO À AJOUTER';
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:var(--sans);
+  font-size:10px;
+  letter-spacing:0.32em;
+  color:#5C544A;
+  z-index:0;
+}
+
+.gallery-img-wrapper img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  position:relative;
+  z-index:1;
+  transition:transform 0.6s ease;
+}
+
+.gallery-img-wrapper img:not([src]),
+.gallery-img-wrapper img[src=""]{
+  display:none;
+}
+
+.gallery-item:hover .gallery-img-wrapper img{
+  transform:scale(1.04);
+}
+
+.gallery-caption{
+  padding:0 4px;
+}
+
+.caption-tag{
+  font-family:var(--sans);
+  font-size:10px;
+  font-weight:500;
+  letter-spacing:0.32em;
+  color:var(--accent);
+  margin:0 0 4px;
+}
+
+.caption-title{
+  font-family:var(--sans);
+  font-style:italic;
+  font-weight:400;
+  font-size:20px;
+  color:var(--ink);
+  margin:0;
+}
+
+/* ─── Responsive tablette ─── */
+@media (max-width:1023px){
+  .section-revelation{
+    height:250vh;
+  }
+  .revelation-mouth-wrapper{
+    width:280px;
+    height:140px;
+  }
+  .revelation-spot{
+    width:400px;
+    height:400px;
+  }
+  .gallery-header{padding:0 32px}
+  .gallery-carousel{padding:0 32px 48px}
+}
+
+/* ─── Responsive mobile : pas de zoom complexe ─── */
+@media (max-width:767px){
+  .section-revelation{height:auto}
+  .revelation-stage{
+    cursor:auto;
+    height:80vh;
+    min-height:500px;
+  }
+  .revelation-spot{display:none}
+  .revelation-mouth{opacity:0.9!important}
+  /* Mobile : pas d'effet torche (touchscreen sans curseur) → photo cachée,
+     la galerie prend le relais directement. */
+  .revelation-photo{display:none}
+  .revelation-bigword{font-size:clamp(60px, 16vw, 120px); opacity:0.12}
+  .revelation-mouth-wrapper{
+    width:220px;
+    height:110px;
+  }
+  .revelation-gallery{
+    position:relative;
+    height:auto;
+    opacity:1;
+    pointer-events:auto;
+    padding:60px 0 60px;
+  }
+  .gallery-header{
+    flex-direction:column;
+    align-items:flex-start;
+    padding:0 20px;
+    gap:24px;
+  }
+  .gallery-nav{align-self:flex-end}
+  .gallery-arrow{width:48px;height:48px}
+  .gallery-carousel{padding:0 20px 40px}
+  .gallery-item{
+    width:80vw;
+    max-width:360px;
+  }
+}
+
+/* ─── Prefers-reduced-motion ─── */
+@media (prefers-reduced-motion:reduce){
+  .revelation-spot{display:none}
+  .revelation-mouth{opacity:0.9!important}
+  /* Pas d'effet torche en reduced-motion : photo visible sans masque */
+  .revelation-photo{
+    -webkit-mask-image:none!important;
+    mask-image:none!important;
+    opacity:0.5!important;
+  }
+  .revelation-hint{animation:none!important}
+  .section-revelation{height:auto}
+  .revelation-stage{height:80vh}
+  .revelation-gallery{
+    position:relative;
+    height:auto;
+    opacity:1;
+    pointer-events:auto;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   FOOTER MINIMALISTE (style Ever)
+   3 colonnes : Maison / Contact / Réseaux + bottom bar mentions
+   ═══════════════════════════════════════════════════════════ */
+
+.site-footer {
+  background: #F5F0E8;
+  padding: 100px 0 48px;
+  position: relative;
+}
+
+.footer-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 64px;
+}
+
+/* ─── Grid 3 colonnes ─── */
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 64px;
+  margin-bottom: 80px;
+}
+
+.footer-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-label {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: #A66B5C;
+  margin: 0 0 28px;
+}
+
+.footer-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.footer-list li {
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.6;
+  color: #1A1814;
+}
+
+.footer-link {
+  color: #1A1814;
+  text-decoration: none;
+  transition: color 0.3s ease, opacity 0.3s ease;
+  position: relative;
+}
+
+.footer-link:hover {
+  color: #A66B5C;
+}
+
+.footer-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 0;
+  height: 1px;
+  background: currentColor;
+  transition: width 0.3s ease;
+}
+
+.footer-link:hover::after {
+  width: 100%;
+}
+
+.footer-cta {
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.footer-address {
+  color: #5C544A;
+  font-style: italic;
+}
+
+/* ─── Réseaux sociaux (Instagram + TikTok) ─── */
+
+.footer-social,
+.footer-tiktok {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+}
+
+.social-icon {
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+.footer-social:hover .social-icon,
+.footer-tiktok:hover .social-icon {
+  transform: scale(1.1);
+}
+
+/* ─── Séparateur ─── */
+
+.footer-divider {
+  height: 1px;
+  background: rgba(26, 24, 20, 0.1);
+  margin-bottom: 32px;
+}
+
+/* ─── Bottom bar ─── */
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.footer-brand {
+  font-family: var(--sans);
+  font-style: italic;
+  font-size: 22px;
+  font-weight: 400;
+  color: #1A1814;
+  margin: 0;
+}
+
+.footer-legal {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.footer-copyright {
+  font-family: var(--sans);
+  font-size: 12px;
+  color: #5C544A;
+}
+
+.footer-separator {
+  color: #A66B5C;
+  opacity: 0.5;
+}
+
+.footer-link-small {
+  font-family: var(--sans);
+  font-size: 12px;
+  color: #5C544A;
+}
+
+.footer-link-small:hover {
+  color: #A66B5C;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   FOOTER - RESPONSIVE
+   ═══════════════════════════════════════════════════════════ */
+
+@media (max-width: 1023px) {
+  .site-footer {
+    padding: 80px 0 40px;
+  }
+  .footer-container {
+    padding: 0 32px;
+  }
+  .footer-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 48px;
+    margin-bottom: 64px;
+  }
+  /* Sur 2 colonnes, la 3e colonne Suivez-nous prend toute la largeur */
+  .footer-column:nth-child(3) {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 767px) {
+  .site-footer {
+    padding: 64px 0 32px;
+  }
+  .footer-container {
+    padding: 0 20px;
+  }
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    margin-bottom: 48px;
+  }
+  .footer-column:nth-child(3) {
+    grid-column: auto;
+  }
+  .footer-label {
+    margin-bottom: 20px;
+  }
+  .footer-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+  .footer-brand {
+    font-size: 20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .footer-link,
+  .footer-link::after,
+  .social-icon {
+    transition: none !important;
+  }
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   SECTION 7 — NOS PARTENAIRES (style Fromanother)
+   Stack vertical pinned 500vh. Rotation TRÈS SUBTILE (±3° max).
+   Pas d'arc horizontal — empilement vertical pur.
+   Fond brun chaud (#3A2E1C), accent doré, Inter italic.
+   ═══════════════════════════════════════════════════════════ */
+
+.section-marques {
+  --gold:        #C9A961;
+  --gold-soft:   rgba(201, 169, 97, 0.15);
+  --gold-line:   rgba(201, 169, 97, 0.6);
+  --ink-on-dark: #F5F0E8;
+  --brand-faded: rgba(245, 240, 232, 0.32);
+
+  position: relative;
+  width: 100%;
+  /* V3 : section statique, plus de pin/scroll-driven */
+  height: auto;
+  padding: clamp(80px, 10vw, 140px) 0;
+  background: #3A2E1C;
+}
+
+.marques-stage {
+  position: relative;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  background: transparent;
+}
+
+/* Effet lumière diagonale supprimé (rendu plus sobre/premium) */
+.marques-stage::before { display: none; }
+
+/* V3 — grille statique : [liste marques] [logo hover] [description hover].
+   La nav-numbers (zone 1) est masquée car elle ne sert plus à rien
+   sans scroll-driven progression. */
+.marques-grid {
+  position: relative;
+  inset: auto;
+  display: grid;
+  grid-template-columns: 1fr 220px 320px;
+  gap: clamp(32px, 5vw, 80px);
+  padding: 0 clamp(32px, 5vw, 80px);
+  max-width: 1480px;
+  margin: 0 auto;
+  align-items: center;
+  z-index: 2;
+}
+
+/* ─── ZONE 1 : Numérotation verticale (V3 : masquée — plus de scroll progression) ─── */
+
+.marques-nav {
+  display: none;
+}
+
+.nav-numbers {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.nav-num {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 400;
+  color: rgba(245, 240, 232, 0.3);
+  transition: color 0.4s ease;
+}
+
+.nav-num.active { color: var(--gold); }
+
+.num-label {
+  display: inline-block;
+  width: 16px;
+  font-style: italic;
+}
+
+.num-line {
+  display: inline-block;
+  width: 0;
+  height: 1px;
+  background: var(--gold);
+  transition: width 0.5s cubic-bezier(0.7, 0, 0.3, 1);
+}
+
+.nav-num.active .num-line { width: 32px; }
+
+.nav-caption {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  font-family: var(--sans);
+  font-style: italic;
+  font-weight: 300;
+  font-size: 13px;
+  color: rgba(245, 240, 232, 0.6);
+}
+
+.caption-line {
+  display: inline-block;
+  width: 24px;
+  height: 1px;
+  background: var(--gold-line);
+}
+
+/* ─── ZONE 2 : Stack marques + halo doré central ─── */
+
+/* V3 : wrapper devient simple conteneur de la liste statique */
+.marques-wheel-wrapper {
+  position: relative;
+  height: auto;
+  overflow: visible;
+}
+
+/* V3 : halo et preview image supprimés (plus d'effet visuel) */
+.wheel-spot { display: none; }
+.wheel-preview { display: none; }
+
+/* V3 — Liste statique verticale */
+.wheel-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  position: relative;
+  top: auto;
+  left: auto;
+  right: auto;
+  transform: none;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(8px, 1vw, 18px);
+}
+
+.wheel-item {
+  position: relative;
+  top: auto;
+  left: auto;
+  right: auto;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: auto;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+  transform: none;
+  opacity: 1;
+  transition: transform .45s var(--ease-soft, ease), opacity .35s ease;
+}
+
+.wheel-name {
+  /* Exception ciblée : serif italique pour les noms de marques.
+     TODO: police barber à définir. */
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(54px, 6.2vw, 104px);
+  line-height: 1.0;
+  color: var(--ink-on-dark);
+  letter-spacing: .005em;
+  text-align: left;
+  white-space: nowrap;
+  position: relative;
+  display: inline-block;
+  padding-bottom: .12em;
+  /* Tous les noms en faded par défaut — focus se gagne au hover */
+  opacity: 0.55;
+  transition: opacity .55s var(--ease-soft, ease),
+              color .55s var(--ease-soft, ease),
+              transform .55s var(--ease-soft, ease),
+              letter-spacing .55s var(--ease-soft, ease);
+}
+/* Fine ligne dorée qui se révèle sous le nom hovered */
+.wheel-name::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: 0;
+  width: 100%; height: 1px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform .7s var(--ease-soft, ease);
+}
+
+/* Au survol : le nom hovered devient pleinement visible et accent doré */
+.wheel-item:hover .wheel-name,
+.wheel-item.is-hovered .wheel-name {
+  opacity: 1;
+  color: var(--gold);
+  transform: translateX(10px);
+  letter-spacing: .015em;
+}
+.wheel-item:hover .wheel-name::after,
+.wheel-item.is-hovered .wheel-name::after {
+  transform: scaleX(.45);
+}
+
+/* Quand UN item est hovered, les autres s'estompent encore plus pour focus */
+.marques-grid.has-active .wheel-item:not(.is-hovered):not(:hover) .wheel-name {
+  opacity: 0.18;
+}
+
+/* ─── ZONE 3 : Logo officiel SVG (V3 : visible UNIQUEMENT au hover d'une marque) ─── */
+
+.marques-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 140px;                /* hauteur réservée pour éviter le shift de layout */
+  opacity: 0;
+  transition: opacity .4s var(--ease-soft, ease);
+}
+
+.marques-grid.has-active .marques-logo {
+  opacity: 1;
+}
+
+.logo-stack {
+  position: relative;
+  width: 200px;
+  height: 120px;
+}
+
+.logo-slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.logo-slide.active { opacity: 1; }
+
+.logo-img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  filter: brightness(0) invert(1) opacity(0.7);
+  transition: filter 0.4s ease;
+}
+
+.logo-slide.active .logo-img {
+  filter: brightness(0) invert(1) opacity(0.85);
+}
+
+/* Fallback texte si SVG manquant */
+.logo-fallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--sans);
+  font-style: italic;
+  font-size: 22px;
+  font-weight: 300;
+  letter-spacing: 0.18em;
+  color: rgba(245, 240, 232, 0.5);
+  border: 1px solid var(--gold-soft);
+  z-index: -1;
+}
+
+.logo-slide:has(.logo-img:not([src=""])) .logo-fallback { display: none; }
+
+/* ─── ZONE 4 : Description (V3 : eyebrow toujours visible, texte visible UNIQUEMENT au hover) ─── */
+
+.marques-description {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-self: center;
+  padding: 0 0 0 24px;
+  border-left: 1px solid var(--gold-soft);
+  min-height: 140px;            /* réserve la hauteur pour éviter le shift de layout */
+}
+
+/* L'eyebrow "— NOS PARTENAIRES —" reste visible en permanence (label de section) */
+.description-eyebrow { opacity: 1; }
+
+/* Le texte descriptif n'apparaît qu'au hover d'une marque */
+.description-text {
+  opacity: 0;
+  transition: opacity .4s var(--ease-soft, ease);
+}
+
+.marques-grid.has-active .description-text {
+  opacity: 1;
+}
+
+.description-eyebrow {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin: 0;
+}
+
+.description-text {
+  font-family: var(--sans);
+  font-style: italic;
+  font-weight: 300;
+  font-size: 18px;
+  line-height: 1.55;
+  color: var(--ink-on-dark);
+  margin: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════════════════════ */
+
+@media (max-width: 1280px) {
+  .marques-grid {
+    grid-template-columns: 1fr 180px 280px;
+    gap: 40px;
+    padding: 0 40px;
+  }
+  .wheel-name { font-size: clamp(40px, 4.5vw, 72px); }
+}
+
+@media (max-width: 1023px) {
+  /* V3 mobile : stack vertical, hover désactivé (touch) → texte description
+     toujours visible pour la 1re marque (active par défaut côté JS au tap). */
+  .section-marques { padding: 80px 0; }
+  .marques-stage { padding: 40px 0; }
+  .marques-grid {
+    grid-template-columns: 1fr;
+    gap: 48px;
+    padding: 0 32px;
+    align-items: flex-start;
+  }
+  .wheel-list { gap: 18px; }
+  .wheel-item { padding: 0; }
+  .wheel-item:hover .wheel-name,
+  .wheel-item.is-hovered .wheel-name {
+    transform: none;          /* pas de slide latéral sur mobile */
+  }
+  .wheel-name {
+    font-size: clamp(40px, 10vw, 72px);
+    opacity: 1;               /* tous les noms visibles sur mobile */
+  }
+  .marques-grid:not(.has-active) .wheel-item .wheel-name { opacity: 1; }
+  .marques-logo { display: none; }
+  .marques-description {
+    border-left: none;
+    border-top: 1px solid var(--gold-soft);
+    padding: 24px 0 0;
+    min-height: auto;
+  }
+  /* Sur mobile, force la description visible (pas de hover) */
+  .description-text { opacity: 1; }
+}
+
+@media (max-width: 767px) {
+  .marques-grid { padding: 0 20px; }
+  .wheel-name { font-size: clamp(34px, 11vw, 56px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wheel-item:hover .wheel-name { transform: none; }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SECTION — MARQUES PARTENAIRES
+   ═══════════════════════════════════════════════════════════
+   Section dark (brun chaud) transitionnelle entre facemap (light)
+   et revelation (dark). Compose :
+     - Header éditorial sobre (eyebrow + 2 lignes : régulière + italique)
+     - Marquee horizontal infini (2 sets pilotés en rAF par site.js)
+     - Progressive blur multi-couches aux bords (6 layers)
+     - Dôme crème qui s'élève en bas + glow terracotta dessous
+     - Canvas sparkles (particules cream, rAF, opacity oscillation)
+   ═══════════════════════════════════════════════════════════ */
+.section-partenaires{
+  /* Override barber : palette sombre commune (charbon chaud + cuir tabac).
+     Synchronisé avec --bg-creme / --ink / --accent posés par apply-config.js. */
+  --section-bg:        var(--bg-creme);              /* charbon chaud — match galerie + footer */
+  --section-fg:        var(--ink);                   /* crème vintage — texte clair sur fond sombre */
+  --section-fg-soft:   var(--ink-soft);              /* cuir café au lait — paragraphes secondaires */
+  --section-accent:    var(--accent);                /* cuir tabac / laiton vieilli */
+
+  position:relative;
+  /* Fond uniforme charbon. Continuité avec galerie (au-dessus, --bg-creme)
+     et footer (en-dessous). Plus de dégradé radial, plus de blobs visibles
+     sur fond clair → l'effet animé .gradient-blobs est désactivé pour la
+     barber (cf. règle plus bas). */
+  background:var(--section-bg);
+  color:var(--section-fg);
+  padding:clamp(120px, 16vw, 200px) 0 clamp(80px, 10vw, 140px);
+  overflow:hidden;
+  isolation:isolate;
+}
+
+/* ─── Header éditorial ─────────────────────────────────────── */
+.partenaires-header{
+  position:relative;
+  z-index:2;
+  max-width:760px;
+  margin:0 auto;
+  padding:0 var(--pad-x);
+  text-align:center;
+}
+
+.partenaires-eyebrow{
+  font-family:var(--sans);
+  font-size:.72rem;
+  font-weight:500;
+  letter-spacing:.32em;
+  text-transform:uppercase;
+  color:var(--section-accent);
+  margin:0 0 clamp(20px, 2.4vw, 32px);
+}
+
+/* Typographie alignée sur .experience-title / .experience-subtitle (screen 1) :
+   ligne 1 = grand titre Inter 300 majuscules, ligne 2 = sous-titre italique
+   léger en soft-ink. Même hiérarchie, mêmes proportions, même feel. */
+.partenaires-title{
+  display:flex;flex-direction:column;
+  gap:clamp(20px, 2.4vw, 40px);
+  font-family:var(--sans);
+  color:var(--section-fg);
+}
+
+.partenaires-title-line{display:block}
+
+/* Ligne 1 — gros titre Inter 300 uppercase (clone .experience-title) */
+.partenaires-title-bold{
+  font-size:clamp(40px, 6vw, 88px);
+  font-weight:300;
+  line-height:1.05;
+  letter-spacing:-0.005em;
+  text-transform:uppercase;
+}
+
+/* Ligne 2 — sous-titre italique léger soft-ink (clone .experience-subtitle) */
+.partenaires-title-italic{
+  font-style:italic;
+  font-weight:300;
+  font-size:clamp(15px, 1.6vw, 18px);
+  line-height:1.65;
+  letter-spacing:0;
+  color:var(--section-fg-soft);
+  max-width:580px;
+  margin-left:auto;
+  margin-right:auto;
+  text-transform:none;
+}
+
+/* Animation word-by-word (adaptée du composant Digital Serenity) :
+   chaque mot apparaît avec un stagger via translateY + scale + blur.
+   L'animation est posée sur chaque .word-animate par site.js (avec un
+   data-delay calculé sur l'ordre d'apparition) quand la section
+   entre en vue (IntersectionObserver). */
+.partenaires-title .word-animate{
+  display:inline-block;
+  opacity:0;
+  margin:0 .12em 0 0;
+  transition:color .3s ease, transform .3s ease;
+  /* L'état initial (avant déclenchement) — masque + descendu + flouté */
+  transform:translateY(20px) scale(.92);
+  filter:blur(6px);
+  will-change:opacity, transform, filter;
+}
+.partenaires-title .word-animate:hover{
+  transform:translateY(-2px) scale(1);
+  filter:none;
+}
+
+@keyframes partenaires-word-appear{
+  0%{opacity:0; transform:translateY(20px) scale(.92); filter:blur(6px);}
+  50%{opacity:.85; transform:translateY(6px) scale(.97); filter:blur(2px);}
+  100%{opacity:1; transform:translateY(0) scale(1); filter:blur(0);}
+}
+
+/* Quand le header reçoit la classe .is-in-view (posée par IntersectionObserver),
+   chaque mot lance l'animation en gardant l'état final (forwards). */
+.partenaires-header.is-in-view .partenaires-title .word-animate{
+  animation:partenaires-word-appear .8s ease-out forwards;
+}
+
+@media (prefers-reduced-motion: reduce){
+  .partenaires-title .word-animate{
+    opacity:1; transform:none; filter:none; animation:none !important;
+  }
+}
+
+/* ─── Marquee logos ─────────────────────────────────────────── */
+.partenaires-marquee{
+  position:relative;
+  z-index:2;
+  margin:clamp(48px, 6vw, 88px) 0 0;
+  height:clamp(100px, 11vw, 140px);
+  width:100%;
+  /* overflow:visible — laisse les logos dépasser verticalement sans
+     gonfler la hauteur structurelle de la section. La section parente a
+     déjà overflow:hidden → le track horizontal large est clipé proprement. */
+  overflow:visible;
+}
+
+.partenaires-marquee-viewport{
+  display:flex;
+  align-items:center;
+  height:100%;
+  width:max-content;
+}
+
+.partenaires-set{
+  display:flex;align-items:center;
+  gap:clamp(2.5rem, 4vw, 4.5rem);
+  padding-right:clamp(2.5rem, 4vw, 4.5rem);
+  flex-shrink:0;
+  will-change:transform;
+}
+
+.partenaires-logo{
+  /* Logos encore agrandis. La marquee garde sa hauteur structurelle ;
+     les <img> débordent verticalement (overflow:visible sur le marquee). */
+  height:clamp(200px, 22vw, 280px);
+  width:clamp(300px, 36vw, 500px);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;
+  opacity:1;
+  transition:opacity .35s var(--ease-soft);
+}
+
+.partenaires-logo:hover{opacity:1}
+
+.partenaires-logo img{
+  max-height:100%;
+  max-width:100%;
+  width:auto;
+  height:auto;
+  object-fit:contain;
+  /* Palette barber sombre : on force tous les logos en BLANC (peu importe leur
+     couleur d'origine). brightness(0) → noir, invert(1) → bascule en blanc. */
+  filter:brightness(0) invert(1);
+  opacity:.92;
+}
+
+.partenaires-logo.is-missing{
+  border:1px dashed rgba(232,217,188,.14);
+}
+
+/* ─── Progressive blur multi-couches (bords gauche/droite) ──── */
+.partenaires-blur{
+  position:absolute;
+  top:0;bottom:0;
+  width:clamp(80px, 14vw, 200px);
+  z-index:3;
+  pointer-events:none;
+}
+.partenaires-blur-left{left:0}
+.partenaires-blur-right{right:0}
+
+.blur-layer{
+  position:absolute;
+  inset:0;
+  backdrop-filter:blur(calc(var(--idx) * .4px));
+  -webkit-backdrop-filter:blur(calc(var(--idx) * .4px));
+}
+
+.partenaires-blur-left .blur-layer{
+  --start: calc((var(--idx) - 1) / 7 * 100%);
+  --mid1:  calc(var(--idx) / 7 * 100%);
+  --mid2:  calc((var(--idx) + 1) / 7 * 100%);
+  --end:   calc((var(--idx) + 2) / 7 * 100%);
+  mask-image:linear-gradient(
+    270deg,
+    rgba(0,0,0,0) var(--start),
+    rgba(0,0,0,1) var(--mid1),
+    rgba(0,0,0,1) var(--mid2),
+    rgba(0,0,0,0) var(--end)
+  );
+  -webkit-mask-image:linear-gradient(
+    270deg,
+    rgba(0,0,0,0) var(--start),
+    rgba(0,0,0,1) var(--mid1),
+    rgba(0,0,0,1) var(--mid2),
+    rgba(0,0,0,0) var(--end)
+  );
+}
+.partenaires-blur-right .blur-layer{
+  --start: calc((var(--idx) - 1) / 7 * 100%);
+  --mid1:  calc(var(--idx) / 7 * 100%);
+  --mid2:  calc((var(--idx) + 1) / 7 * 100%);
+  --end:   calc((var(--idx) + 2) / 7 * 100%);
+  mask-image:linear-gradient(
+    90deg,
+    rgba(0,0,0,0) var(--start),
+    rgba(0,0,0,1) var(--mid1),
+    rgba(0,0,0,1) var(--mid2),
+    rgba(0,0,0,0) var(--end)
+  );
+  -webkit-mask-image:linear-gradient(
+    90deg,
+    rgba(0,0,0,0) var(--start),
+    rgba(0,0,0,1) var(--mid1),
+    rgba(0,0,0,1) var(--mid2),
+    rgba(0,0,0,0) var(--end)
+  );
+}
+
+.partenaires-blur-left::after,
+.partenaires-blur-right::after{
+  content:"";
+  position:absolute;inset:0;
+  pointer-events:none;
+}
+.partenaires-blur-left::after{
+  background:linear-gradient(90deg, var(--section-bg) 0%, rgba(245,240,232,0) 100%);
+}
+.partenaires-blur-right::after{
+  background:linear-gradient(270deg, var(--section-bg) 0%, rgba(245,240,232,0) 100%);
+}
+
+/* ─── Padding bas de partenaires (le dôme/sparkles ne ferme plus la section) ── */
+.section-partenaires{padding-bottom:clamp(60px, 8vw, 120px)}
+
+/* ─── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 767px){
+  .section-partenaires{padding:clamp(80px,16vw,120px) 0 64px}
+  .partenaires-marquee{height:90px}
+  .partenaires-logo{height:90px;width:170px}
+  .partenaires-blur{width:60px}
+}
+
+@media (prefers-reduced-motion: reduce){
+  .partenaires-set{transform:none !important}
+}
+
+/* ═══════════════════════════════════════════════════════════
+   GRADIENT BLOBS ANIMATION (partagé partenaires + avis)
+   ═══════════════════════════════════════════════════════════
+   Port vanilla du composant background-gradient-animation :
+     - 5 blobs en radial-gradient absolument positionnés
+     - Filter goo SVG (#blobsGoo) → effet métaballes (les blobs fusionnent)
+     - mix-blend-mode multiply → teinte la crème en chaud sans saturer
+     - Palette iconique : variations terracotta / sable / rosé / gold sourd
+     - Calque z:0 : passe SOUS tout le contenu de la section (header z:2, marquee z:2, blur-edges z:3, columns z:1)
+   ═══════════════════════════════════════════════════════════ */
+.gradient-blobs{
+  /* DÉSACTIVÉ pour la palette barber sombre — l'animation crème + blobs
+     terracotta n'a plus de sens sur fond charbon. Les blobs restent dans le
+     DOM (compatibilité site.js) mais ne sont plus rendus. */
+  display:none;
+
+  --blob-size:        140%;
+  --blob-blur:        40px;
+  --blob-blend:       multiply;
+  /* Triplets RGB — palette chaude iconique */
+  --blob-color-1:     166, 107, 92;   /* terracotta (--accent) */
+  --blob-color-2:     212, 165, 116;  /* gold soft */
+  --blob-color-3:     196, 150, 138;  /* rosé poudré */
+  --blob-color-4:     186, 130, 110;  /* terracotta clair */
+  --blob-color-5:     224, 197, 170;  /* sable cream */
+
+  position:absolute;
+  inset:0;
+  z-index:0;
+  overflow:hidden;
+  pointer-events:none;
+  filter:url(#blobsGoo) blur(var(--blob-blur));
+
+  /* Mask vertical : blobs invisibles aux bords haut/bas, max au milieu.
+     → la couleur visible aux jonctions = crème pur (#F5F0E8) du parent
+     → match exact avec galerie (au-dessus) et footer (en-dessous)
+     → AUCUNE ligne séparatrice visible. La transition entre les sections
+     est purement chromatique (cream → cream), donc invisible. */
+  mask-image:linear-gradient(
+    to bottom,
+    transparent 0%,
+    #000 14%,
+    #000 86%,
+    transparent 100%
+  );
+  -webkit-mask-image:linear-gradient(
+    to bottom,
+    transparent 0%,
+    #000 14%,
+    #000 86%,
+    transparent 100%
+  );
+}
+
+/* Fallback Safari (qui parfois rend mal le goo SVG → blur seul plus fort) */
+@supports (-webkit-touch-callout: none) {
+  .gradient-blobs{ filter:blur(60px); }
+}
+
+.gradient-blob{
+  position:absolute;
+  width:var(--blob-size);
+  height:var(--blob-size);
+  top:calc(50% - var(--blob-size) / 2);
+  left:calc(50% - var(--blob-size) / 2);
+  mix-blend-mode:var(--blob-blend);
+  border-radius:50%;
+  will-change:transform;
+}
+
+/* Blob 1 — terracotta plein, monte/descend verticalement */
+.blob-1{
+  background:radial-gradient(circle at center, rgba(var(--blob-color-1), .45) 0%, rgba(var(--blob-color-1), 0) 50%);
+  transform-origin:center center;
+  animation:blob-move-vertical 30s ease infinite;
+}
+
+/* Blob 2 — gold soft, tourne en cercle (origine décalée) */
+.blob-2{
+  background:radial-gradient(circle at center, rgba(var(--blob-color-2), .42) 0%, rgba(var(--blob-color-2), 0) 50%);
+  transform-origin:calc(50% - 400px) center;
+  animation:blob-move-circle 20s reverse infinite;
+}
+
+/* Blob 3 — rosé poudré, tourne lentement (origine opposée) */
+.blob-3{
+  background:radial-gradient(circle at center, rgba(var(--blob-color-3), .40) 0%, rgba(var(--blob-color-3), 0) 50%);
+  transform-origin:calc(50% + 400px) center;
+  animation:blob-move-circle 40s linear infinite;
+}
+
+/* Blob 4 — terracotta clair, balaye horizontalement (opacité réduite) */
+.blob-4{
+  background:radial-gradient(circle at center, rgba(var(--blob-color-4), .38) 0%, rgba(var(--blob-color-4), 0) 50%);
+  transform-origin:calc(50% - 200px) center;
+  opacity:.72;
+  animation:blob-move-horizontal 40s ease infinite;
+}
+
+/* Blob 5 — sable, orbite ample (origine très excentrée) */
+.blob-5{
+  background:radial-gradient(circle at center, rgba(var(--blob-color-5), .45) 0%, rgba(var(--blob-color-5), 0) 50%);
+  transform-origin:calc(50% - 800px) calc(50% + 800px);
+  animation:blob-move-circle 20s ease infinite;
+}
+
+/* Keyframes (équivalents Tailwind config du composant d'origine) */
+@keyframes blob-move-vertical{
+  0%   { transform:translateY(-50%); }
+  50%  { transform:translateY(50%); }
+  100% { transform:translateY(-50%); }
+}
+@keyframes blob-move-circle{
+  0%   { transform:rotate(0deg); }
+  50%  { transform:rotate(180deg); }
+  100% { transform:rotate(360deg); }
+}
+@keyframes blob-move-horizontal{
+  0%   { transform:translateX(-50%) translateY(-10%); }
+  50%  { transform:translateX(50%) translateY(10%); }
+  100% { transform:translateX(-50%) translateY(-10%); }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .gradient-blob{ animation:none !important; }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   BLOC AVIS CLIENTES (intégré DANS .section-partenaires)
+   ═══════════════════════════════════════════════════════════
+   N'est plus une section séparée — c'est un bloc enfant qui prend
+   sa place après le marquee. Les blobs et le bg sont gérés par
+   .section-partenaires (calque continu sur l'ensemble marques + avis).
+   ═══════════════════════════════════════════════════════════ */
+.avis-block{
+  /* Hérite des couleurs et de la section parente, on ne définit que
+     les tokens des cartes (pas portés par .section-partenaires). */
+  --avis-fg:        var(--section-fg);
+  --avis-fg-soft:   var(--section-fg-soft);
+  --avis-accent:    var(--section-accent);
+  /* Override barber : cartes en brun-noir profond (--bg-creme-warm), bord cuir tabac discret */
+  --avis-card-bg:   var(--bg-creme-warm);
+  --avis-card-line: rgba(181,130,74,.22);
+  --avis-card-shadow: 0 12px 36px -8px rgba(0,0,0,.40), 0 4px 12px -2px rgba(0,0,0,.25);
+
+  position:relative;
+  z-index:2;                                  /* au-dessus des blobs */
+  margin-top:clamp(80px, 12vw, 160px);        /* espace entre marquee partenaires et header avis */
+  color:var(--avis-fg);
+}
+
+/* ─── Header éditorial (mêmes attributs que partenaires-header) ── */
+.avis-header{
+  position:relative;
+  z-index:2;
+  max-width:760px;
+  margin:0 auto clamp(48px, 6vw, 80px);
+  padding:0 var(--pad-x);
+  text-align:center;
+}
+
+/* Typographie alignée sur .experience-title / .experience-subtitle (screen 1) :
+   même police, même taille, même hiérarchie que la section LA MÉTHODE. */
+.avis-title{
+  display:flex;flex-direction:column;
+  gap:clamp(20px, 2.4vw, 40px);
+  font-family:var(--sans);
+  color:var(--avis-fg);
+}
+
+.avis-title-line{display:block}
+
+/* Ligne 1 — gros titre Inter 300 uppercase (clone .experience-title) */
+.avis-title-bold{
+  font-size:clamp(40px, 6vw, 88px);
+  font-weight:300;
+  line-height:1.05;
+  letter-spacing:-0.005em;
+  text-transform:uppercase;
+}
+
+/* Ligne 2 — sous-titre italique léger soft-ink (clone .experience-subtitle) */
+.avis-title-italic{
+  font-style:italic;
+  font-weight:300;
+  font-size:clamp(15px, 1.6vw, 18px);
+  line-height:1.65;
+  letter-spacing:0;
+  color:var(--avis-fg-soft);
+  max-width:580px;
+  margin-left:auto;
+  margin-right:auto;
+  text-transform:none;
+}
+
+/* Animation word-by-word — réutilise les mêmes keyframes que partenaires
+   (partenaires-word-appear est déclaré plus haut dans le fichier).
+   Le déclenchement est posé par site.js (IntersectionObserver). */
+.avis-title .word-animate{
+  display:inline-block;
+  opacity:0;
+  margin:0 .12em 0 0;
+  transition:color .3s ease, transform .3s ease;
+  transform:translateY(20px) scale(.92);
+  filter:blur(6px);
+  will-change:opacity, transform, filter;
+}
+.avis-header.is-in-view .avis-title .word-animate{
+  animation:partenaires-word-appear .8s ease-out forwards;
+}
+
+/* ─── 3 colonnes ──────────────────────────────────────────────── */
+.avis-columns{
+  position:relative;
+  z-index:1;
+  display:flex;
+  justify-content:center;
+  gap:clamp(16px, 2vw, 32px);
+  max-width:1180px;
+  margin:0 auto;
+  padding:0 var(--pad-x);
+  height:clamp(560px, 72vh, 740px);
+  /* Mask vertical : fondu haut + bas — lit comme un cadrage éditorial */
+  mask-image:linear-gradient(to bottom, transparent 0%, #000 18%, #000 82%, transparent 100%);
+  -webkit-mask-image:linear-gradient(to bottom, transparent 0%, #000 18%, #000 82%, transparent 100%);
+}
+
+.avis-column{
+  position:relative;
+  width:clamp(280px, 28vw, 340px);
+  flex-shrink:0;
+  overflow:hidden;
+}
+
+.avis-column-md{display:none}
+.avis-column-lg{display:none}
+
+@media (min-width: 768px){
+  .avis-column-md{display:block}
+}
+@media (min-width: 1100px){
+  .avis-column-lg{display:block}
+}
+
+/* Track : 2 sets empilés (set + set dupliqué) — boucle infinie
+   par translateY -50 % (équivalent vertical de la marquee horizontale).
+   La translation est posée par site.js en rAF (iOS-safe). */
+.avis-track{
+  display:flex;
+  flex-direction:column;
+  gap:clamp(16px, 1.8vw, 24px);
+  padding-bottom:clamp(16px, 1.8vw, 24px);
+  will-change:transform;
+}
+
+/* ─── Carte d'avis ────────────────────────────────────────────── */
+.avis-card{
+  background:var(--avis-card-bg);
+  border:1px solid var(--avis-card-line);
+  border-radius:clamp(18px, 2vw, 28px);
+  padding:clamp(24px, 2.4vw, 40px);
+  box-shadow:var(--avis-card-shadow);
+  /* Crisp text rendering sur la matière crème */
+  -webkit-font-smoothing:antialiased;
+}
+
+.avis-card-text{
+  font-family:var(--serif);
+  font-size:clamp(.95rem, .85rem + .25vw, 1.05rem);
+  font-weight:300;
+  line-height:1.55;
+  color:var(--avis-fg);
+  margin:0 0 clamp(20px, 2vw, 28px);
+  letter-spacing:.005em;
+}
+
+.avis-card-author{
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+
+/* Avatar = initiales sur cercle terracotta sourd
+   (volontaire : pas de stock photo de fausse cliente ; étude doctrine §5 :
+   un avis crédible cite un effet, pas un visage générique). */
+.avis-card-avatar{
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  background:var(--avis-accent);
+  color:var(--avis-bg);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:var(--serif);
+  font-style:italic;
+  font-size:.85rem;
+  font-weight:500;
+  letter-spacing:.04em;
+  flex-shrink:0;
+}
+
+.avis-card-meta{
+  display:flex;
+  flex-direction:column;
+  line-height:1.25;
+}
+
+.avis-card-name{
+  font-family:var(--sans);
+  font-size:.95rem;
+  font-weight:500;
+  color:var(--avis-fg);
+  letter-spacing:-.005em;
+  margin:0;
+}
+
+.avis-card-role{
+  font-family:var(--sans);
+  font-size:.78rem;
+  font-weight:400;
+  color:var(--avis-fg-soft);
+  letter-spacing:.02em;
+  margin:0;
+}
+
+/* ─── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 767px){
+  .section-avis{padding:clamp(60px, 14vw, 96px) 0 64px}
+  .avis-columns{
+    height:520px;
+    gap:0;
+  }
+  .avis-column{width:100%; max-width:340px}
+  .avis-card{padding:24px}
+}
+
+@media (prefers-reduced-motion: reduce){
+  .avis-track{transform:none !important}
+}
+
+
+/* ============================================================
+   VÆON · BOOKING CTA (Calendly popup en bas de page)
+   ============================================================ */
+.booking-cta{padding:80px 24px 100px;background:var(--bg-soft,#f5efe5);border-top:1px solid var(--line,rgba(0,0,0,.08));text-align:center}
+.booking-inner{max-width:720px;margin:0 auto}
+.booking-title{font-family:var(--serif,Georgia,serif);font-weight:400;font-size:clamp(28px,4vw,44px);line-height:1.15;letter-spacing:-.02em;color:#000;margin:0 0 16px}
+.booking-title em{font-style:italic;color:var(--accent,#bd3f23)}
+.booking-sub{font-size:clamp(15px,1.5vw,17px);line-height:1.55;color:var(--muted,#6a6a6a);margin:0 auto 36px;max-width:540px}
+.btn-booking{color:#000;cursor:pointer;border:0;display:inline-flex;align-items:center;justify-content:center;padding:18px 32px;font-family:inherit;font-size:15px;font-weight:600;letter-spacing:.02em;border-radius:999px;transition:transform .25s ease,box-shadow .25s ease,background-color .25s ease}
+.btn-booking:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(0,0,0,.15)}
+@media (max-width:640px){
+  .booking-cta{padding:60px 20px 70px}
+  .booking-sub{margin-bottom:28px}
+  .btn-booking{padding:16px 26px;font-size:14px}
+}
+/* ============================================================ */

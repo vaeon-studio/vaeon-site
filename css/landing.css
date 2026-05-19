@@ -1,0 +1,410 @@
+/* ============================================================
+   PROSPECTION · LANDING /beaute
+   Styles spécifiques à la landing intermédiaire de prospection.
+   Reprend les variables (--bg, --ink, --c-*) de css/style.css.
+   ============================================================ */
+
+/* Utilitaire accessibilité */
+.visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+.prosp-body{overflow-x:clip}
+
+/* ============================================================
+   SECTION 1 — HERO
+   Centré, respiration verticale forte, pas de visuel lourd.
+   ============================================================ */
+.prosp-hero{
+  min-height:88vh;min-height:88dvh;
+  padding:160px 40px 100px;
+  display:flex;flex-direction:column;justify-content:center;align-items:center;
+  text-align:center;
+  position:relative;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(255,181,71,.06) 0%, transparent 55%),
+    radial-gradient(ellipse at 50% 100%, rgba(255,94,138,.04) 0%, transparent 60%),
+    var(--bg);
+}
+.prosp-eyebrow{
+  font-family:var(--mono);
+  font-size:11px;font-weight:500;
+  text-transform:uppercase;letter-spacing:.28em;
+  color:var(--ink-3);
+  margin-bottom:32px;
+}
+.prosp-hero h1{
+  font-family:var(--display-mono);
+  font-weight:700;
+  font-size:clamp(40px,7vw,96px);
+  line-height:1.02;letter-spacing:-.045em;
+  color:var(--ink);
+  text-transform:uppercase;
+  max-width:1100px;
+}
+.prosp-hero h1 em{
+  font-family:var(--serif);
+  font-style:italic;font-weight:300;
+  letter-spacing:-.02em;
+  text-transform:none;
+  font-size:.92em;
+  background:linear-gradient(110deg,var(--c-pink),var(--c-amber));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.prosp-sub{
+  margin-top:28px;
+  max-width:620px;
+  font-size:clamp(15px,1.6vw,18px);
+  line-height:1.55;
+  color:var(--ink-2);
+  font-weight:400;
+}
+.prosp-scroll-hint{
+  margin-top:60px;
+  display:inline-flex;align-items:center;gap:10px;
+  padding:12px 22px;
+  font-family:var(--mono);font-size:11px;font-weight:600;
+  letter-spacing:.18em;text-transform:uppercase;
+  color:var(--ink-2);
+  border:1px solid var(--line);
+  border-radius:999px;
+  transition:border-color .25s, color .25s, transform .25s;
+}
+.prosp-scroll-hint svg{animation:scrollHintBob 2.2s ease-in-out infinite}
+.prosp-scroll-hint:hover{color:var(--ink);border-color:var(--line-2);transform:translateY(-2px)}
+@keyframes scrollHintBob{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
+
+/* ============================================================
+   SECTION 2 — TROIS NIVEAUX (CARTES)
+   Mobile-first : 1 colonne. Tablette/desktop : 3 colonnes égales.
+   Espacements généreux, cartes sobres avec border + glow au hover.
+   ============================================================ */
+.prosp-niveaux{
+  padding:60px 24px 100px;
+  display:grid;
+  grid-template-columns:1fr;
+  gap:28px;
+  max-width:1400px;margin:0 auto;
+}
+
+.niveau-card{
+  position:relative;
+  display:flex;flex-direction:column;
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:20px;
+  overflow:hidden;
+  transition:border-color .35s, transform .35s, box-shadow .35s;
+}
+.niveau-card:hover{
+  border-color:var(--line-2);
+  transform:translateY(-4px);
+  box-shadow:0 24px 60px rgba(0,0,0,.45);
+}
+.niveau-card--featured{
+  border-color:rgba(255,181,71,.35);
+  box-shadow:0 20px 40px rgba(255,94,138,.06);
+}
+.niveau-card--featured:hover{
+  border-color:rgba(255,181,71,.55);
+  box-shadow:0 24px 60px rgba(255,94,138,.12);
+}
+
+.niveau-badge{
+  position:absolute;top:16px;right:16px;z-index:3;
+  padding:6px 12px;
+  font-family:var(--mono);font-size:10px;font-weight:600;
+  letter-spacing:.16em;text-transform:uppercase;
+  color:var(--bg);
+  background:linear-gradient(110deg,var(--c-pink),var(--c-amber));
+  border-radius:999px;
+  box-shadow:0 4px 14px rgba(255,94,138,.35);
+}
+
+/* ============================================================
+   PREVIEW FRAME — IFRAME RESPONSIVE
+   Pattern : conteneur avec aspect-ratio + iframe scaled-down
+   pour montrer plus de la maquette dans une vue d'oiseau.
+   pointer-events:none sur iframe → tout le frame devient cliquable.
+   ============================================================ */
+.preview-frame{
+  position:relative;
+  display:block;
+  aspect-ratio:4/5;
+  overflow:hidden;
+  background:var(--bg-2);
+  border-bottom:1px solid var(--line);
+  cursor:pointer;
+}
+.preview-frame iframe{
+  /* L'iframe rend à 200% de taille du wrapper, scaled à 0.5 → vue d'oiseau */
+  position:absolute;top:0;left:0;
+  width:200%;height:200%;
+  border:0;
+  transform:scale(.5);
+  transform-origin:top left;
+  pointer-events:none; /* aperçu non-interactif, clic = ouvre la maquette */
+  background:#fff;
+  opacity:0;
+  transition:opacity .5s ease;
+}
+.preview-frame iframe.loaded{opacity:1}
+.frame-loading{
+  position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--mono);font-size:10px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--ink-3);
+  background:var(--bg-2);
+  transition:opacity .4s ease;
+  pointer-events:none;
+}
+.preview-frame.is-loaded .frame-loading{opacity:0}
+/* Overlay subtil au hover : signal qu'on peut cliquer */
+.preview-frame::after{
+  content:'';
+  position:absolute;inset:0;
+  background:linear-gradient(180deg, transparent 0%, transparent 60%, rgba(14,14,16,.4) 100%);
+  opacity:0;
+  transition:opacity .35s ease;
+  pointer-events:none;
+}
+.niveau-card:hover .preview-frame::after{opacity:1}
+
+/* ============================================================
+   CONTENU DE LA CARTE
+   ============================================================ */
+.niveau-content{
+  padding:32px 28px 36px;
+  display:flex;flex-direction:column;flex:1;gap:18px;
+}
+.niveau-head{
+  display:flex;align-items:baseline;gap:14px;
+}
+.niveau-num{
+  font-family:var(--mono);
+  font-size:11px;font-weight:600;
+  color:var(--ink-3);
+  letter-spacing:.2em;
+}
+.niveau-name{
+  font-family:var(--display-mono);
+  font-weight:700;
+  font-size:clamp(28px,3.6vw,40px);
+  line-height:1;letter-spacing:-.03em;
+  color:var(--ink);
+  text-transform:uppercase;
+}
+.niveau-desc{
+  font-size:15px;
+  line-height:1.55;
+  color:var(--ink-2);
+  font-weight:400;
+}
+.niveau-feats{
+  list-style:none;
+  padding:0;margin:0;
+  display:flex;flex-direction:column;gap:10px;
+  border-top:1px solid var(--line);
+  padding-top:20px;
+}
+.niveau-feats li{
+  position:relative;
+  padding-left:22px;
+  font-size:14px;line-height:1.4;
+  color:var(--ink-2);
+}
+.niveau-feats li::before{
+  content:'';
+  position:absolute;left:0;top:.5em;
+  width:10px;height:1px;
+  background:var(--ink-3);
+}
+
+.niveau-cta{
+  margin-top:auto;
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  padding:14px 24px;
+  background:var(--ink);
+  color:var(--bg);
+  font-weight:600;font-size:14px;
+  border-radius:999px;
+  transition:background .25s, transform .25s, gap .25s;
+  align-self:flex-start;
+}
+.niveau-cta:hover{background:var(--c-amber);transform:translateY(-2px);gap:14px}
+.niveau-card--featured .niveau-cta{
+  background:linear-gradient(110deg,var(--c-pink),var(--c-amber));
+  color:#fff;
+}
+.niveau-card--featured .niveau-cta:hover{
+  background:var(--ink);
+  color:var(--c-amber);
+}
+
+/* ============================================================
+   SECTION 3 — TÉMOIGNAGE
+   ============================================================ */
+.prosp-temoignage{
+  padding:100px 24px;
+  max-width:900px;
+  margin:0 auto;
+  text-align:center;
+}
+.prosp-temoignage figure{margin:0}
+.temoignage-quote{
+  position:relative;
+  font-family:var(--serif);
+  font-style:italic;font-weight:300;
+  font-size:clamp(22px,2.6vw,32px);
+  line-height:1.4;letter-spacing:-.01em;
+  color:var(--ink);
+  padding:0 20px;
+}
+.quote-mark{
+  display:block;
+  font-family:var(--display-mono);
+  font-size:80px;line-height:.5;
+  color:var(--c-amber);
+  margin-bottom:24px;
+  opacity:.7;
+}
+.temoignage-cite{
+  margin-top:32px;
+  display:flex;flex-direction:column;gap:4px;
+  font-style:normal;
+  color:var(--ink-3);
+  font-size:13px;
+  font-family:var(--mono);
+  letter-spacing:.04em;
+}
+.temoignage-cite strong{
+  color:var(--ink);
+  font-weight:600;
+  letter-spacing:.02em;
+}
+
+/* ============================================================
+   SECTION 4 — CTA FINAL CALENDLY
+   Fond légèrement contrasté, focus sur le bouton.
+   ============================================================ */
+.prosp-cta-final{
+  margin:60px 24px 100px;
+  padding:80px 40px 90px;
+  background:
+    radial-gradient(ellipse at 30% 20%, rgba(255,94,138,.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, rgba(255,181,71,.06) 0%, transparent 50%),
+    var(--bg-2);
+  border:1px solid var(--line);
+  border-radius:28px;
+  text-align:center;
+  max-width:1100px;
+  margin-left:auto;margin-right:auto;
+}
+.prosp-cta-final h2{
+  font-family:var(--display-mono);
+  font-weight:700;
+  font-size:clamp(28px,4.5vw,56px);
+  line-height:1.05;letter-spacing:-.035em;
+  color:var(--ink);
+  text-transform:uppercase;
+  max-width:780px;margin:0 auto;
+}
+.prosp-cta-final h2 em{
+  font-family:var(--serif);
+  font-style:italic;font-weight:300;
+  text-transform:none;
+  font-size:.92em;
+  color:var(--ink-2);
+}
+.cta-sub{
+  margin-top:20px;
+  font-size:clamp(15px,1.5vw,17px);
+  line-height:1.55;
+  color:var(--ink-2);
+  max-width:540px;margin-left:auto;margin-right:auto;
+}
+.prosp-cta-big{
+  margin-top:40px;
+  display:inline-flex;align-items:center;gap:14px;
+  padding:20px 34px;
+  background:var(--ink);
+  color:var(--bg);
+  font-weight:700;font-size:16px;
+  border-radius:999px;
+  transition:background .25s, transform .25s, gap .25s, box-shadow .25s;
+  box-shadow:0 12px 32px rgba(0,0,0,.35);
+}
+.prosp-cta-big:hover{
+  background:var(--c-amber);
+  transform:translateY(-3px);
+  gap:18px;
+  box-shadow:0 18px 44px rgba(255,181,71,.25);
+}
+.cta-meta{
+  margin-top:24px;
+  display:block;
+  font-family:var(--mono);
+  font-size:11px;font-weight:500;
+  text-transform:uppercase;letter-spacing:.2em;
+  color:var(--ink-3);
+}
+
+/* ============================================================
+   RESPONSIVE
+   Breakpoints : 640px / 768px / 1024px / 1280px (mobile-first)
+   ============================================================ */
+
+/* Tablette ≥ 768px : passage en 3 colonnes pour les cartes */
+@media (min-width:768px){
+  .prosp-niveaux{
+    grid-template-columns:repeat(3, 1fr);
+    gap:24px;
+    padding:80px 40px 120px;
+  }
+  .preview-frame{aspect-ratio:3/4}
+  .niveau-content{padding:28px 24px 32px}
+  .niveau-name{font-size:clamp(24px,2.4vw,30px)}
+  .niveau-desc{font-size:14px}
+  .niveau-feats li{font-size:13px}
+}
+
+/* Desktop ≥ 1024px : espacements respiration */
+@media (min-width:1024px){
+  .prosp-niveaux{
+    gap:32px;
+    padding:100px 60px 140px;
+  }
+  .niveau-content{padding:36px 32px 40px;gap:22px}
+  .niveau-name{font-size:clamp(28px,2.6vw,36px)}
+  .niveau-desc{font-size:15px}
+  .niveau-feats li{font-size:14px}
+}
+
+/* Large desktop ≥ 1280px */
+@media (min-width:1280px){
+  .prosp-niveaux{gap:36px}
+}
+
+/* Mobile spécifique < 640px */
+@media (max-width:640px){
+  .prosp-hero{padding:140px 24px 80px;min-height:80vh}
+  .prosp-sub{margin-top:20px}
+  .prosp-scroll-hint{margin-top:40px;padding:10px 18px;font-size:10px}
+  .prosp-niveaux{padding:40px 18px 80px;gap:24px}
+  .niveau-card{border-radius:18px}
+  .niveau-content{padding:24px 22px 28px;gap:16px}
+  .niveau-feats{padding-top:16px}
+  .prosp-temoignage{padding:70px 20px}
+  .prosp-cta-final{margin:40px 16px 70px;padding:60px 24px 70px;border-radius:22px}
+  .prosp-cta-big{padding:18px 28px;font-size:15px;margin-top:32px}
+}
+
+/* Accessibilité : respect des préférences de mouvement réduit */
+@media (prefers-reduced-motion:reduce){
+  .prosp-scroll-hint svg,
+  .preview-frame iframe,
+  .niveau-card,
+  .niveau-cta,
+  .prosp-cta-big{
+    transition:none;
+    animation:none;
+  }
+}

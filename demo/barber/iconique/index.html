@@ -1,0 +1,634 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+
+<title>Maison Faubourg · Barbier à Paris 9ᵉ — coupe, barbe, rasage</title>
+<meta name="description" content="Atelier de barbier à Paris 9ᵉ. Coupe, barbe, rasage au coupe-chou, soin, coloration. Cabines fermées, lames Thiers Issard, savons Truefitt & Hill." />
+<meta name="theme-color" content="#1F1814" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+<!-- TODO: police barber à définir — Google Fonts <link> à réintégrer ici une fois la stack typographique choisie -->
+
+<link rel="stylesheet" href="css/style.css" />
+
+<!-- Config + moteur d'injection (synchrone : variables CSS posées avant peinture) -->
+<script src="js/config.js"></script>
+<script src="js/apply-config.js"></script>
+
+<!-- VÆON · Plausible Analytics (defer = non-bloquant LCP, queue intégrée) -->
+<script defer data-domain="vaeon.fr" src="https://plausible.io/js/script.js"></script>
+<script>window.plausible = window.plausible || function(){(plausible.q=plausible.q||[]).push(arguments)}</script>
+
+<!-- VÆON · Calendly widget assets (async = non-bloquant LCP) -->
+<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+<script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+</head>
+<body data-pageview-event="Iconique viewed barber">
+
+<a class="skip" href="#hero" style="position:absolute;left:-9999px">Aller au contenu</a>
+
+<!-- SVG goo filter (mutualisé) — utilisé par .gradient-blobs des sections
+     partenaires + avis pour fusionner les blobs en métaballes douces.
+     Hors viewport (width/height 0) : aucune empreinte de layout. -->
+<svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute;overflow:hidden">
+  <defs>
+    <filter id="blobsGoo">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
+      <feColorMatrix in="blur" mode="matrix"
+        values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -8" result="goo" />
+      <feBlend in="SourceGraphic" in2="goo" />
+    </filter>
+  </defs>
+</svg>
+
+<!-- ========== HEADER SMART-CONTRAST ==========
+     Transparent par défaut. data-header-theme change automatiquement
+     selon la section visible (light = textes noirs, dark = textes blancs).
+     Backdrop blur s'active à >100px de scroll (.scrolled).               -->
+<header class="site-header" data-header data-header-theme="light" role="banner">
+  <button class="burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false">
+    <span class="burger-line"></span>
+    <span class="burger-line"></span>
+  </button>
+
+  <a href="/" class="brand-center header-logo" aria-label="Accueil"><span data-cfg="brand-name">MAISON FAUBOURG</span></a>
+
+  <a href="#contact" class="header-cta" data-cfg="header-cta">PRENDRE RENDEZ-VOUS</a>
+</header>
+
+<main>
+
+  <!-- ========== HERO (scroll-driven Ever-style) ========== -->
+  <section class="hero-section" id="hero" data-theme="light" data-section="hero" aria-label="Présentation">
+
+    <!-- Panneau gauche : fond uni (couleur définie par CSS variables) -->
+    <div class="hero-bg-pane" aria-hidden="true"></div>
+
+    <!-- Panneau droit : photo en gros plan -->
+    <div class="hero-photo-pane">
+      <img data-cfg="hero-photo"
+           src="assets/images/hero-photo.jpg"
+           alt="Coupe-chou en main du barbier — préparation au rasage"
+           loading="eager" decoding="async"
+           style="width:100%;height:100%;object-fit:cover"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+      <div class="hero-photo-placeholder" style="display:none">PHOTO À AJOUTER</div>
+    </div>
+
+    <!-- TITRE PRINCIPAL — traverse les 2 panneaux (mix-blend-mode: difference) -->
+    <h1 class="hero-title" data-cfg="hero-titre">Coupe, barbe, rasage. Cinq postes en cabine fermée.</h1>
+
+    <!-- CONTENT — description (panneau gauche) -->
+    <div class="hero-content">
+      <div class="hero-bottom">
+        <p class="hero-description" data-cfg="hero-description">Cinq cabines fermées. Coupe-chou Thiers Issard, savons Truefitt &amp; Hill, ciseaux japonais. Séances à l'unité ou en abonnement, après diagnostic du cheveu et de la barbe.</p>
+      </div>
+    </div>
+
+    <!-- SCROLL INDICATOR — bas gauche, vertical -->
+    <div class="hero-scroll-indicator" aria-hidden="true">
+      <span data-cfg="hero-scroll-indicator">DESCENDRE</span>
+    </div>
+
+  </section>
+
+  <!-- ========== SECTION 2 — TITRE ÉCLATÉ MAGAZINE ==========
+       Layout magazine éditorial avec :
+       - Eyebrow (numéro + ligne + label)
+       - Titre éclaté (lignes alternant fill majuscules / italic-small)
+       - Photo portrait au centre qui dépasse
+       - Phrase descriptive italique en bas
+       Le contenu (titreLignes) est généré dynamiquement par apply-config.js. -->
+  <section class="section-personalise" id="approche" data-theme="light" data-section="personalise">
+
+    <!-- Titre éclaté — généré dynamiquement par apply-config.js depuis config.sectionPersonalise.titreLignes -->
+    <div class="personalise-title-stack">
+      <h2 class="personalise-title" data-cfg-list="personalise-titre">
+        <!-- Généré dynamiquement : alternance .title-line / .title-word avec photo intercalée -->
+      </h2>
+    </div>
+
+    <!-- Phrase descriptive en bas -->
+    <div class="personalise-description">
+      <p data-cfg="personalise-description">Diagnostic en début de séance. La coupe se lit à la matière du cheveu. La barbe se taille au sens du poil. Le même barbier vous suit d'une fois sur l'autre.</p>
+    </div>
+
+  </section>
+
+  <!-- ========== SECTION 3 — L'EXPÉRIENCE / MÉTHODE ==========
+       - Titre central énorme en majuscules sans-serif light
+       - 3 raisons en colonnes (titre serif italic + paragraphe)
+       - 2 photos latérales qui apparaissent au scroll
+       Le contenu est généré dynamiquement par apply-config.js depuis config.sectionExperience. -->
+  <section class="section-experience" id="experience" data-theme="dark" data-section="experience">
+
+    <!-- Photos latérales (animées en scrub par animations.js) -->
+    <div class="experience-photo experience-photo-left" data-scroll-photo="left">
+      <img class="experience-photo-img"
+           data-cfg="experience-photo-left"
+           src="assets/images/experience-left.jpg"
+           alt="Détail rasage au coupe-chou"
+           loading="lazy" decoding="async"
+           onerror="this.removeAttribute('src')" />
+    </div>
+
+    <div class="experience-photo experience-photo-right" data-scroll-photo="right">
+      <img class="experience-photo-img"
+           data-cfg="experience-photo-right"
+           src="assets/images/experience-right.jpg"
+           alt="Coupe ciseau — finition"
+           loading="lazy" decoding="async"
+           onerror="this.removeAttribute('src')" />
+    </div>
+
+    <!-- Contenu central -->
+    <div class="experience-container">
+
+      <!-- Eyebrow (marque) -->
+      <div class="experience-eyebrow">
+        <span class="experience-brand" data-cfg="experience-brand">— L'ATELIER —</span>
+      </div>
+
+      <!-- Titre central énorme — généré dynamiquement par apply-config.js -->
+      <h2 class="experience-title" data-cfg="experience-title">LE<br>GESTE</h2>
+
+      <!-- Sous-titre italique -->
+      <p class="experience-subtitle" data-cfg="experience-subtitle">Trois règles tenues sur chaque venue. Pas de protocole standard, pas de lame jetable sur le contour.</p>
+
+      <!-- 3 raisons (générées dynamiquement par apply-config.js) -->
+      <div class="experience-reasons" data-cfg-list="experience-reasons">
+        <!-- Fallback statique : remplacé au runtime -->
+        <div class="experience-reason">
+          <h3 class="reason-title">Diagnostic</h3>
+          <p class="reason-text">On lit la matière avant de couper. Implantation, sens du poil, état du cuir chevelu, nature du cheveu. La coupe se définit ensuite — jamais avant.</p>
+        </div>
+        <div class="experience-reason">
+          <h3 class="reason-title">Lame</h3>
+          <p class="reason-text">Coupe-chou Thiers Issard, ciseaux japonais Kasho, savons Truefitt &amp; Hill, baumes Captain Fawcett. Aucune lame jetable sur les contours, aucun produit de grande surface en cabine.</p>
+        </div>
+        <div class="experience-reason">
+          <h3 class="reason-title">Suivi</h3>
+          <p class="reason-text">Carnet client tenu à chaque venue. Repousse anticipée, raccord posé à quatre semaines. Le même barbier reprend votre coupe d'un rendez-vous au suivant.</p>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- ========== SECTION 4 — INTERACTIVE FACE MAP ==========
+       Photo portrait full-bleed avec 5 numéros (01-05) positionnés
+       sur le visage/corps. Au hover/clic : card flottante en
+       bas à gauche met à jour son contenu.
+       Le contenu est généré dynamiquement par apply-config.js. -->
+  <section class="section-facemap" id="facemap" data-theme="dark" data-section="facemap">
+
+    <!-- Photo background facemap (portrait homme — prestations) -->
+    <div class="facemap-bg">
+      <img class="facemap-bg-img"
+           data-cfg="facemap-bg-img"
+           src="assets/images/facemap-portrait.png"
+           alt="Portrait modèle homme — prestations barbier"
+           loading="lazy" decoding="async"
+           style="height:100%;width:auto;object-fit:cover" />
+      <div class="facemap-bg-overlay" aria-hidden="true"></div>
+    </div>
+
+    <!-- Marquee défilant en arrière-plan -->
+    <div class="facemap-marquee" aria-hidden="true">
+      <div class="facemap-marquee-track">
+        <span data-cfg="facemap-marquee">CINQ LAMES · UN MÊME ATELIER · CINQ LAMES · UN MÊME ATELIER ·</span>
+        <span data-cfg="facemap-marquee">CINQ LAMES · UN MÊME ATELIER · CINQ LAMES · UN MÊME ATELIER ·</span>
+      </div>
+    </div>
+
+    <!-- Numéros interactifs sur le visage (positions x/y override par apply-config) -->
+    <div class="facemap-points">
+      <button class="facemap-point" data-prestation-id="nails"
+              style="left:50%;top:18%" aria-label="Coupe signature">01</button>
+      <button class="facemap-point" data-prestation-id="brow"
+              style="left:50%;top:65%" aria-label="Barbe et contours">02</button>
+      <button class="facemap-point" data-prestation-id="esthetique"
+              style="left:62%;top:38%" aria-label="Soin du visage">03</button>
+      <button class="facemap-point" data-prestation-id="massages"
+              style="left:38%;top:28%" aria-label="Coloration et camouflage">04</button>
+    </div>
+
+    <!-- Card flottante en bas à gauche -->
+    <div class="facemap-card" data-card>
+
+      <div class="facemap-card-photo" data-card-photo>
+        <img data-card-img
+             src="assets/images/prestations/coupeciseaux.jpg"
+             alt="Photo de la prestation"
+             loading="lazy" decoding="async"
+             style="width:100%;height:100%;object-fit:cover" />
+      </div>
+
+      <div class="facemap-card-content">
+
+        <p class="facemap-card-eyebrow" data-card-eyebrow>01 — COUPE</p>
+
+        <h3 class="facemap-card-title" data-card-title>Coupe ciseau &amp; contour</h3>
+
+        <p class="facemap-card-description" data-card-description>Diagnostic du cheveu, shampoing assis, coupe au ciseau japonais ou à la tondeuse, contour à la lame. Dégradé, fondu ou raccord selon la matière du cheveu.</p>
+
+        <div class="facemap-card-treatments" data-card-treatments>
+          <p class="treatments-label">Gestes signature</p>
+          <p class="treatments-list">Coupe ciseau 45 min | Dégradé fondu | Raccord 4 semaines | Coupe enfant</p>
+        </div>
+
+        <a href="#reservation" class="facemap-card-cta" data-card-cta>
+          Réserver
+          <span class="cta-arrow" aria-hidden="true">→</span>
+        </a>
+
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       SECTION 5 - GALERIE RÉVÉLATION (effet bouche zoom)
+       ═══════════════════════════════════════════════════════
+       4 phases en une section pinned :
+         1. Au repos : fond sombre + logo bouche très peu visible
+         2. Au mouvement souris : spot lumineux qui suit le curseur
+         3. Au scroll : ScrollTrigger pin + bouche zoom scale 1 → 30
+         4. Galerie qui apparaît au scroll 50%+
+  -->
+  <section class="section-revelation" data-theme="dark" data-section="revelation">
+
+    <!-- Phase 1-2-3 : stage avec bouche -->
+    <div class="revelation-stage" data-revelation-stage>
+
+      <!-- Spot lumineux qui suit la souris -->
+      <div class="revelation-spot" data-revelation-spot></div>
+
+      <!-- EFFET TORCHE — Photo cachée dans l'ombre, révélée uniquement
+           où passe le curseur (mask radial dynamique). -->
+      <div class="revelation-photo" data-mouth-wrapper data-revelation-photo>
+        <img src="assets/images/revelation-portrait.jpg"
+             alt="Maison Faubourg — l'atelier"
+             class="revelation-photo-img"
+             data-mouth
+             data-cfg="revelation-torch-photo"
+             loading="lazy" decoding="async" />
+      </div>
+
+      <!-- Texte invitation -->
+      <p class="revelation-hint" data-revelation-hint>
+        <span class="hint-arrow" aria-hidden="true">↓</span>
+        <span class="hint-text" data-cfg="revelation-hint">Approchez le curseur. Faites défiler pour ouvrir.</span>
+      </p>
+
+      <!-- Phase 4 : galerie qui apparaît au scroll. -->
+      <div class="revelation-gallery" data-revelation-gallery>
+
+      <div class="gallery-header">
+        <div class="gallery-header-text">
+          <p class="gallery-eyebrow" data-cfg="revelation-eyebrow">— DANS LA CABINE —</p>
+          <h2 class="gallery-title" data-cfg="revelation-titre">En coupe.</h2>
+        </div>
+        <div class="gallery-nav">
+          <button class="gallery-arrow gallery-arrow-prev"
+                  data-gallery-prev
+                  aria-label="Photo précédente">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M15 6L9 12L15 18" stroke="currentColor"
+                    stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </button>
+          <button class="gallery-arrow gallery-arrow-next"
+                  data-gallery-next
+                  aria-label="Photo suivante">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M9 6L15 12L9 18" stroke="currentColor"
+                    stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Carousel horizontal (cards générées dynamiquement par apply-config.js) -->
+      <div class="gallery-carousel" data-gallery-carousel>
+        <div class="gallery-track" data-gallery-track data-cfg-list="revelation-photos">
+          <!-- Fallback statique : remplacé au runtime -->
+
+          <article class="gallery-item">
+            <div class="gallery-img-wrapper">
+              <div class="placeholder-image" data-placeholder="image" aria-label="Lame de coupe-chou en gros plan, manche corne" style="width:100%;height:100%">IMAGE</div>
+            </div>
+            <div class="gallery-caption">
+              <p class="caption-tag">RASAGE</p>
+              <p class="caption-title">Coupe-chou Thiers Issard</p>
+            </div>
+          </article>
+
+          <article class="gallery-item">
+            <div class="gallery-img-wrapper">
+              <div class="placeholder-image" data-placeholder="image" aria-label="Passage de tondeuse Wahl en dégradé sur la nuque" style="width:100%;height:100%">IMAGE</div>
+            </div>
+            <div class="gallery-caption">
+              <p class="caption-tag">COUPE</p>
+              <p class="caption-title">Dégradé tondeuse</p>
+            </div>
+          </article>
+
+          <article class="gallery-item">
+            <div class="gallery-img-wrapper">
+              <div class="placeholder-image" data-placeholder="image" aria-label="Finition rasoir sur la mâchoire après tondeuse" style="width:100%;height:100%">IMAGE</div>
+            </div>
+            <div class="gallery-caption">
+              <p class="caption-tag">BARBE</p>
+              <p class="caption-title">Contour à la lame</p>
+            </div>
+          </article>
+
+          <article class="gallery-item">
+            <div class="gallery-img-wrapper">
+              <div class="placeholder-image" data-placeholder="image" aria-label="Application coloration au pinceau sur tempe grisonnante" style="width:100%;height:100%">IMAGE</div>
+            </div>
+            <div class="gallery-caption">
+              <p class="caption-tag">COLORATION</p>
+              <p class="caption-title">Camouflage tempes</p>
+            </div>
+          </article>
+
+          <article class="gallery-item">
+            <div class="gallery-img-wrapper">
+              <div class="placeholder-image" data-placeholder="image" aria-label="Serviette chaude posée sur la barbe avant rasage" style="width:100%;height:100%">IMAGE</div>
+            </div>
+            <div class="gallery-caption">
+              <p class="caption-tag">SOIN</p>
+              <p class="caption-title">Vapeur &amp; serviette chaude</p>
+            </div>
+          </article>
+
+          <article class="gallery-item">
+            <div class="gallery-img-wrapper">
+              <div class="placeholder-image" data-placeholder="image" aria-label="Coupe précise au ciseau Kasho sur cheveu fin" style="width:100%;height:100%">IMAGE</div>
+            </div>
+            <div class="gallery-caption">
+              <p class="caption-tag">COUPE</p>
+              <p class="caption-title">Ciseau japonais</p>
+            </div>
+          </article>
+
+        </div>
+      </div>
+
+      </div><!-- /.revelation-gallery -->
+
+    </div><!-- /.revelation-stage -->
+
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       SECTION — MARQUES PARTENAIRES (logos défilants + sparkles)
+       ═══════════════════════════════════════════════════════ -->
+  <section class="section-partenaires" id="partenaires" data-theme="light" data-section="partenaires">
+
+    <!-- Header éditorial — titre 2 lignes -->
+    <header class="partenaires-header" data-partenaires-header>
+      <h2 class="partenaires-title">
+        <span class="partenaires-title-line partenaires-title-bold" data-cfg="partenaires-titre-1" data-word-line="1">Marques de barbier sélectionnées.</span>
+        <span class="partenaires-title-line partenaires-title-italic" data-cfg="partenaires-titre-2" data-word-line="2">Aucune référence de grande surface.</span>
+      </h2>
+    </header>
+
+    <!-- Marquee logos : 2 sets côte à côte (boucle infinie pilotée en rAF par site.js) -->
+    <div class="partenaires-marquee" aria-label="Marques partenaires défilantes">
+      <div class="partenaires-marquee-viewport">
+        <div class="partenaires-set" data-partenaires-set data-cfg-list="partenaires-logos">
+          <!-- Généré dynamiquement par apply-config.js -->
+        </div>
+        <div class="partenaires-set" data-partenaires-set data-cfg-list="partenaires-logos" aria-hidden="true">
+          <!-- Deuxième set (boucle infinie) -->
+        </div>
+      </div>
+
+      <!-- Progressive blur multi-couches : bord gauche -->
+      <div class="partenaires-blur partenaires-blur-left" data-partenaires-blur="left" aria-hidden="true">
+        <div class="blur-layer" style="--idx:1"></div>
+        <div class="blur-layer" style="--idx:2"></div>
+        <div class="blur-layer" style="--idx:3"></div>
+        <div class="blur-layer" style="--idx:4"></div>
+        <div class="blur-layer" style="--idx:5"></div>
+        <div class="blur-layer" style="--idx:6"></div>
+      </div>
+
+      <!-- Progressive blur multi-couches : bord droit -->
+      <div class="partenaires-blur partenaires-blur-right" data-partenaires-blur="right" aria-hidden="true">
+        <div class="blur-layer" style="--idx:1"></div>
+        <div class="blur-layer" style="--idx:2"></div>
+        <div class="blur-layer" style="--idx:3"></div>
+        <div class="blur-layer" style="--idx:4"></div>
+        <div class="blur-layer" style="--idx:5"></div>
+        <div class="blur-layer" style="--idx:6"></div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════
+         BLOC AVIS CLIENTS
+         ═══════════════════════════════════════════════════════ -->
+    <div class="avis-block" id="avis" data-section="avis">
+
+      <!-- Header éditorial (mêmes attributs que partenaires : 2 lignes) -->
+      <header class="avis-header" data-avis-header>
+        <h2 class="avis-title">
+          <span class="avis-title-line avis-title-bold" data-cfg="avis-titre-1" data-word-line="1">Ce qu'en disent ceux qui reviennent.</span>
+          <span class="avis-title-line avis-title-italic" data-cfg="avis-titre-2" data-word-line="2">Effets décrits, séances datées.</span>
+        </h2>
+      </header>
+
+      <!-- 3 colonnes de testimonials (scroll vertical, rAF dans site.js) -->
+      <div class="avis-columns" data-avis-columns>
+        <div class="avis-column" data-avis-column data-duration="22">
+          <div class="avis-track" data-cfg-list="avis-col-1" data-avis-track>
+            <!-- Généré dynamiquement par apply-config.js (set 1 + set 2 dupliqué) -->
+          </div>
+        </div>
+        <div class="avis-column avis-column-md" data-avis-column data-duration="28">
+          <div class="avis-track" data-cfg-list="avis-col-2" data-avis-track>
+            <!-- Généré dynamiquement (visible ≥ tablet) -->
+          </div>
+        </div>
+        <div class="avis-column avis-column-lg" data-avis-column data-duration="25">
+          <div class="avis-track" data-cfg-list="avis-col-3" data-avis-track>
+            <!-- Généré dynamiquement (visible ≥ desktop) -->
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Background gradient blobs -->
+    <div class="gradient-blobs" aria-hidden="true">
+      <div class="gradient-blob blob-1"></div>
+      <div class="gradient-blob blob-2"></div>
+      <div class="gradient-blob blob-3"></div>
+      <div class="gradient-blob blob-4"></div>
+      <div class="gradient-blob blob-5"></div>
+    </div>
+
+  </section>
+
+  <!-- ========== BOOKING CTA · Discutons 15 min avec Maxime ========== -->
+  <section class="booking-cta" aria-labelledby="booking-title">
+    <div class="container booking-inner">
+      <h2 id="booking-title" class="booking-title">Discutons quinze minutes <em>de votre projet.</em></h2>
+      <p class="booking-sub">Réservez un créneau direct avec Maxime. Aucun engagement, juste un échange clair.</p>
+      <button type="button"
+              class="btn btn-accent btn-booking"
+              data-booking-source="niveau"
+              data-booking-vertical="barber"
+              data-booking-niveau="iconique">
+        Réserver 15 min avec Maxime
+      </button>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       FOOTER - Minimaliste 3 colonnes
+       ═══════════════════════════════════════════════════════ -->
+  <footer class="site-footer" data-theme="light">
+
+    <div class="footer-container">
+
+      <!-- Bloc principal en 3 colonnes -->
+      <div class="footer-grid">
+
+        <!-- Colonne 1 -->
+        <div class="footer-column">
+          <p class="footer-label">Atelier</p>
+          <ul class="footer-list">
+            <li><a href="#hero" class="footer-link">Accueil</a></li>
+            <li><a href="#experience" class="footer-link">Le geste</a></li>
+            <li><a href="#facemap" class="footer-link">Prestations</a></li>
+            <li><a href="#revelation" class="footer-link">En coupe</a></li>
+          </ul>
+        </div>
+
+        <!-- Colonne 2 -->
+        <div class="footer-column">
+          <p class="footer-label">Contact</p>
+          <ul class="footer-list">
+            <li>
+              <a href="tel:+33148780000" class="footer-link">
+                +33 01 48 78 00 00
+              </a>
+            </li>
+            <li>
+              <a href="mailto:contact@maison-faubourg.fr" class="footer-link">
+                contact@maison-faubourg.fr
+              </a>
+            </li>
+            <li class="footer-address">
+              28 rue Notre-Dame-de-Lorette<br>
+              75009 Paris
+            </li>
+            <li>
+              <a href="#reservation" class="footer-link footer-cta">
+                Prendre rendez-vous →
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Colonne 3 -->
+        <div class="footer-column">
+          <p class="footer-label">Réseaux</p>
+          <ul class="footer-list">
+            <li>
+              <a href="https://instagram.com/maisonfaubourg"
+                 target="_blank"
+                 rel="noopener"
+                 class="footer-link footer-social">
+                <svg class="social-icon" width="20" height="20"
+                     viewBox="0 0 24 24" fill="none"
+                     xmlns="http://www.w3.org/2000/svg">
+                  <rect x="2" y="2" width="20" height="20"
+                        rx="5" stroke="currentColor"
+                        stroke-width="1.5"/>
+                  <circle cx="12" cy="12" r="4"
+                          stroke="currentColor"
+                          stroke-width="1.5"/>
+                  <circle cx="17.5" cy="6.5" r="1"
+                          fill="currentColor"/>
+                </svg>
+                <span>Instagram</span>
+              </a>
+            </li>
+            <li>
+              <a href="https://www.tiktok.com/@maisonfaubourg"
+                 target="_blank"
+                 rel="noopener"
+                 class="footer-link footer-tiktok">
+                <svg class="social-icon" width="20" height="20"
+                     viewBox="0 0 24 24" fill="none"
+                     xmlns="http://www.w3.org/2000/svg">
+                  <path d="M16 3v3a4 4 0 0 0 4 4"
+                        stroke="currentColor" stroke-width="1.5"
+                        stroke-linecap="round"/>
+                  <path d="M16 3v12.5a4.5 4.5 0 1 1-4.5-4.5"
+                        stroke="currentColor" stroke-width="1.5"
+                        stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>TikTok</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Séparateur -->
+      <div class="footer-divider"></div>
+
+      <!-- Bottom bar : nom + mentions légales -->
+      <div class="footer-bottom">
+
+        <p class="footer-brand">Maison Faubourg</p>
+
+        <div class="footer-legal">
+          <span class="footer-copyright">© 2026 Maison Faubourg</span>
+          <span class="footer-separator">·</span>
+          <a href="/mentions-legales/" class="footer-link footer-link-small">
+            Mentions légales
+          </a>
+          <span class="footer-separator">·</span>
+          <a href="/mentions-legales/#donnees" class="footer-link footer-link-small">
+            Politique de confidentialité
+          </a>
+        </div>
+
+      </div>
+
+    </div>
+
+  </footer>
+
+</main>
+
+<!-- Logique de base (Lenis init + HeaderContrast + scroll detection) -->
+<script src="js/site.js"></script>
+
+<!-- Librairies d'animations (defer) -->
+<script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<!-- Lenis : version 1.0.42 demandée mais 404 sur jsdelivr → unpkg -->
+<script defer src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+
+<!-- Timeline GSAP du hero + animations section 2 -->
+<script defer src="js/animations.js"></script>
+
+<!-- VÆON · Booking Calendly + Plausible events -->
+<script src="js/booking-calendly.js"></script>
+
+</body>
+</html>
