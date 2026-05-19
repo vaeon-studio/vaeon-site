@@ -90,13 +90,13 @@
         </div>
       </div>
 
-      <form id="contactForm" action="https://formsubmit.co/contact@vaeon.fr" method="POST" autocomplete="off" data-r>
+      <!-- Formulaire de contact : ouvre le client mail de l'utilisateur avec
+           tous les champs pré-remplis. Pas de dépendance tierce (formsubmit
+           down) → fiabilité maximale. Le handler JS en bas de page construit
+           le mailto. Fallback noscript : l'attribut action ouvre direct le
+           client mail (sans corps pré-rempli mais ça marche). -->
+      <form id="contactForm" action="mailto:contact@vaeon.fr" method="GET" enctype="text/plain" autocomplete="off" data-r>
         <h4>Remplissez ce formulaire</h4>
-        <input type="hidden" name="_subject" value="Nouveau contact VÆON" />
-        <input type="hidden" name="_captcha" value="false" />
-        <input type="hidden" name="_template" value="table" />
-        <input type="hidden" name="_next" value="https://vaeon.fr/contact.html?sent=1" />
-        <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" />
         <div class="field"><label for="name">Votre nom</label><input id="name" name="nom" type="text" required placeholder="Entrez votre nom complet" /></div>
         <div class="field"><label for="email">Votre email</label><input id="email" name="email" type="email" required placeholder="Entrez votre adresse email" /></div>
         <div class="field"><label for="company">Type d'activité</label>
@@ -122,7 +122,10 @@
         </div>
         <div class="field"><label for="msg">À propos du projet</label><textarea id="msg" name="message" required placeholder="Présentez-nous votre activité, vos objectifs et l'univers que vous souhaitez construire."></textarea></div>
         <button type="submit" class="submit">Envoyer le message <span>↗</span></button>
-        <div class="ok" id="ok">★ Message bien reçu — nous vous répondons sous 24h ouvrées.</div>
+        <div class="ok" id="ok">★ Votre client mail s'est ouvert avec le message pré-rempli — vérifiez puis envoyez.</div>
+        <p class="form-fallback" style="margin-top:14px;font-size:12px;color:var(--ink-3);text-align:center;">
+          Ou écris-nous directement à <a href="mailto:contact@vaeon.fr" style="color:var(--ink-2);text-decoration:underline">contact@vaeon.fr</a>
+        </p>
       </form>
     </div>
   </section>
@@ -169,5 +172,63 @@
 </footer>
 
 <script src="js/script.js"></script>
+<script>
+  // ============================================================
+  // CONTACT FORM → mailto: pré-rempli
+  // Intercepte le submit, construit un mail proprement formaté
+  // avec subject et body, ouvre le client mail de l'utilisateur.
+  // (Remplace formsubmit.co qui était down — host error 522.)
+  // ============================================================
+  (function(){
+    var form = document.getElementById('contactForm');
+    var okMsg = document.getElementById('ok');
+    if (!form) return;
+
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+
+      var fd = new FormData(form);
+      var nom      = (fd.get('nom') || '').toString().trim();
+      var email    = (fd.get('email') || '').toString().trim();
+      var activite = (fd.get('activite') || '').toString().trim();
+      var service  = (fd.get('service') || '').toString().trim();
+      var message  = (fd.get('message') || '').toString().trim();
+
+      // Filtre les valeurs "placeholder" des <select> non-modifiés
+      if (activite.indexOf('Sélectionnez') === 0) activite = '';
+      if (service.indexOf('Sélectionnez') === 0) service = '';
+
+      var subject = 'Nouveau contact VÆON' + (nom ? ' — ' + nom : '');
+
+      var lines = [];
+      if (nom)      lines.push('Nom : ' + nom);
+      if (email)    lines.push('Email : ' + email);
+      if (activite) lines.push('Type d\'activité : ' + activite);
+      if (service)  lines.push('Service recherché : ' + service);
+      lines.push('');
+      lines.push('— À propos du projet —');
+      lines.push(message || '(vide)');
+      lines.push('');
+      lines.push('---');
+      lines.push('Envoyé depuis le formulaire de contact vaeon.fr');
+
+      var body = lines.join('\n');
+
+      // RFC 6068 : encodage des params mailto
+      var mailto = 'mailto:contact@vaeon.fr'
+        + '?subject=' + encodeURIComponent(subject)
+        + '&body='    + encodeURIComponent(body);
+
+      // Ouvre le client mail
+      window.location.href = mailto;
+
+      // Affiche la confirmation visuelle
+      if (okMsg) {
+        okMsg.style.display = 'block';
+        okMsg.style.opacity = '1';
+      }
+    });
+  })();
+</script>
 </body>
 </html>
