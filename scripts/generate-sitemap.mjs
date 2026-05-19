@@ -3,7 +3,7 @@
 //
 // Règles :
 //  - Scanne récursivement le repo à partir de la racine.
-//  - Exclut : 404.html, mockups/, preview/, dossiers commençant par "."
+//  - Exclut : 404.html, mockups/, preview/, demo/, pages noindex, dossiers commençant par "."
 //  - Pour chaque .html, déduit l'URL canonique :
 //      * Lit <link rel="canonical"> si présent (source de vérité)
 //      * Sinon : transforme le chemin en URL ; ".../index.html" → ".../"
@@ -22,7 +22,7 @@ const SITE_ORIGIN = 'https://vaeon.fr';
 const OUT = resolve(ROOT, 'sitemap.xml');
 const DRY = process.argv.includes('--dry-run');
 
-const SKIP_DIRS = new Set(['node_modules', '.git', '.claude', 'mockups', 'preview', 'uploads']);
+const SKIP_DIRS = new Set(['node_modules', '.git', '.claude', 'mockups', 'preview', 'uploads', 'demo']);
 const SKIP_FILES = new Set(['404.html']);
 
 // Convention de priorité / changefreq. Premier pattern qui matche gagne.
@@ -58,6 +58,14 @@ function extractCanonical(html) {
   return m ? m[1] : null;
 }
 
+function isNoIndex(html) {
+  // Page marquée <meta name="robots" content="noindex,..."> → hors sitemap.
+  // Utile pour les landings de démarchage commercial (ex : /barber/, /beaute/)
+  // qui doivent rester accessibles par URL directe mais hors index Google.
+  const m = html.match(/<meta\s+name=["']robots["']\s+content=["']([^"']+)["']/i);
+  return m ? /\bnoindex\b/i.test(m[1]) : false;
+}
+
 function pathToUrl(relPath) {
   // relPath uses OS sep — normalize to /
   const norm = relPath.split(sep).join('/');
@@ -88,9 +96,11 @@ function classify(relPath) {
 const htmlFiles = walk(ROOT);
 const entries = [];
 
+const excluded = [];
 for (const file of htmlFiles) {
   const rel = relative(ROOT, file);
   const html = readFileSync(file, 'utf8');
+  if (isNoIndex(html)) { excluded.push(rel); continue; }
   const canonical = extractCanonical(html);
   const url = canonical || pathToUrl(rel);
   const lastmod = gitLastMod(file);
@@ -128,3 +138,6 @@ if (DRY) {
 
 writeFileSync(OUT, xml, 'utf8');
 console.log(`✓ sitemap.xml généré — ${entries.length} URL(s) — ${relative(ROOT, OUT)}`);
+if (excluded.length) {
+  console.log(`  (${excluded.length} page(s) noindex exclue(s) : ${excluded.join(', ')})`);
+}
