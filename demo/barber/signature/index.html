@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+
+<!-- Title + meta : seront écrasés par apply-config.js (mais valeurs par défaut pour avant-JS / SEO crawlers no-JS) -->
+<title>Atelier Lazare · Barbier à Paris 11ᵉ — coupe, barbe, rasage</title>
+<meta name="description" content="[META DESCRIPTION À DÉFINIR]" />
+<meta name="theme-color" content="#FFFFFF" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<!-- TODO: police barber à définir — Google Fonts <link> à réintégrer ici -->
+
+<link rel="stylesheet" href="css/style.css" />
+
+<!-- Config + moteur d'injection (chargés en synchrone dans <head> pour
+     poser les variables CSS et les meta avant peinture) -->
+<script src="js/config.js"></script>
+<script src="js/apply-config.js"></script>
+
+<!-- VÆON · Plausible Analytics (defer = non-bloquant LCP, queue intégrée) -->
+<script defer data-domain="vaeon.fr" src="https://plausible.io/js/script.js"></script>
+<script>window.plausible = window.plausible || function(){(plausible.q=plausible.q||[]).push(arguments)}</script>
+
+<!-- VÆON · Calendly widget assets (async = non-bloquant LCP) -->
+<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+<script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+</head>
+<body data-page="home" data-pageview-event="Signature viewed barber">
+
+<a class="skip" href="#main">Aller au contenu</a>
+
+<!-- ========== HEADER ========== -->
+<header class="site-header" id="siteHeader" data-top="true">
+  <div class="header-inner">
+    <a href="/" class="brand" data-cfg="brand-link" aria-label="Accueil">
+      <span class="brand-name" data-cfg="brand-name">Atelier Lazare</span>
+    </a>
+    <nav class="nav-primary" aria-label="Navigation principale">
+      <ul>
+        <li><a href="#histoire">Le geste</a></li>
+        <li><a href="#prestations">Prestations</a></li>
+        <li><a href="#galerie">Galerie</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <a href="/reservation" class="btn btn-reserve" data-cfg-href="reservation">Réserver</a>
+    <button class="burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu" hidden>
+    <ul>
+      <li><a href="#histoire">Le geste</a></li>
+      <li><a href="#prestations">Prestations</a></li>
+      <li><a href="#galerie">Galerie</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="/reservation" class="mobile-cta" data-cfg-href="reservation">Réserver →</a></li>
+    </ul>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ========== HERO ==========
+       Sources <source> remplacées dynamiquement par apply-config.js
+       depuis SITE_CONFIG.hero.videoMobile / videoDesktop. -->
+  <section class="hero" aria-label="Présentation">
+    <video class="hero-video" id="heroVideo"
+           data-src-mobile="assets/video/hero.mp4"
+           data-src-desktop="assets/video/hero.mp4"
+           autoplay muted loop playsinline preload="auto"
+           disablepictureinpicture disableremoteplayback
+           fetchpriority="high">
+      <source media="(min-width: 768px)" src="assets/video/hero.mp4" type='video/mp4; codecs="avc1.640028,mp4a.40.2"' />
+      <source media="(min-width: 768px)" src="assets/video/hero.mp4" type="video/mp4" />
+      <source src="assets/video/hero.mp4" type='video/mp4; codecs="avc1.640028,mp4a.40.2"' />
+      <source src="assets/video/hero.mp4" type="video/mp4" />
+    </video>
+    <div class="hero-overlay" aria-hidden="true"></div>
+
+    <div class="hero-content">
+      <p class="eyebrow light hero-eyebrow" data-cfg="hero-eyebrow"></p>
+      <h1 class="hero-title">
+        <span class="hero-line" data-cfg="hero-line1"></span>
+        <span class="hero-line" data-cfg="hero-line2"></span>
+      </h1>
+      <p class="hero-promo" data-cfg="hero-promo"></p>
+      <div class="hero-actions">
+        <a href="/reservation" class="btn btn-light" data-cfg-href="reservation"><span data-cfg="hero-btn-reserver">Réserver</span></a>
+        <a href="#histoire" class="hero-link" data-cfg="hero-link-decouvrir"></a>
+      </div>
+    </div>
+
+    <a href="#histoire" class="scroll-indicator" aria-label="Faire défiler"><span></span></a>
+  </section>
+
+  <!-- ========== HISTOIRE ========== -->
+  <section class="histoire" id="histoire">
+    <div class="container">
+      <div class="histoire-grid">
+        <figure class="histoire-img reveal">
+          <img data-cfg="histoire-image" src="assets/images/portrait-section2.jpg" alt="" width="800" height="1000" loading="eager" decoding="async" />
+        </figure>
+        <div class="histoire-text reveal">
+          <p class="eyebrow" data-cfg="histoire-eyebrow"></p>
+          <h2 class="display" data-cfg="histoire-titre"></h2>
+          <p class="histoire-lede" data-cfg="histoire-intro"></p>
+
+          <div data-cfg-list="histoire-piliers">
+            <!-- Généré dynamiquement par apply-config.js depuis SITE_CONFIG.histoire.piliers -->
+          </div>
+
+          <div class="histoire-stats" data-cfg-list="histoire-stats">
+            <!-- Généré dynamiquement -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PRESTATIONS ========== -->
+  <section class="prestations" id="prestations">
+    <div class="container">
+      <header class="section-head center reveal">
+        <p class="eyebrow centered" data-cfg="prestations-eyebrow"></p>
+        <h2 class="display" data-cfg="prestations-titre"></h2>
+      </header>
+
+      <div class="prestations-list" data-cfg-list="prestations">
+        <!-- Généré dynamiquement par apply-config.js depuis SITE_CONFIG.prestations -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PARTENAIRES ========== -->
+  <section class="partenaires" data-cfg-section="partenaires">
+    <div class="container">
+      <header class="section-head center reveal">
+        <p class="eyebrow centered" data-cfg="partenaires-eyebrow"></p>
+        <h2 class="display" style="font-size:clamp(1.8rem,1.4rem + 1.6vw,2.6rem)" data-cfg="partenaires-titre"></h2>
+      </header>
+      <div class="marquee marquee-soft reveal" aria-hidden="true">
+        <div class="marquee-track">
+          <span class="partner-set" data-cfg-list="partenaires-set">
+            <!-- Généré dynamiquement -->
+          </span>
+          <span class="partner-set" data-cfg-list="partenaires-set" aria-hidden="true">
+            <!-- Généré dynamiquement (deuxième set pour la boucle infinie) -->
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== GALERIE INSTAGRAM (widget Behold + fallback grid) ==========
+       Par défaut : grid 3 cols carrée façon feed Instagram, alimentée par
+       SITE_CONFIG.galeriePhotos. Pour brancher le vrai feed Insta : créer
+       compte gratuit sur behold.so, connecter @barbier, copier le feed-id
+       dans SITE_CONFIG.beholdFeedId — apply-config.js injecte alors le
+       widget live qui remplace la grid statique. Voir DUPLICATION.md. -->
+  <section class="galerie galerie-insta" id="galerie" data-cfg-section="galerie">
+    <div class="container">
+      <header class="section-head center reveal">
+        <p class="eyebrow centered" data-cfg="galerie-eyebrow"></p>
+        <h2 class="display" data-cfg="galerie-titre"></h2>
+        <a class="galerie-handle" data-cfg-href="instagram" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8" fill="currentColor"/></svg>
+          <span data-cfg="galerie-handle"></span>
+        </a>
+      </header>
+      <div class="galerie-feed" data-cfg-behold-mount>
+        <div class="galerie-grid" data-cfg-list="galerie-photos">
+          <!-- Tiles statiques (fallback) générées depuis SITE_CONFIG.galeriePhotos.
+               Si beholdFeedId est défini, ce wrap est remplacé par <behold-widget>. -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== AVIS ========== -->
+  <section class="avis" data-cfg-section="avis">
+    <div class="container">
+      <header class="section-head center reveal">
+        <p class="eyebrow centered" data-cfg="avis-eyebrow"></p>
+        <h2 class="display" data-cfg="avis-titre"></h2>
+      </header>
+      <div class="avis-grid" data-cfg-list="avis">
+        <!-- Généré dynamiquement -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CONTACT ========== -->
+  <section class="contact" id="contact">
+    <div class="container">
+      <div class="contact-grid">
+        <div class="contact-info reveal">
+          <p class="eyebrow"><span class="rule"></span>Nous trouver</p>
+          <h2 class="display" data-cfg="contact-titre"></h2>
+          <address data-cfg="contact-adresse"></address>
+          <ul class="contact-list">
+            <li><a href="/reservation" data-cfg-href="reservation"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/></svg>Prendre rendez-vous</a></li>
+          </ul>
+          <dl class="hours" data-cfg-list="horaires">
+            <!-- Généré dynamiquement -->
+          </dl>
+          <div class="contact-actions">
+            <a class="btn btn-ink" href="" data-cfg-href="sms"><span data-cfg="sms-btn-text">Envoyer un SMS</span></a>
+            <a class="btn btn-ghost" href="" data-cfg-href="maps-directions">Itinéraire →</a>
+          </div>
+        </div>
+        <div class="contact-map reveal">
+          <iframe data-cfg="maps-iframe"
+            src=""
+            title=""
+            width="100%" height="100%"
+            loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+            allowfullscreen></iframe>
+          <div class="contact-map-overlay" aria-hidden="true">
+            <span class="btn btn-light">Voir l'itinéraire →</span>
+          </div>
+          <a class="contact-map-link" href="" data-cfg-href="maps-directions" aria-label="Ouvrir l'itinéraire dans Google Maps"></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== BOOKING CTA · Discutons 15 min avec Maxime ========== -->
+  <section class="booking-cta" aria-labelledby="booking-title">
+    <div class="container booking-inner">
+      <h2 id="booking-title" class="booking-title">Discutons quinze minutes <em>de votre projet.</em></h2>
+      <p class="booking-sub">Réservez un créneau direct avec Maxime. Aucun engagement, juste un échange clair.</p>
+      <button type="button"
+              class="btn btn-accent btn-booking"
+              data-booking-source="niveau"
+              data-booking-vertical="barber"
+              data-booking-niveau="signature">
+        Réserver 15 min avec Maxime
+      </button>
+    </div>
+  </section>
+
+</main>
+
+<!-- Planity modale (embed-ready, optionnel) -->
+<div class="planity-modal" id="planityModal" role="dialog" aria-modal="true" aria-labelledby="planityTitle">
+  <div class="planity-modal-inner">
+    <button class="planity-close" id="planityClose" aria-label="Fermer">×</button>
+    <div class="planity-widget-zone" id="planityWidgetZone">
+      <div class="planity-fallback-modal">
+        <p class="eyebrow centered"><span class="rule"></span>Réservation<span class="rule"></span></p>
+        <h3 id="planityTitle">Réservez votre <em>rendez-vous.</em></h3>
+        <p>Choisissez votre prestation et créneau directement sur notre plateforme de réservation.</p>
+        <a href="/reservation" class="btn btn-accent" data-cfg-href="reservation">Réserver →</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== FOOTER ========== -->
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-logo"><span class="footer-brand-name" data-cfg="brand-name">Atelier Lazare</span></div>
+    <p class="footer-tagline" data-cfg="footer-tagline"></p>
+    <div class="footer-cta">
+      <a href="/reservation" class="btn btn-accent" data-cfg-href="reservation">Réserver maintenant</a>
+      <a class="btn btn-ghost" href="" data-cfg-href="sms">Envoyer un SMS</a>
+    </div>
+    <ul class="socials" aria-label="Réseaux sociaux">
+      <li><a href="" data-cfg-social="instagram" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8" fill="currentColor"/></svg></a></li>
+      <li><a href="" data-cfg-social="facebook" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M14 8h2V5h-2a3 3 0 0 0-3 3v2H9v3h2v6h3v-6h2l1-3h-3V8z"/></svg></a></li>
+      <li><a href="" data-cfg-social="tiktok" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M14 4v9.5a3.5 3.5 0 1 1-3.5-3.5"/><path d="M14 4c.5 2.5 2.5 4 5 4"/></svg></a></li>
+    </ul>
+    <p class="legal" data-cfg="footer-legal"></p>
+  </div>
+</footer>
+
+<!-- Logique du site (header scroll, mobile menu, hero video, marquee, etc.) -->
+<script src="js/site.js"></script>
+<script src="js/booking-calendly.js"></script>
+</body>
+</html>

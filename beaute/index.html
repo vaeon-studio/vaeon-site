@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Trois manières d'incarner votre institut — VÆON Studio</title>
+<meta name="description" content="Découvrez nos trois niveaux de prestation web pour instituts de beauté : Essentielle, Signature, Iconique. Choisissez la formule qui correspond à votre cadence." />
+<meta name="robots" content="noindex,follow" />
+<link rel="canonical" href="https://vaeon.fr/beaute/" />
+
+<meta property="og:type" content="website" />
+<meta property="og:locale" content="fr_FR" />
+<meta property="og:image" content="https://vaeon.fr/assets/og-square.svg" />
+<meta property="og:image:width" content="1254" />
+<meta property="og:image:height" content="1254" />
+<meta property="og:image:alt" content="VÆON — Trois niveaux de prestation pour instituts de beauté" />
+<meta property="og:url" content="https://vaeon.fr/beaute/" />
+<meta property="og:title" content="Trois manières d'incarner votre institut — VÆON" />
+<meta property="og:description" content="Essentielle, Signature, Iconique : trois niveaux de prestation web pour instituts de beauté." />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://vaeon.fr/assets/og-square.svg" />
+<meta name="twitter:title" content="Trois manières d'incarner votre institut — VÆON" />
+<meta name="twitter:description" content="Essentielle, Signature, Iconique : trois niveaux de prestation web pour instituts de beauté." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link href="https://api.fontshare.com/v2/css?f[]=chillax@300,400,500,600,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css?v=12">
+<link rel="stylesheet" href="../css/landing.css?v=1">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "https://vaeon.fr/beaute/#webpage",
+      "url": "https://vaeon.fr/beaute/",
+      "name": "Trois manières d'incarner votre institut — VÆON",
+      "isPartOf": {"@id":"https://vaeon.fr/#website"},
+      "about": {
+        "@type": "Service",
+        "name": "Création de site web pour institut de beauté",
+        "provider": {"@id":"https://vaeon.fr/#organization"}
+      }
+    }
+  ]
+}
+</script>
+
+<!-- VÆON · Plausible Analytics (tagged-events : lit data-plausible-event-name sur les <a> cards) -->
+<script defer data-domain="vaeon.fr" src="https://plausible.io/js/script.tagged-events.js"></script>
+<script>window.plausible = window.plausible || function(){(window.plausible.q = window.plausible.q || []).push(arguments)}</script>
+
+<!-- VÆON · Calendly widget assets (async = non-bloquant LCP) -->
+<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+<script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+</head>
+<body class="prosp-body" data-pageview-event="Landing viewed beaute">
+
+<a class="skip-link" href="#niveaux">Aller aux niveaux de prestation</a>
+
+<div class="cursor" id="cursor" data-label=""></div>
+
+<a href="../index.html" class="brand">VÆON</a>
+<header class="nav">
+  <nav class="links">
+    <a href="../metiers/">Métiers</a>
+    <a href="../projets.html">Maquettes</a>
+    <a href="../tarifs.html">Tarifs</a>
+  </nav>
+  <a href="../contact.html" class="cta">Contact</a>
+</header>
+
+<main id="top" class="landing-prospection">
+
+  <!-- ============================================================
+       SECTION 1 — HERO
+       Titre court + sous-titre. Pas de CTA ici (respiration visuelle).
+       ============================================================ -->
+  <section class="prosp-hero">
+    <span class="prosp-eyebrow">VÆON Studio · Institut &amp; Spa</span>
+    <h1>Trois manières d'incarner <em>votre institut.</em></h1>
+    <p class="prosp-sub">Architecture, signature, permanence. Choisissez le niveau qui correspond à votre cadence.</p>
+    <a href="#niveaux" class="prosp-scroll-hint" aria-label="Découvrir les trois niveaux">
+      <span>Découvrir</span>
+      <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M12 4v16M6 14l6 6 6-6"/></svg>
+    </a>
+  </section>
+
+  <!-- ============================================================
+       SECTION 2 — TROIS NIVEAUX (iframes responsive)
+       Desktop : 3 cartes côte-à-côte (grid-template-columns: repeat(3, 1fr))
+       Mobile (<768px) : empilées verticalement (1fr)
+       Iframes : lazy-loaded via IntersectionObserver (swap data-src → src)
+       Pointer-events désactivés sur l'iframe (aperçu non-interactif).
+       ============================================================ -->
+  <section class="prosp-niveaux" id="niveaux" aria-labelledby="niveaux-title">
+    <h2 id="niveaux-title" class="visually-hidden">Trois niveaux de prestation</h2>
+
+    <!-- CARTE 01 · ESSENTIELLE -->
+    <article class="niveau-card" data-niveau="essentielle">
+      <a class="preview-frame"
+         href="../demo/beaute/essentielle/"
+         target="_blank"
+         rel="noopener noreferrer"
+         aria-label="Voir la maquette Essentielle en grand"
+         data-plausible-event-name="Card clicked: Essentielle">
+        <iframe data-src="../demo/beaute/essentielle/"
+                title="Aperçu de la maquette Essentielle"
+                loading="lazy"
+                referrerpolicy="no-referrer"
+                tabindex="-1"></iframe>
+        <span class="frame-loading" aria-hidden="true">Chargement…</span>
+      </a>
+      <div class="niveau-content">
+        <div class="niveau-head">
+          <span class="niveau-num">01</span>
+          <h3 class="niveau-name">Essentielle</h3>
+        </div>
+        <p class="niveau-desc">Le point de départ. Une présence web sobre et efficace pour transformer une recherche locale en première visite.</p>
+        <ul class="niveau-feats">
+          <li>Site vitrine une page</li>
+          <li>Design sur-mesure responsive</li>
+          <li>SEO local optimisé</li>
+          <li>Formulaire de contact</li>
+          <li>Mise en ligne incluse</li>
+        </ul>
+        <a class="niveau-cta"
+           href="../demo/beaute/essentielle/"
+           target="_blank"
+           rel="noopener noreferrer"
+           data-plausible-event-name="Card clicked: Essentielle">
+          <span>Voir la démo</span>
+          <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </article>
+
+    <!-- CARTE 02 · SIGNATURE -->
+    <article class="niveau-card niveau-card--featured" data-niveau="signature">
+      <span class="niveau-badge">Le plus choisi</span>
+      <a class="preview-frame"
+         href="../demo/beaute/signature/"
+         target="_blank"
+         rel="noopener noreferrer"
+         aria-label="Voir la maquette Signature en grand"
+         data-plausible-event-name="Card clicked: Signature">
+        <iframe data-src="../demo/beaute/signature/"
+                title="Aperçu de la maquette Signature"
+                loading="lazy"
+                referrerpolicy="no-referrer"
+                tabindex="-1"></iframe>
+        <span class="frame-loading" aria-hidden="true">Chargement…</span>
+      </a>
+      <div class="niveau-content">
+        <div class="niveau-head">
+          <span class="niveau-num">02</span>
+          <h3 class="niveau-name">Signature</h3>
+        </div>
+        <p class="niveau-desc">Le niveau intermédiaire. Architecture web élargie, identité affirmée, parcours client soigné de la première impression à la réservation.</p>
+        <ul class="niveau-feats">
+          <li>Site multi-pages structuré</li>
+          <li>Identité visuelle distinctive</li>
+          <li>SEO local &amp; technique</li>
+          <li>Système de prise de rendez-vous</li>
+          <li>Suivi analytics inclus</li>
+        </ul>
+        <a class="niveau-cta"
+           href="../demo/beaute/signature/"
+           target="_blank"
+           rel="noopener noreferrer"
+           data-plausible-event-name="Card clicked: Signature">
+          <span>Voir la démo</span>
+          <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </article>
+
+    <!-- CARTE 03 · ICONIQUE -->
+    <article class="niveau-card" data-niveau="iconique">
+      <a class="preview-frame"
+         href="../demo/beaute/iconique/"
+         target="_blank"
+         rel="noopener noreferrer"
+         aria-label="Voir la maquette Iconique en grand"
+         data-plausible-event-name="Card clicked: Iconique">
+        <iframe data-src="../demo/beaute/iconique/"
+                title="Aperçu de la maquette Iconique"
+                loading="lazy"
+                referrerpolicy="no-referrer"
+                tabindex="-1"></iframe>
+        <span class="frame-loading" aria-hidden="true">Chargement…</span>
+      </a>
+      <div class="niveau-content">
+        <div class="niveau-head">
+          <span class="niveau-num">03</span>
+          <h3 class="niveau-name">Iconique</h3>
+        </div>
+        <p class="niveau-desc">La pièce d'orfèvrerie. Direction artistique unique, animations sur-mesure, expérience web qui ancre votre institut comme référence du secteur.</p>
+        <ul class="niveau-feats">
+          <li>Architecture web complète</li>
+          <li>Direction artistique sur-mesure</li>
+          <li>Animations &amp; micro-interactions</li>
+          <li>Performance &amp; SEO premium</li>
+          <li>Accompagnement dédié</li>
+        </ul>
+        <a class="niveau-cta"
+           href="../demo/beaute/iconique/"
+           target="_blank"
+           rel="noopener noreferrer"
+           data-plausible-event-name="Card clicked: Iconique">
+          <span>Voir la démo</span>
+          <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </article>
+  </section>
+
+  <!-- ============================================================
+       SECTION 3 — TÉMOIGNAGE / PREUVE SOCIALE
+       Bloc court, sobre. Texte à remplacer par un vrai témoignage.
+       ============================================================ -->
+  <section class="prosp-temoignage" aria-label="Témoignage client">
+    <figure>
+      <blockquote class="temoignage-quote">
+        <span aria-hidden="true" class="quote-mark">“</span>
+        VÆON a transformé notre présence en ligne en quelque chose qui ressemble vraiment à l'institut. Le travail est précis, la livraison rapide, et le résultat parle de nous mieux que nous ne savions le faire.
+      </blockquote>
+      <figcaption class="temoignage-cite">
+        <strong>Camille R.</strong> <span>Directrice — Institut Maison Pure, Toulouse</span>
+      </figcaption>
+    </figure>
+  </section>
+
+  <!-- ============================================================
+       SECTION 4 — CTA FINAL CALENDLY
+       Permet la réservation directe sans passer par une maquette.
+       Lien Calendly à remplacer (sera fourni par Maxime).
+       ============================================================ -->
+  <section class="prosp-cta-final" id="reserver" aria-labelledby="cta-title">
+    <h2 id="cta-title">Discutons directement.</h2>
+    <p class="cta-sub">Quinze minutes pour cadrer votre projet.</p>
+    <button type="button"
+            class="prosp-cta-big"
+            data-booking-source="landing"
+            data-booking-vertical="beaute">
+      <span>Réserver</span>
+      <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </button>
+    <span class="cta-meta">Maxime · Co-fondateur · Devis sous 24h</span>
+  </section>
+
+</main>
+
+<!-- ============================================================
+     FOOTER GLOBAL AEON (identique aux autres pages du site)
+     ============================================================ -->
+<footer>
+  <div class="footer-big"><h2><em>Travelling</em><br>vers vous.</h2></div>
+  <div class="footer-cols">
+    <div class="fcol"><h4>VÆON</h4><p>Studio indépendant de design &amp; développement web basé à Toulouse. Architectures digitales sur-mesure pour commerces, maisons et marques exigeantes.</p></div>
+    <div class="fcol"><h4>Métiers</h4><a href="../metiers/restaurant/">Restaurant</a><a href="../metiers/pizzeria/">Pizzeria</a><a href="../metiers/coiffeur/">Coiffeur</a><a href="../metiers/barbershop/">Barbershop</a><a href="../metiers/institut-beaute-spa/">Institut &amp; Spa</a><a href="../metiers/avocat/">Avocat</a></div>
+    <div class="fcol"><h4>Pages</h4><a href="../services.html">Services</a><a href="../projets.html">Maquettes</a><a href="../tarifs.html">Tarifs</a><a href="../agence-web-toulouse.html">Studio Web Toulouse</a><a href="../process.html">Process</a><a href="../a-propos.html">À propos</a><a href="../blog/">Blog</a><a href="../contact.html">Contact</a></div>
+    <div class="fcol"><h4>Contact</h4><a href="mailto:contact@vaeon.fr">contact@vaeon.fr</a><a href="#">Instagram</a><a href="#">LinkedIn</a></div>
+    <div class="fcol"><h4>Légal</h4><a href="../mentions-legales.html">Mentions légales</a><a href="../politique-confidentialite.html">Politique de confidentialité</a><a href="../cookies.html">Cookies</a></div>
+  </div>
+  <div class="copy"><span>© 2025 — 2026 VÆON · Tous droits réservés</span><span>Design &amp; développement web à Toulouse</span></div>
+</footer>
+
+<script src="../js/script.js"></script>
+<script src="../js/landing.js?v=1"></script>
+<script src="../js/booking-calendly.js?v=1"></script>
+</body>
+</html>

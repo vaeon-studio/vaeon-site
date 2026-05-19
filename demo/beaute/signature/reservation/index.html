@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+
+<title>Réservation</title>
+<meta name="description" content="" />
+<meta name="theme-color" content="#F5EFE5" />
+<meta name="robots" content="index,follow" />
+<link rel="canonical" href="/reservation" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="preconnect" href="https://d2skjte8udjqxw.cloudfront.net" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="../css/style.css" />
+
+<!-- Config + moteur d'injection. Charge AVANT les scripts Planity car
+     window.planity doit être posé AVANT le chargement de app.latest.js. -->
+<script src="../js/config.js"></script>
+<script src="../js/apply-config.js"></script>
+</head>
+<body data-page="reservation">
+
+<a class="skip" href="#myContainerId">Aller au module de réservation</a>
+
+<!-- ========== HEADER (identique à index.html) ========== -->
+<header class="site-header" id="siteHeader">
+  <div class="header-inner">
+    <a href="/" class="brand" data-cfg="brand-link" aria-label="Accueil">
+      <span class="brand-name" data-cfg="brand-name">MAISON LUMIÈRE</span>
+    </a>
+    <nav class="nav-primary" aria-label="Navigation principale">
+      <ul>
+        <li><a href="/#histoire">Histoire</a></li>
+        <li><a href="/#prestations">Prestations</a></li>
+        <li><a href="/#galerie">Galerie</a></li>
+        <li><a href="/#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <a href="/" class="btn btn-reserve">← Accueil</a>
+    <button class="burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu" hidden>
+    <ul>
+      <li><a href="/#histoire">Histoire</a></li>
+      <li><a href="/#prestations">Prestations</a></li>
+      <li><a href="/#galerie">Galerie</a></li>
+      <li><a href="/#contact">Contact</a></li>
+      <li><a href="/" class="mobile-cta">← Retour à l'accueil</a></li>
+    </ul>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ========== HERO RÉSERVATION ========== -->
+  <section class="reservation-hero">
+    <div class="container">
+      <p class="eyebrow centered"><span class="rule"></span>Réservation<span class="rule"></span></p>
+      <h1 class="display">Prenez rendez-vous <em>en quelques clics.</em></h1>
+      <p class="lede">Choisissez votre prestation, votre experte et votre créneau — directement ici, sur le site.</p>
+    </div>
+  </section>
+
+  <!-- ========== WIDGET PLANITY ========== -->
+  <section class="planity-section" aria-label="Module de réservation">
+    <div class="container">
+      <div class="planity-shell">
+        <div id="myContainerId"></div>
+
+        <div class="planity-loader" id="planityLoader" aria-hidden="true">
+          <div class="spinner"></div>
+          <p>Chargement du module de réservation…</p>
+        </div>
+
+        <div class="planity-fallback" id="planityFallback">
+          <h2>Le module de réservation <em>n'a pas pu se charger.</em></h2>
+          <p>Vérifiez votre connexion ou désactivez votre bloqueur de publicités, puis rechargez la page. Vous pouvez aussi nous joindre par SMS.</p>
+          <a class="btn btn-accent" href="" data-cfg-href="sms">Nous écrire par SMS</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ========== FOOTER (identique à index.html) ========== -->
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-logo"><span class="footer-brand-name" data-cfg="brand-name">MAISON LUMIÈRE</span></div>
+    <p class="footer-tagline" data-cfg="footer-tagline"></p>
+    <ul class="socials" aria-label="Réseaux sociaux">
+      <li><a href="" data-cfg-social="instagram" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8" fill="currentColor"/></svg></a></li>
+      <li><a href="" data-cfg-social="facebook" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M14 8h2V5h-2a3 3 0 0 0-3 3v2H9v3h2v6h3v-6h2l1-3h-3V8z"/></svg></a></li>
+      <li><a href="" data-cfg-social="tiktok" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M14 4v9.5a3.5 3.5 0 1 1-3.5-3.5"/><path d="M14 4c.5 2.5 2.5 4 5 4"/></svg></a></li>
+    </ul>
+    <p class="legal" data-cfg="footer-legal"></p>
+  </div>
+</footer>
+
+<!-- Logique du site (mobile menu, etc.) -->
+<script src="../js/site.js"></script>
+
+<!-- ============== PLANITY WHITE-LABEL INTÉGRATION ==============
+     window.planity est posé par apply-config.js avec les valeurs
+     de SITE_CONFIG.planityKey et SITE_CONFIG.planityCouleurPrimaire.
+     On observe l'apparition de contenu pour cacher le loader.
+     Fallback visuel après 12s si rien n'a chargé (adblocker).
+     ============================================================ -->
+<script>
+(() => {
+  const container = document.getElementById('myContainerId');
+  const loader    = document.getElementById('planityLoader');
+  const fallback  = document.getElementById('planityFallback');
+  if (!container) return;
+
+  const observer = new MutationObserver(() => {
+    if (container.childElementCount > 0) {
+      if (loader) loader.dataset.hidden = 'true';
+      observer.disconnect();
+    }
+  });
+  observer.observe(container, { childList: true, subtree: true });
+
+  setTimeout(() => {
+    if (container.childElementCount === 0) {
+      if (loader)   loader.style.display = 'none';
+      if (fallback) fallback.dataset.active = 'true';
+    }
+  }, 12000);
+})();
+</script>
+<script src="https://d2skjte8udjqxw.cloudfront.net/widget/production/2/polyfills.latest.js"></script>
+<script src="https://d2skjte8udjqxw.cloudfront.net/widget/production/2/app.latest.js"></script>
+
+</body>
+</html>

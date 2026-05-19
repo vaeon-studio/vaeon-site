@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 140" fill="currentColor" role="img" aria-label="Captain Fawcett">
+  <text x="200" y="58" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="22" font-weight="400" font-style="italic" letter-spacing="6">CAPTAIN</text>
+  <text x="200" y="92" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="38" font-weight="600" letter-spacing="4">FAWCETT</text>
+  <line x1="120" y1="106" x2="280" y2="106" stroke="currentColor" stroke-width="0.5" opacity="0.55"/>
+  <text x="200" y="122" text-anchor="middle" font-family="Georgia, serif" font-size="10" font-style="italic" letter-spacing="4">Gentlemen's Grooming · England</text>
+</svg>

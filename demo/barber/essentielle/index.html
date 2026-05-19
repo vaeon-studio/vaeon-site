@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+
+<title>Atelier Lazare · Barbier à Paris 11ᵉ — coupe, barbe, rasage</title>
+<meta name="description" content="[META DESCRIPTION À DÉFINIR]" />
+<meta name="theme-color" content="#FFFFFF" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<!-- TODO: police barber à définir — Google Fonts <link> à réintégrer ici -->
+
+<link rel="stylesheet" href="css/style.css" />
+
+<!-- Config + moteur d'injection (synchrone dans <head> : variables CSS posées avant peinture) -->
+<script src="js/config.js"></script>
+<script src="js/apply-config.js"></script>
+
+<!-- VÆON · Plausible Analytics (defer = non-bloquant LCP, queue intégrée) -->
+<script defer data-domain="vaeon.fr" src="https://plausible.io/js/script.js"></script>
+<script>window.plausible = window.plausible || function(){(plausible.q=plausible.q||[]).push(arguments)}</script>
+
+<!-- VÆON · Calendly widget assets (async = non-bloquant LCP) -->
+<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+<script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+</head>
+<body data-page="home" data-pageview-event="Essentielle viewed barber">
+
+<a class="skip" href="#main">Aller au contenu</a>
+
+<!-- ========== HEADER ========== -->
+<header class="site-header" id="siteHeader" data-scrolled="false">
+  <div class="header-inner">
+    <a href="/" class="brand" data-cfg="brand-link" aria-label="Accueil">
+      <span class="brand-name" data-cfg="brand-name">Atelier Lazare</span>
+    </a>
+    <nav class="nav-primary" aria-label="Navigation principale">
+      <ul>
+        <li><a href="#histoire">Le geste</a></li>
+        <li><a href="#prestations">Prestations</a></li>
+        <li><a href="#galerie">Galerie</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <a href="#" class="btn btn-accent btn-reserve" data-cfg-href="reservation">Réserver</a>
+    <button class="burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu" hidden>
+    <ul>
+      <li><a href="#histoire">Le geste</a></li>
+      <li><a href="#prestations">Prestations</a></li>
+      <li><a href="#galerie">Galerie</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="#" class="mobile-cta" data-cfg-href="reservation">Réserver →</a></li>
+    </ul>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ========== HERO (photo statique en background) ==========
+       Background-image posée par apply-config.js depuis SITE_CONFIG.hero.photoBackground. -->
+  <section class="hero" aria-label="Présentation">
+    <div class="hero-content">
+      <p class="eyebrow light hero-eyebrow" data-cfg="hero-eyebrow"></p>
+      <h1 class="hero-title">
+        <span class="hero-line" data-cfg="hero-line1"></span>
+        <span class="hero-line" data-cfg="hero-line2"></span>
+      </h1>
+      <p class="hero-promo" data-cfg="hero-promo"></p>
+    </div>
+    <a href="#histoire" class="scroll-indicator" aria-label="Faire défiler"><span></span></a>
+  </section>
+
+  <!-- ========== HISTOIRE (méthode) ========== -->
+  <section class="histoire" id="histoire">
+    <div class="container">
+      <div class="histoire-grid">
+        <figure class="histoire-img reveal">
+          <img data-cfg="histoire-image" src="assets/images/experience.jpg" alt="" width="800" height="1000" loading="lazy" decoding="async" />
+        </figure>
+        <div class="histoire-text reveal">
+          <p class="eyebrow" data-cfg="histoire-eyebrow"></p>
+          <h2 class="display" data-cfg="histoire-titre"></h2>
+          <p class="histoire-lede" data-cfg="histoire-intro"></p>
+
+          <div data-cfg-list="histoire-piliers">
+            <!-- Généré dynamiquement -->
+          </div>
+
+          <div class="histoire-stats" data-cfg-list="histoire-stats">
+            <!-- Généré dynamiquement -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PRESTATIONS (liste textuelle simple) ========== -->
+  <section class="prestations" id="prestations">
+    <div class="container">
+      <header class="section-head center reveal">
+        <h2 class="display" data-cfg="prestations-titre"></h2>
+      </header>
+
+      <div class="prestations-list" data-cfg-list="prestations">
+        <!-- Généré dynamiquement par apply-config.js -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== GALERIE ========== -->
+  <section class="galerie" id="galerie" data-cfg-section="galerie">
+    <div class="container">
+      <header class="section-head center reveal">
+        <p class="eyebrow centered" data-cfg="galerie-eyebrow"></p>
+        <h2 class="display" data-cfg="galerie-titre"></h2>
+      </header>
+    </div>
+    <div class="galerie-grid" data-cfg-list="galerie-photos">
+      <!-- Tiles générées dynamiquement -->
+    </div>
+  </section>
+
+  <!-- ========== AVIS ========== -->
+  <section class="avis" id="avis" data-cfg-section="avis">
+    <div class="container">
+      <header class="section-head center reveal">
+        <p class="eyebrow centered" data-cfg="avis-eyebrow"></p>
+        <h2 class="display" data-cfg="avis-titre"></h2>
+      </header>
+      <div class="avis-grid" data-cfg-list="avis">
+        <!-- Généré dynamiquement -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CONTACT ========== -->
+  <section class="contact" id="contact">
+    <div class="container">
+      <div class="contact-grid">
+        <div class="contact-info reveal">
+          <p class="eyebrow"><span class="rule"></span>Nous trouver</p>
+          <h2 class="display" data-cfg="contact-titre"></h2>
+          <address data-cfg="contact-adresse"></address>
+          <dl class="hours" data-cfg-list="horaires">
+            <!-- Généré dynamiquement -->
+          </dl>
+          <div class="contact-actions">
+            <a class="btn btn-ink" href="" data-cfg-href="sms">Envoyer un SMS</a>
+            <a class="btn btn-ghost" href="" data-cfg-href="maps-directions">Itinéraire →</a>
+          </div>
+        </div>
+        <div class="contact-map reveal">
+          <iframe data-cfg="maps-iframe"
+            src=""
+            title=""
+            width="100%" height="100%"
+            loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+            allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== BOOKING CTA · Discutons 15 min avec Maxime ========== -->
+  <section class="booking-cta" aria-labelledby="booking-title">
+    <div class="container booking-inner">
+      <h2 id="booking-title" class="booking-title">Discutons quinze minutes <em>de votre projet.</em></h2>
+      <p class="booking-sub">Réservez un créneau direct avec Maxime. Aucun engagement, juste un échange clair.</p>
+      <button type="button"
+              class="btn btn-accent btn-booking"
+              data-booking-source="niveau"
+              data-booking-vertical="barber"
+              data-booking-niveau="essentielle">
+        Réserver 15 min avec Maxime
+      </button>
+    </div>
+  </section>
+
+</main>
+
+<!-- ========== FOOTER ========== -->
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div class="footer-logo"><span class="brand-name brand-name-footer" data-cfg="brand-name">Atelier Lazare</span></div>
+    <p class="footer-tagline" data-cfg="footer-tagline"></p>
+    <div class="footer-cta">
+      <a href="" class="btn btn-accent" data-cfg-href="reservation">Réserver</a>
+      <a class="btn btn-ghost" href="" data-cfg-href="sms">Envoyer un SMS</a>
+    </div>
+    <ul class="socials" aria-label="Réseaux sociaux">
+      <li><a href="" data-cfg-social="instagram" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8" fill="currentColor"/></svg></a></li>
+      <li><a href="" data-cfg-social="facebook" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M14 8h2V5h-2a3 3 0 0 0-3 3v2H9v3h2v6h3v-6h2l1-3h-3V8z"/></svg></a></li>
+      <li><a href="" data-cfg-social="tiktok" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M14 4v9.5a3.5 3.5 0 1 1-3.5-3.5"/><path d="M14 4c.5 2.5 2.5 4 5 4"/></svg></a></li>
+    </ul>
+    <p class="legal" data-cfg="footer-legal"></p>
+  </div>
+</footer>
+
+<script src="js/site.js"></script>
+<script src="js/booking-calendly.js"></script>
+</body>
+</html>
