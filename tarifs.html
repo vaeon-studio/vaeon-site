@@ -52,8 +52,8 @@
       "@type": "FAQPage",
       "mainEntity": [
         {"@type":"Question","name":"Pourquoi des formules et pas un prix unique ?","acceptedAnswer":{"@type":"Answer","text":"Parce qu'un site destiné à présenter une activité locale n'a pas les mêmes besoins qu'une expérience plus avancée avec réservation, contenu dynamique ou e-commerce. Les trois formules correspondent à différents niveaux de périmètre, de complexité et d'ambition. Vous investissez uniquement dans ce dont votre projet a réellement besoin."}},
-        {"@type":"Question","name":"Y a-t-il des frais cachés ?","acceptedAnswer":{"@type":"Answer","text":"Non. Le périmètre, les livrables, les délais et les modalités de paiement sont définis avant le lancement. L'hébergement est inclus à vie. Les seuls coûts externes éventuels concernent le nom de domaine et certains services tiers clairement mentionnés en amont."}},
-        {"@type":"Question","name":"L'hébergement est-il inclus dans le prix ?","acceptedAnswer":{"@type":"Answer","text":"Oui, à vie. Le site est hébergé sur Vercel — SSL, sauvegardes quotidiennes et monitoring inclus, sans abonnement mensuel chez VAEON. Forfait maintenance optionnel (30 à 80 €/mois selon la formule) pour les évolutions et le support proactif."}},
+        {"@type":"Question","name":"Y a-t-il des frais cachés ?","acceptedAnswer":{"@type":"Answer","text":"Non. Le périmètre, les livrables, les délais et les modalités de paiement sont définis avant le lancement. Les coûts externes éventuels (hébergement 0-120 €/an sur votre compte Vercel, nom de domaine ~12 €/an) sont facturés directement à votre nom, jamais via VÆON."}},
+        {"@type":"Question","name":"Qui détient mon site après livraison ?","acceptedAnswer":{"@type":"Answer","text":"Vous, à 100 %. Le compte Vercel est à votre nom, le code source vous est remis en archive, le nom de domaine est chez votre registrar. VÆON se déconnecte à la livraison. Vous pourriez tout migrer ailleurs (Netlify, OVH, autre studio) sans nous demander quoi que ce soit. Pas de lock-in, pas d'abonnement."}},
         {"@type":"Question","name":"Que se passe-t-il si je veux dépasser la formule choisie ?","acceptedAnswer":{"@type":"Answer","text":"Chaque formule correspond à un périmètre précis. Si le projet évolue en cours de route, des fonctionnalités ou pages supplémentaires peuvent être ajoutées via un ajustement de devis validé ensemble avant toute production."}},
         {"@type":"Question","name":"Peut-on payer en plusieurs fois ?","acceptedAnswer":{"@type":"Answer","text":"Nous sommes actuellement en train de mettre en place une solution de paiement en plusieurs fois avec un partenaire dédié. Pour le moment, les modalités de règlement sont définies directement au devis selon le projet."}},
         {"@type":"Question","name":"Pourquoi VÆON ne propose pas de sites en dessous de 1 300 € ?","acceptedAnswer":{"@type":"Answer","text":"Parce que chaque site est conçu sur-mesure et développé manuellement. Structure, animations, responsive, performances, SEO technique, intégration des contenus : chaque détail est travaillé et codé spécifiquement pour le projet. Ce niveau d'exécution demande plusieurs jours de conception et de développement."}}
@@ -108,7 +108,7 @@
           <li>Schéma LocalBusiness + Organization</li>
           <li>Fiche Google Business connectée</li>
           <li>Performances Core Web Vitals optimisées</li>
-          <li><strong>Hébergement à vie inclus</strong> — SSL, sauvegardes quotidiennes</li>
+          <li><strong>Setup hébergement à votre nom</strong> — Vercel Hobby gratuit, accès remis à la livraison</li>
         </ul>
       </article>
       <article class="tarif-card featured" id="standard">
@@ -124,7 +124,7 @@
           <li>Blog autonome</li>
           <li>Multi-langue FR/EN possible</li>
           <li>Paiement Stripe / Lyf Pro intégré</li>
-          <li><strong>Hébergement à vie inclus</strong> — + monitoring uptime</li>
+          <li><strong>Setup hébergement à votre nom</strong> — Vercel Hobby gratuit, branchement domaine inclus</li>
         </ul>
       </article>
       <article class="tarif-card" id="premium">
@@ -140,7 +140,7 @@
           <li>Système de fidélité</li>
           <li>Espace client sécurisé (si besoin)</li>
           <li>Newsletter intégrée</li>
-          <li><strong>Hébergement à vie inclus</strong> — + monitoring &amp; évolutions mineures 1×/an</li>
+          <li><strong>Setup hébergement à votre nom</strong> — Vercel Hobby gratuit, configuration analytics + monitoring</li>
         </ul>
       </article>
     </div>
@@ -161,7 +161,7 @@
         <li><strong>Fiche Google Business</strong> — création ou mise à jour, connexion avec le site, optimisation des photos et description.</li>
         <li><strong>Formation à la prise en main</strong> — 30 à 45 minutes en visio pour vous rendre autonome sur le CMS (sur Standard et Premium).</li>
         <li><strong>30 jours de support post-livraison</strong> — pour accompagner les ajustements après mise en ligne.</li>
-        <li><strong>Hébergement à vie &amp; sécurité</strong> — site servi via Vercel (serveurs en Europe, région <code>fra1</code>), SSL automatique, sauvegardes quotidiennes, monitoring uptime. Aucun abonnement mensuel chez VÆON.</li>
+        <li><strong>Setup hébergement à votre nom</strong> — création d'un compte Vercel (gratuit, serveurs en Europe région <code>fra1</code>), déploiement initial, SSL automatique, branchement du domaine. Vous récupérez tous les accès à la livraison et nous nous déconnectons : vous êtes 100 % propriétaire, indépendant de VÆON.</li>
         <li><strong>AISO-native</strong> — contenu structuré pour être compris et cité par les moteurs de réponse IA (ChatGPT, Perplexity, Gemini). FAQ extractibles, entités nommées définies, phrases citables.</li>
       </ul>
     </div>
@@ -174,10 +174,11 @@
     </div>
     <div class="metier-prose">
       <ul class="metier-list">
+        <li><strong>Hébergement annuel</strong> — 0 à 120 €/an sur votre compte Vercel selon le trafic. Le plan Hobby gratuit suffit dans 95 % des cas (TPE, commerces locaux). Facturation directe sur votre compte, jamais via VÆON.</li>
         <li><strong>Nom de domaine</strong> — environ 12 € par an, facturé directement par le registrar.</li>
         <li><strong>Rédaction des contenus</strong> — vous fournissez vos textes (descriptions, biographies, fiches produits). Nous pouvons accompagner la structure éditoriale et les contenus stratégiques sur devis.</li>
         <li><strong>Production photo</strong> — vous fournissez vos photos. Nous pouvons recommander des photographes partenaires selon votre activité.</li>
-        <li><strong>Maintenance évolutive</strong> — forfait mensuel <em>optionnel</em> à partir de 30 €/mois (Essentielle) jusqu'à 80 €/mois (Iconique) pour les évolutions, mises à jour techniques et ajustements continus. Sinon, prestations à la demande au besoin.</li>
+        <li><strong>Maintenance &amp; évolutions post-livraison</strong> — au-delà des 30 jours de support inclus, les évolutions ponctuelles sont facturées à la demande sur devis. Pas de forfait mensuel, pas d'abonnement : vous payez uniquement ce dont vous avez besoin, quand vous en avez besoin.</li>
         <li><strong>Campagnes Google Ads ou Meta Ads</strong> — les campagnes Google Ads ou Meta Ads ne sont pas incluses dans les formules. En revanche, chaque site est structuré avec des fondations techniques et SEO solides pour optimiser les futures performances d'acquisition.</li>
       </ul>
     </div>
@@ -195,11 +196,11 @@
       </div>
       <div class="faq">
         <button class="faq-q">Y a-t-il des frais cachés ?<span class="plus">+</span></button>
-        <div class="faq-a"><div class="faq-a-inner">Non. Le périmètre, les livrables, les délais et les modalités de paiement sont définis <strong>avant le lancement du projet</strong>. L'hébergement est <strong>inclus à vie</strong>. Les seuls coûts externes éventuels concernent le nom de domaine et certains services tiers clairement mentionnés en amont.</div></div>
+        <div class="faq-a"><div class="faq-a-inner">Non. Le périmètre, les livrables, les délais et les modalités de paiement sont définis <strong>avant le lancement du projet</strong>. Les coûts externes éventuels (hébergement 0-120 €/an sur votre compte Vercel, nom de domaine ~12 €/an) sont facturés directement à votre nom, <strong>jamais via VÆON</strong>.</div></div>
       </div>
       <div class="faq">
-        <button class="faq-q">L'hébergement est-il inclus dans le prix ?<span class="plus">+</span></button>
-        <div class="faq-a"><div class="faq-a-inner">Oui, <strong>à vie</strong>. Le site est hébergé sur Vercel — SSL, sauvegardes quotidiennes et monitoring inclus, <strong>sans abonnement mensuel</strong> chez VAEON. Forfait maintenance optionnel (30 à 80 €/mois selon la formule) pour les évolutions et le support proactif.</div></div>
+        <button class="faq-q">Qui détient mon site après livraison ?<span class="plus">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner"><strong>Vous, à 100 %.</strong> Le compte Vercel est à votre nom, le code source vous est remis en archive, le nom de domaine est chez votre registrar. VÆON se déconnecte à la livraison. Vous pourriez tout migrer ailleurs (Netlify, OVH, autre studio) sans nous demander quoi que ce soit. <strong>Pas de lock-in, pas d'abonnement.</strong></div></div>
       </div>
       <div class="faq">
         <button class="faq-q">Pourquoi VÆON ne propose pas de sites en dessous de 1 300 € ?<span class="plus">+</span></button>
