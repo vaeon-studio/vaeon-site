@@ -278,13 +278,6 @@ setInterval(() => {
   });
 }, SCRAMBLE_TICK);
 
-// === Scroll progress bar — barber-pole stripes ===
-const scrollProgress = document.createElement('div');
-scrollProgress.className = 'scroll-progress';
-scrollProgress.setAttribute('aria-hidden', 'true');
-scrollProgress.innerHTML = `<div class="sp-track"><div class="sp-fill"></div></div>`;
-document.body.appendChild(scrollProgress);
-
 // (Nova Orb 3D keycap removed)
 let lastScroll = 0;
 let scrollVel = 0;
@@ -342,8 +335,6 @@ function updateOrb() {
   // Velocity tracking (kept for future hooks)
   scrollVel = scrollVel * 0.85 + (scroll - lastScroll) * 0.4;
   lastScroll = scroll;
-  // Scroll progress bar (set on parent so both fill + reaper inherit)
-  scrollProgress.style.setProperty('--p', progress);
   rafId = null;
 }
 
