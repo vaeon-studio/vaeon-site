@@ -192,6 +192,28 @@
   color:var(--ink);
   text-transform:uppercase;
 }
+.niveau-price{
+  font-family:var(--display-mono);
+  font-weight:700;
+  font-size:clamp(26px,3vw,34px);
+  letter-spacing:-.02em;
+  line-height:1;
+  margin:14px 0 18px;
+  color:var(--ink);
+}
+.niveau-price small{
+  display:block;
+  font-family:var(--mono);
+  font-size:10px;
+  font-weight:500;
+  text-transform:uppercase;
+  letter-spacing:.18em;
+  color:var(--ink-3);
+  margin-top:6px;
+}
+.niveau-card[data-niveau="essentielle"] .niveau-price{color:var(--c-cyan,#5fc9ff)}
+.niveau-card[data-niveau="signature"] .niveau-price{color:var(--c-pink,#ff5e8a)}
+.niveau-card[data-niveau="iconique"] .niveau-price{background:linear-gradient(110deg,var(--c-purple,#b59cff),var(--c-amber,#ffb547));-webkit-background-clip:text;background-clip:text;color:transparent}
 .niveau-desc{
   font-size:15px;
   line-height:1.55;

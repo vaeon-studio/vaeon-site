@@ -123,12 +123,15 @@
         </div>
       </div>
 
-      <!-- Formulaire de contact : ouvre le client mail de l'utilisateur avec
-           tous les champs pré-remplis. Pas de dépendance tierce (formsubmit
-           down) → fiabilité maximale. Le handler JS en bas de page construit
-           le mailto. Fallback noscript : l'attribut action ouvre direct le
-           client mail (sans corps pré-rempli mais ça marche). -->
-      <form id="contactForm" action="mailto:contact@vaeon.fr" method="GET" enctype="text/plain" autocomplete="off" data-r>
+      <!-- Formulaire de contact — envoi direct via Web3Forms (gratuit, illimité).
+           ⚠️ À CONFIGURER : remplacer YOUR_WEB3FORMS_ACCESS_KEY par la vraie clé
+           obtenue sur https://web3forms.com (entrer contact@vaeon.fr → clé reçue par mail).
+           Tant que la clé n'est pas configurée, le form tombe en fallback mailto:. -->
+      <form id="contactForm" action="https://api.web3forms.com/submit" method="POST" autocomplete="off" data-r>
+        <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_ACCESS_KEY">
+        <input type="hidden" name="subject" value="Nouveau contact VÆON">
+        <input type="hidden" name="from_name" value="Formulaire vaeon.fr">
+        <input type="text" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
         <h4>Remplissez ce formulaire</h4>
         <div class="field"><label for="name">Votre nom</label><input id="name" name="nom" type="text" required placeholder="Entrez votre nom complet" /></div>
         <div class="field"><label for="email">Votre email</label><input id="email" name="email" type="email" required placeholder="Entrez votre adresse email" /></div>
@@ -154,8 +157,17 @@
           </select>
         </div>
         <div class="field"><label for="msg">À propos du projet</label><textarea id="msg" name="message" required placeholder="Présentez-nous votre activité, vos objectifs et l'univers que vous souhaitez construire."></textarea></div>
-        <button type="submit" class="submit">Envoyer le message <span>↗</span></button>
-        <div class="ok" id="ok">★ Votre client mail s'est ouvert avec le message pré-rempli — vérifiez puis envoyez.</div>
+        <button type="submit" class="submit" id="submitBtn"><span class="submit-label">Envoyer le message</span> <span class="submit-arrow">↗</span></button>
+        <div class="form-success" id="formSuccess" role="status" aria-live="polite">
+          <div class="form-success-icon">✓</div>
+          <div class="form-success-text">
+            <strong>Message bien reçu.</strong>
+            <span>Nous revenons vers vous sous 48h ouvrées.</span>
+          </div>
+        </div>
+        <div class="form-error" id="formError" role="alert" aria-live="assertive">
+          <strong>Envoi impossible.</strong> Écrivez-nous directement à <a href="mailto:contact@vaeon.fr">contact@vaeon.fr</a>.
+        </div>
         <p class="form-fallback" style="margin-top:14px;font-size:12px;color:var(--ink-3);text-align:center;">
           Ou écris-nous directement à <a href="mailto:contact@vaeon.fr" style="color:var(--ink-2);text-decoration:underline">contact@vaeon.fr</a>
         </p>
@@ -193,7 +205,7 @@
   <div class="footer-cols">
     <div class="fcol"><h3>VÆON</h3><p>Studio indépendant de design &amp; développement web basé à Toulouse. Architectures digitales sur-mesure pour commerces, maisons et marques exigeantes.</p></div>
     <div class="fcol"><h3>Métiers</h3><a href="metiers/restaurant/">Restaurant</a><a href="metiers/pizzeria/">Pizzeria</a><a href="metiers/coiffeur/">Coiffeur</a><a href="metiers/barbershop/">Barbershop</a><a href="metiers/institut-beaute-spa/">Institut &amp; Spa</a><a href="metiers/avocat/">Avocat</a></div>
-    <div class="fcol"><h3>Pages</h3><a href="services.html">Services</a><a href="projets.html">Maquettes</a><a href="tarifs.html">Tarifs</a><a href="agence-web-toulouse.html">Studio Web Toulouse</a><a href="process.html">Process</a><a href="a-propos.html">À propos</a><a href="blog/">Blog</a><a href="contact.html">Contact</a></div>
+    <div class="fcol"><h3>Pages</h3><a href="services.html">Services</a><a href="process.html">Process</a><a href="a-propos.html">À propos</a><a href="agence-web-toulouse.html">Studio Web Toulouse</a><a href="blog/">Blog</a></div>
     <div class="fcol"><h3>Contact</h3><a href="mailto:contact@vaeon.fr">contact@vaeon.fr</a><a href="#">Instagram</a><a href="#">LinkedIn</a></div>
     <div class="fcol"><h3>Légal</h3><a href="/mentions-legales.html">Mentions légales</a><a href="/politique-confidentialite.html">Politique de confidentialité</a><a href="/cookies.html">Cookies</a></div>
   </div>
@@ -203,59 +215,85 @@
 <script src="js/script.js"></script>
 <script>
   // ============================================================
-  // CONTACT FORM → mailto: pré-rempli
-  // Intercepte le submit, construit un mail proprement formaté
-  // avec subject et body, ouvre le client mail de l'utilisateur.
-  // (Remplace formsubmit.co qui était down — host error 522.)
+  // CONTACT FORM → envoi direct via Web3Forms (fetch POST JSON)
+  // Affiche "Message bien reçu sous 48h" en cas de succès.
+  // Fallback automatique sur mailto: si la clé Web3Forms n'est pas
+  // configurée (placeholder YOUR_WEB3FORMS_ACCESS_KEY) ou si l'API échoue.
   // ============================================================
   (function(){
     var form = document.getElementById('contactForm');
-    var okMsg = document.getElementById('ok');
     if (!form) return;
+    var btn = document.getElementById('submitBtn');
+    var btnLabel = btn ? btn.querySelector('.submit-label') : null;
+    var successEl = document.getElementById('formSuccess');
+    var errorEl = document.getElementById('formError');
+    var accessKey = form.querySelector('input[name="access_key"]').value;
+    var isConfigured = accessKey && accessKey.indexOf('YOUR_') !== 0;
+
+    function showSuccess(){
+      if (errorEl) errorEl.classList.remove('show');
+      if (successEl) successEl.classList.add('show');
+      form.reset();
+      if (btn) { btn.disabled = false; }
+      if (btnLabel) btnLabel.textContent = 'Envoyer le message';
+      // Scroll into view so the user sees the confirmation
+      if (successEl) successEl.scrollIntoView({behavior: 'smooth', block: 'center'});
+    }
+    function showError(){
+      if (successEl) successEl.classList.remove('show');
+      if (errorEl) errorEl.classList.add('show');
+      if (btn) { btn.disabled = false; }
+      if (btnLabel) btnLabel.textContent = 'Envoyer le message';
+    }
+    function fallbackMailto(fd){
+      var nom = (fd.get('nom') || '').toString().trim();
+      var email = (fd.get('email') || '').toString().trim();
+      var activite = (fd.get('activite') || '').toString().trim();
+      var service = (fd.get('service') || '').toString().trim();
+      var message = (fd.get('message') || '').toString().trim();
+      if (activite.indexOf('Sélectionnez') === 0) activite = '';
+      if (service.indexOf('Sélectionnez') === 0) service = '';
+      var subject = 'Nouveau contact VÆON' + (nom ? ' — ' + nom : '');
+      var body = [
+        nom && 'Nom : ' + nom,
+        email && 'Email : ' + email,
+        activite && 'Type d\'activité : ' + activite,
+        service && 'Service recherché : ' + service,
+        '',
+        '— À propos du projet —',
+        message || '(vide)',
+      ].filter(Boolean).join('\n');
+      window.location.href = 'mailto:contact@vaeon.fr?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+    }
 
     form.addEventListener('submit', function(e){
       e.preventDefault();
-
       var fd = new FormData(form);
-      var nom      = (fd.get('nom') || '').toString().trim();
-      var email    = (fd.get('email') || '').toString().trim();
-      var activite = (fd.get('activite') || '').toString().trim();
-      var service  = (fd.get('service') || '').toString().trim();
-      var message  = (fd.get('message') || '').toString().trim();
 
-      // Filtre les valeurs "placeholder" des <select> non-modifiés
-      if (activite.indexOf('Sélectionnez') === 0) activite = '';
-      if (service.indexOf('Sélectionnez') === 0) service = '';
-
-      var subject = 'Nouveau contact VÆON' + (nom ? ' — ' + nom : '');
-
-      var lines = [];
-      if (nom)      lines.push('Nom : ' + nom);
-      if (email)    lines.push('Email : ' + email);
-      if (activite) lines.push('Type d\'activité : ' + activite);
-      if (service)  lines.push('Service recherché : ' + service);
-      lines.push('');
-      lines.push('— À propos du projet —');
-      lines.push(message || '(vide)');
-      lines.push('');
-      lines.push('---');
-      lines.push('Envoyé depuis le formulaire de contact vaeon.fr');
-
-      var body = lines.join('\n');
-
-      // RFC 6068 : encodage des params mailto
-      var mailto = 'mailto:contact@vaeon.fr'
-        + '?subject=' + encodeURIComponent(subject)
-        + '&body='    + encodeURIComponent(body);
-
-      // Ouvre le client mail
-      window.location.href = mailto;
-
-      // Affiche la confirmation visuelle
-      if (okMsg) {
-        okMsg.style.display = 'block';
-        okMsg.style.opacity = '1';
+      // Si la clé Web3Forms n'est pas configurée, fallback direct sur mailto
+      if (!isConfigured) {
+        fallbackMailto(fd);
+        return;
       }
+
+      if (btn) { btn.disabled = true; }
+      if (btnLabel) btnLabel.textContent = 'Envoi en cours…';
+
+      // Convert FormData to JSON for Web3Forms API
+      var json = {};
+      fd.forEach(function(v, k){ json[k] = v; });
+
+      fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(json),
+      })
+      .then(function(res){ return res.json(); })
+      .then(function(data){
+        if (data && data.success) showSuccess();
+        else showError();
+      })
+      .catch(function(){ showError(); });
     });
   })();
 </script>
