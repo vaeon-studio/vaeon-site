@@ -193,15 +193,18 @@
   position:absolute;bottom:24px;left:50%;transform:translateX(-50%);
   z-index:4;
   display:inline-flex;align-items:center;gap:8px;
-  padding:10px 18px;
+  padding:10px 20px;
   background:var(--ink);color:var(--bg);
   border-radius:999px;
   font-family:var(--display-mono);font-weight:700;font-size:12px;
   letter-spacing:.04em;
-  opacity:0;
-  transition:opacity .35s ease, transform .35s ease;
+  opacity:.92;
+  transition:opacity .3s ease, transform .35s ease, background .3s ease, color .3s ease;
 }
 .niveau-card:hover .ph-cta{opacity:1;transform:translate(-50%, -4px)}
+.niveau-card[data-niveau="essentielle"]:hover .ph-cta{background:#5fc9ff;color:#0e1320}
+.niveau-card[data-niveau="signature"]:hover .ph-cta{background:#ff5e8a;color:#fff}
+.niveau-card[data-niveau="iconique"]:hover .ph-cta{background:linear-gradient(110deg,#b59cff,#ffb547);color:#1a1622}
 
 /* ============================================================
    CONTENU DE LA CARTE
