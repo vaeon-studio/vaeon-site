@@ -189,6 +189,8 @@ img{max-width:100%;display:block}
 /* Bottom footer — overlay bottom */
 .particle-section .ps-bottom{position:absolute;bottom:36px;left:56px;right:56px;z-index:3;display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.28em;color:var(--ink-3)}
 .particle-section .ps-hint{opacity:.55}
+.particle-section .ps-hint-touch{display:none}
+@media (hover:none),(pointer:coarse){.particle-section .ps-hint-hover{display:none}.particle-section .ps-hint-touch{display:inline}}
 .particle-section .ps-scroll{color:var(--ink-2);display:inline-flex;align-items:center;gap:8px;animation:psScroll 2.4s ease-in-out infinite}
 @keyframes psScroll{0%,100%{transform:translateY(0);opacity:.6}50%{transform:translateY(4px);opacity:1}}
 
@@ -679,6 +681,11 @@ section{padding:120px 40px;position:relative;z-index:2}
 .m-essentielle .maq-tag em{color:var(--c-cyan);font-style:italic}
 .m-signature .maq-tag em{color:var(--c-pink);font-style:italic}
 .m-iconique .maq-tag em{background:linear-gradient(110deg,var(--c-purple),var(--c-amber));-webkit-background-clip:text;background-clip:text;color:transparent;font-style:italic}
+.maq-price{font-family:var(--display-mono);font-weight:700;font-size:30px;color:var(--ink);margin:0 0 18px;letter-spacing:-.02em;line-height:1}
+.maq-price small{font-family:var(--mono);font-size:10px;font-weight:500;color:var(--ink-3);text-transform:uppercase;letter-spacing:.18em;display:block;margin-top:6px}
+.m-essentielle .maq-price{color:var(--c-cyan)}
+.m-signature .maq-price{color:var(--c-pink)}
+.m-iconique .maq-price{background:linear-gradient(110deg,var(--c-purple),var(--c-amber));-webkit-background-clip:text;background-clip:text;color:transparent}
 .maq-desc{color:var(--ink-2);font-size:15px;line-height:1.55;margin-bottom:24px;flex:1}
 .maq-cta{display:inline-flex;align-items:center;gap:10px;padding:12px 22px;border:1px solid var(--line-2);color:var(--ink);border-radius:999px;font-weight:600;font-size:14px;align-self:flex-start;transition:background .2s,color .2s,border-color .2s,gap .2s}
 .maq-cta:hover{background:var(--ink);color:var(--bg);border-color:var(--ink);gap:14px}
@@ -1242,7 +1249,34 @@ section{padding:120px 40px;position:relative;z-index:2}
 
 /* Hide cols progressively on smaller screens */
 @media (max-width:1080px){.testi-col.col-3{display:none}}
-@media (max-width:760px){.testi-col.col-2{display:none}.testimonials{padding:80px 20px}}
+@media (max-width:760px){
+  .testimonials{padding:64px 0 80px}
+  /* Mobile: convert vertical scrolling columns into a single horizontal swipeable carousel
+     so users can access all 9 testimonials instead of only the first 3. */
+  .testi-grid{
+    display:flex;
+    justify-content:flex-start;
+    gap:16px;
+    max-height:none;
+    overflow-x:auto;
+    overflow-y:visible;
+    -webkit-mask-image:none;
+    mask-image:none;
+    scroll-snap-type:x mandatory;
+    scroll-padding:20px;
+    padding:8px 20px 24px;
+    scrollbar-width:none;
+  }
+  .testi-grid::-webkit-scrollbar{display:none}
+  .testi-col,.testi-col.col-2,.testi-col.col-3{display:contents}
+  .testi-list{display:contents;animation:none !important}
+  .testi{
+    scroll-snap-align:center;
+    flex:0 0 calc(100vw - 80px);
+    max-width:360px;
+    width:auto;
+  }
+}
 
 /* === FAQ === */
 .faq-list{max-width:1100px;margin:0 auto}

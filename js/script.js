@@ -286,20 +286,42 @@ let rafId = null;
 // === Particle text effect — full-screen section after hero ===
 const particleSectionCanvas = document.getElementById('particleSection');
 if (particleSectionCanvas && typeof window.initParticleText === 'function') {
-  // Size canvas internal pixels to match its on-screen display
+  let particleCtrl = null;
+  // Size canvas internal pixels to match its on-screen display (avoids stretch on mobile)
   const sizeCanvas = () => {
     const rect = particleSectionCanvas.getBoundingClientRect();
-    particleSectionCanvas.width = Math.min(Math.max(Math.round(rect.width), 1000), 1920);
-    particleSectionCanvas.height = Math.min(Math.max(Math.round(rect.height), 600), 1080);
+    particleSectionCanvas.width = Math.min(Math.max(Math.round(rect.width), 360), 1920);
+    particleSectionCanvas.height = Math.min(Math.max(Math.round(rect.height), 480), 1080);
   };
-  sizeCanvas();
-  window.initParticleText(particleSectionCanvas, [
-    'VÆON',
-    'DESIGN',
-    'CODE',
-    'IDENTITÉ',
-    'SUR-MESURE',
-  ], { fontSize: 200, fontFamily: 'Geist Mono, monospace', wordInterval: 240 });
+  const startParticles = () => {
+    sizeCanvas();
+    if (particleCtrl && typeof particleCtrl.destroy === 'function') particleCtrl.destroy();
+    // Scale font with canvas width so words fit on small screens
+    const fontSize = Math.max(56, Math.min(200, Math.round(particleSectionCanvas.width / 6)));
+    particleCtrl = window.initParticleText(particleSectionCanvas, [
+      'VÆON',
+      'DESIGN',
+      'CODE',
+      'IDENTITÉ',
+      'SUR-MESURE',
+    ], { fontSize, fontFamily: 'Geist Mono, monospace', wordInterval: 240 });
+  };
+  startParticles();
+  // Re-init on significant viewport change (orientation, browser resize)
+  let resizeRaf = null;
+  let lastW = particleSectionCanvas.width;
+  let lastH = particleSectionCanvas.height;
+  window.addEventListener('resize', () => {
+    if (resizeRaf) cancelAnimationFrame(resizeRaf);
+    resizeRaf = requestAnimationFrame(() => {
+      const rect = particleSectionCanvas.getBoundingClientRect();
+      if (Math.abs(lastW - rect.width) > 40 || Math.abs(lastH - rect.height) > 40) {
+        startParticles();
+        lastW = particleSectionCanvas.width;
+        lastH = particleSectionCanvas.height;
+      }
+    });
+  }, { passive: true });
 }
 
 // Hero scroll-driven dive (cascade zooms forward as user scrolls through stage)
