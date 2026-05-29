@@ -165,7 +165,16 @@
 .niveau-card[data-niveau="iconique"] .preview-frame{
   background:radial-gradient(circle at 50% 30%, rgba(181,156,255,.32), transparent 65%),radial-gradient(circle at 80% 80%, rgba(255,181,71,.18), transparent 55%),linear-gradient(135deg, #1a1622 0%, #14101c 100%);
 }
-/* Bloc placeholder centré */
+/* Image preview — screenshot de la vraie maquette (cover, ancrée en haut) */
+.preview-img{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;object-position:top center;
+  z-index:0;
+  transition:transform .6s cubic-bezier(.2,.8,.2,1);
+}
+.niveau-card:hover .preview-img{transform:scale(1.04)}
+
+/* Bloc placeholder centré (legacy — gardé au cas où) */
 .preview-placeholder{
   position:relative;z-index:3;
   display:flex;flex-direction:column;align-items:center;gap:18px;
