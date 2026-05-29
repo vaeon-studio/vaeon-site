@@ -34,7 +34,7 @@
     {"@type":"FAQPage","mainEntity":[
       {"@type":"Question","name":"Combien coûte un site e-commerce sur mesure ?","acceptedAnswer":{"@type":"Answer","text":"Entre 2 000 € et 4 500 €. Catalogue < 50 produits, paiement Stripe, livraison Colissimo : 2 000 €. Catalogue 50-300 produits avec stocks et variantes : 4 500 €. Au-delà, on parle de projet hors fourchette VÆON (Shopify Plus ou agence e-commerce spécialisée)."}},
       {"@type":"Question","name":"Pourquoi pas Shopify ?","acceptedAnswer":{"@type":"Answer","text":"Shopify est excellent pour démarrer. Mais coûte 30-350 €/mois selon le plan, prélève des frais de transaction sur chaque vente (sauf Shopify Payments), et standardise l'expérience client. Pour une boutique avec moins de 300 produits qui veut une identité forte et zéro frais variable, le sur-mesure est plus rentable sur 3-5 ans. Au-delà de 500 produits ou en B2B complexe, Shopify reste pertinent."}},
-      {"@type":"Question","name":"Quelle plateforme de paiement ?","acceptedAnswer":{"@type":"Answer","text":"Stripe (1,4 % + 0,25 € par transaction) pour l'international, Lyf Pro (1,5 % + 0,20 €) pour le français pur. Pour le retrait en boutique sans frais : paiement sur place possible. PayPal en complément si demandé par votre clientèle. Tout est branché en standard, vous choisissez."}},
+      {"@type":"Question","name":"Quelle plateforme de paiement ?","acceptedAnswer":{"@type":"Answer","text":"Stripe (1,4 % + 0,25 € par transaction) pour le paiement en ligne. Pour le retrait en boutique sans frais : paiement sur place possible. PayPal en complément si demandé par votre clientèle. Tout est branché en standard, vous choisissez."}},
       {"@type":"Question","name":"Peut-on faire du click & collect ?","acceptedAnswer":{"@type":"Answer","text":"Oui, c'est l'un des atouts du sur-mesure pour un commerce local. Pas de frais Colissimo si retrait en boutique, créneau de retrait choisi par le client, confirmation SMS. Particulièrement adapté aux fleuristes, librairies, épiceries fines, primeurs."}},
       {"@type":"Question","name":"Et la gestion des stocks ?","acceptedAnswer":{"@type":"Answer","text":"Back-office avec gestion stocks par produit et par variante (taille, couleur). Alertes seuil de réapprovisionnement. Synchronisation possible avec votre logiciel de caisse (Square, Lightspeed, Yavin selon les cas). À cadrer en brief."}}
     ]}
@@ -98,8 +98,8 @@
       <h3>Catalogue produits avec variantes</h3>
       <p>Gestion des produits avec variantes (taille, couleur, parfum), stocks par variante, photos multiples par produit (jusqu'à 8), descriptions structurées. Catégories et filtres pour navigation rapide. Format AVIF/WebP pour des fiches produit qui se chargent en moins d'1 seconde.</p>
 
-      <h3>Paiement Stripe ou Lyf Pro</h3>
-      <p>Stripe (1,4 % + 0,25 €) ou Lyf Pro (1,5 % + 0,20 €) selon vos préférences. Apple Pay, Google Pay, paiement en plusieurs fois. Sécurité PCI-DSS native, pas besoin de stocker les CB chez vous. PayPal en option si votre clientèle le demande.</p>
+      <h3>Paiement Stripe intégré</h3>
+      <p>Stripe (1,4 % + 0,25 €) pour le paiement en ligne. Apple Pay, Google Pay, paiement en plusieurs fois. Sécurité PCI-DSS native, pas besoin de stocker les CB chez vous. PayPal en option si votre clientèle le demande.</p>
 
       <h3>Click &amp; collect + livraison locale</h3>
       <p>Retrait gratuit en boutique avec créneau choisi par le client (slots paramétrables selon vos horaires). Livraison Colissimo ou Mondial Relay pour la France. Livraison locale à vélo possible (Stuart, Olvo, ou solo selon la zone) pour les commerces de proximité.</p>
@@ -116,9 +116,9 @@
     <ol class="metier-steps">
       <li><strong>Brief</strong> — 1h30 pour comprendre votre catalogue, vos volumes, votre clientèle, votre logistique.</li>
       <li><strong>Maquette</strong> — 7-10 jours. Travail sur la fiche produit (l'élément le plus regardé d'un e-commerce).</li>
-      <li><strong>Développement</strong> — 1 à 2 semaines selon la profondeur fonctionnelle (catalogue, paiement, espace client).</li>
+      <li><strong>Développement</strong> — 1 à 2 semaines selon la profondeur fonctionnelle (catalogue, paiement, gestion stocks).</li>
       <li><strong>Recette</strong> — vous testez en mode Stripe test : commandes, retours, codes promo, stocks.</li>
-      <li><strong>Mise en ligne</strong> — déploiement, fiche Google Business, formation back-office détaillée (1h-1h30).</li>
+      <li><strong>Mise en ligne</strong> — déploiement, formation back-office détaillée (1h-1h30).</li>
     </ol>
   </section>
 
@@ -128,25 +128,22 @@
     </div>
     <div class="tarif-grid">
       <article class="tarif-card">
-        <h3>Standard</h3>
+        <h3>Signature</h3>
         <p class="tarif-price">2 000 €</p>
-        <p class="tarif-cible">Petit catalogue (&lt; 50 produits), démarrage.</p>
-        <ul><li>Catalogue jusqu'à 50 produits</li><li>Paiement Stripe / Lyf Pro</li><li>Click &amp; collect + Colissimo</li><li>Back-office complet</li><li>Photos optimisées AVIF/WebP</li></ul>
+        <ul><li>Catalogue jusqu'à 50 produits</li><li>Paiement Stripe intégré</li><li>Click &amp; collect + Colissimo</li><li>Back-office complet</li><li>Photos optimisées AVIF/WebP</li></ul>
       </article>
       <article class="tarif-card featured">
         <h3>Premium</h3>
         <p class="tarif-price">4 500 €</p>
-        <p class="tarif-cible">Catalogue 50-300 produits avec variantes, design poussé.</p>
-        <ul><li>Catalogue 50-300 produits</li><li>Variantes (taille, couleur, parfum)</li><li>Gestion stocks fine</li><li>Direction artistique signée</li><li>Multi-langue FR/EN</li><li>Codes promo et fidélité</li></ul>
+        <ul><li>Catalogue 50-300 produits</li><li>Variantes (taille, couleur, parfum)</li><li>Gestion stocks fine</li><li>Direction artistique signée</li><li>Codes promo</li></ul>
       </article>
       <article class="tarif-card">
         <h3>Au-delà</h3>
         <p class="tarif-price">5 000 € +</p>
-        <p class="tarif-cible">Hors fourchette VÆON.</p>
         <ul><li>Plus de 300 produits</li><li>B2B complexe</li><li>Multi-entrepôts</li><li>Connexion ERP / WMS</li><li>On vous oriente vers Shopify Plus ou agence e-commerce</li></ul>
       </article>
     </div>
-    <p class="tarif-aside">L'e-commerce démarre à la formule Standard (2 000 €) en raison de la complexité fonctionnelle. Devis détaillé sous 24h.</p>
+    <p class="tarif-aside">L'e-commerce démarre à la formule Signature (2 000 €) en raison de la complexité fonctionnelle. Devis détaillé sous 24h.</p>
   </section>
 
   <section class="metier-faq">
@@ -157,7 +154,7 @@
     <div class="faq-list">
       <div class="faq open"><button class="faq-q">Combien coûte un site e-commerce sur mesure ?<span class="plus">+</span></button><div class="faq-a" style="max-height:280px"><div class="faq-a-inner">Entre <strong>2 000 € et 4 500 €</strong>. &lt; 50 produits : 2 000 €. 50-300 produits avec variantes : 4 500 €. Au-delà, hors fourchette.</div></div></div>
       <div class="faq"><button class="faq-q">Pourquoi pas Shopify ?<span class="plus">+</span></button><div class="faq-a"><div class="faq-a-inner"><strong>Sur 5 ans, Shopify coûte 4 000-12 000 €</strong> sans rien posséder. Sur-mesure rentabilisé en 18-30 mois pour une boutique active.</div></div></div>
-      <div class="faq"><button class="faq-q">Quelle plateforme de paiement ?<span class="plus">+</span></button><div class="faq-a"><div class="faq-a-inner">Stripe (1,4 % + 0,25 €), Lyf Pro (1,5 % + 0,20 €), PayPal en option.</div></div></div>
+      <div class="faq"><button class="faq-q">Quelle plateforme de paiement ?<span class="plus">+</span></button><div class="faq-a"><div class="faq-a-inner">Stripe (1,4 % + 0,25 €), PayPal en option.</div></div></div>
       <div class="faq"><button class="faq-q">Peut-on faire du click & collect ?<span class="plus">+</span></button><div class="faq-a"><div class="faq-a-inner">Oui, atout du sur-mesure. <strong>Retrait gratuit en boutique</strong>, créneau choisi, confirmation SMS.</div></div></div>
       <div class="faq"><button class="faq-q">Et la gestion des stocks ?<span class="plus">+</span></button><div class="faq-a"><div class="faq-a-inner">Stocks par produit et par variante, alertes seuil. Synchronisation logiciel de caisse possible.</div></div></div>
     </div>
@@ -172,12 +169,12 @@
 </main>
 
 <footer>
-  <div class="footer-big"><h2><em>Travelling</em><br>vers vous.</h2></div>
+  <div class="footer-big"><h2><em>En route</em><br>vers vous.</h2></div>
   <div class="footer-cols">
-    <div class="fcol"><h3>VÆON</h3><p>Studio indépendant de design &amp; développement web basé à Toulouse. Architectures digitales sur-mesure pour commerces, maisons et marques exigeantes.</p></div>
+    <div class="fcol"><h3>VÆON</h3><p>Collectif de freelances design, développement et stratégie web basé à Toulouse. Architectures digitales sur-mesure pour commerces, maisons et marques exigeantes.</p></div>
     <div class="fcol"><h3>Métiers</h3><a href="/metiers/restaurant/">Restaurant</a><a href="/metiers/pizzeria/">Pizzeria</a><a href="/metiers/coiffeur/">Coiffeur</a><a href="/metiers/barbershop/">Barbershop</a><a href="/metiers/institut-beaute-spa/">Institut &amp; Spa</a><a href="/metiers/avocat/">Avocat</a></div>
-    <div class="fcol"><h3>Pages</h3><a href="/services.html">Services</a><a href="/process.html">Process</a><a href="/a-propos.html">À propos</a><a href="/agence-web-toulouse.html">Studio Web Toulouse</a><a href="/blog/">Blog</a></div>
-    <div class="fcol"><h3>Contact</h3><a href="mailto:contact@vaeon.fr">contact@vaeon.fr</a><a href="#">Instagram</a><a href="#">LinkedIn</a></div>
+    <div class="fcol"><h3>Pages</h3><a href="/process.html">Process</a><a href="/a-propos.html">À propos</a></div>
+    <div class="fcol"><h3>Contact</h3><a href="mailto:contact@vaeon.fr">contact@vaeon.fr</a><a href="#">Instagram</a></div>
     <div class="fcol"><h3>Légal</h3><a href="/mentions-legales.html">Mentions légales</a><a href="/politique-confidentialite.html">Politique de confidentialité</a><a href="/cookies.html">Cookies</a></div>
   </div>
   <div class="copy"><span>© 2025 — 2026 VÆON · Tous droits réservés</span><span>Design &amp; développement web à Toulouse</span></div>

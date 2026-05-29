@@ -1,7 +1,7 @@
 # Cahier des charges — SEO Foundations vaeon.fr
 
 **Auteur** Maxime · Direction
-**Destinataires** Hedi, Wassim (dev)
+**Destinataires** Hedi Contreras (dev), Wassim Ouadah (design)
 **Date** 2026-05-18
 **Référence brief source** `brief-seo-vaeon.pdf` (mai 2026)
 **Branche de travail** `claude/elastic-ptolemy-9689bf`
@@ -32,7 +32,7 @@ Le brief technique initial (`brief-seo-vaeon.pdf`) a été rédigé en supposant
 - 3 maquettes (Essentielle, Signature, Iconique) publiées.
 - 3 articles de blog en ligne.
 - Un seul `<h1>` par page (vérifié sur les 6 pages principales).
-- Footer "Travelling vers vous" + page Institut & Spa déployés en production.
+- Footer "En route vers vous" + page Institut & Spa déployés en production.
 
 ### Gaps identifiés (ce qui reste à traiter)
 
@@ -634,7 +634,7 @@ Coller chaque URL → cliquer **"Demander l'indexation"** → confirmer.
 
 ### Corrections appliquées
 
-**1. Footer global** — 35 fichiers HTML + 2 règles CSS (`.fcol h4` et `.demo-footer-cols .fcol h4`). Les 5 colonnes du footer (VÆON / Métiers / Pages / Contact / Légal) ont été passées de `<h4>` à `<h3>` pour suivre logiquement le `<h2>` "Travelling vers vous".
+**1. Footer global** — 35 fichiers HTML + 2 règles CSS (`.fcol h4` et `.demo-footer-cols .fcol h4`). Les 5 colonnes du footer (VÆON / Métiers / Pages / Contact / Légal) ont été passées de `<h4>` à `<h3>` pour suivre logiquement le `<h2>` "En route vers vous".
 
 **2. Pages légales** (`cookies.html`, `mentions-legales.html`, `politique-confidentialite.html`) — Décalage hiérarchique de -1 niveau : tous les `<h3>` numérotés des sections ("1. Qu'est-ce qu'un cookie ?", etc.) sont passés `<h2>` ; les sous-`<h4>` sont passés `<h3>`.
 

@@ -5,6 +5,16 @@
       "source": "/index.html",
       "destination": "/",
       "permanent": true
+    },
+    {
+      "source": "/agence-web-toulouse.html",
+      "destination": "/studio-web-toulouse.html",
+      "permanent": true
+    },
+    {
+      "source": "/agence-web-toulouse",
+      "destination": "/studio-web-toulouse",
+      "permanent": true
     }
   ],
   "cleanUrls": true,

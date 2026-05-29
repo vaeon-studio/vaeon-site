@@ -28,7 +28,7 @@ const SKIP_FILES = new Set(['404.html']);
 // Convention de priorité / changefreq. Premier pattern qui matche gagne.
 const PRIORITIES = [
   { pattern: /^index\.html$/, priority: '1.0', changefreq: 'weekly' },
-  { pattern: /^(tarifs|services|projets|contact|process|a-propos|agence-web-toulouse)\.html$/, priority: '0.8', changefreq: 'monthly' },
+  { pattern: /^(tarifs|services|projets|contact|process|a-propos|studio-web-toulouse)\.html$/, priority: '0.8', changefreq: 'monthly' },
   { pattern: /^(essentielle|signature|iconique)\.html$/, priority: '0.7', changefreq: 'monthly' },
   { pattern: /^metiers\/index\.html$/, priority: '0.8', changefreq: 'monthly' },
   { pattern: /^metiers\/[^/]+\/index\.html$/, priority: '0.6', changefreq: 'monthly' },

@@ -468,3 +468,46 @@ document.querySelectorAll('[data-matrix]').forEach(el => {
     labelObserver.observe(s);
   });
 })();
+
+// === Testimonials: clone items for seamless infinite scroll ===
+// The CSS animation translates each .testi-list from 0 to -50% to create an
+// infinite loop. That only looks seamless if the list contains two identical
+// sets — otherwise the list scrolls out and leaves a visible gap at the bottom
+// (which is the bug we saw on the live site). We clone on the client to keep
+// the HTML clean and only run when the marquee animation is active (not on
+// the mobile horizontal carousel breakpoint, which kills the animation).
+(function() {
+  const lists = document.querySelectorAll('.testi-list');
+  if (!lists.length) return;
+
+  const cloneItems = (list) => {
+    if (list.dataset.cloned === 'true') return;
+    const originals = Array.from(list.children);
+    if (!originals.length) return;
+    const frag = document.createDocumentFragment();
+    originals.forEach(li => {
+      const clone = li.cloneNode(true);
+      clone.setAttribute('aria-hidden', 'true');
+      clone.dataset.clone = 'true';
+      frag.appendChild(clone);
+    });
+    list.appendChild(frag);
+    list.dataset.cloned = 'true';
+  };
+
+  const removeClones = (list) => {
+    if (list.dataset.cloned !== 'true') return;
+    list.querySelectorAll('[data-clone="true"]').forEach(n => n.remove());
+    list.dataset.cloned = 'false';
+  };
+
+  // Only clone above the mobile breakpoint (the mobile layout shows
+  // testimonials in a horizontal carousel and we don't want duplicates there).
+  const mq = window.matchMedia('(min-width: 761px)');
+  const apply = () => {
+    lists.forEach(mq.matches ? cloneItems : removeClones);
+  };
+  apply();
+  // Re-evaluate on viewport changes (e.g. resize, orientation change).
+  mq.addEventListener ? mq.addEventListener('change', apply) : mq.addListener(apply);
+})();

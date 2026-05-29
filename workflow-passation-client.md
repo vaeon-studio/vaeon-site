@@ -21,7 +21,7 @@ VÆON est un **Studio**, pas une Agence. La différence opérationnelle se joue 
 
 **La promesse écrite sur le site (tarifs.html, process.html, métiers) :**
 
-> À la livraison, votre site est 100 % à vous. Compte hosting à votre nom, code source en archive, domaine chez votre registrar. VÆON se déconnecte. Pas de lock-in, pas d'abonnement.
+> À la livraison, votre site est 100 % à vous. Compte hosting à votre nom, code source en archive, domaine chez votre registrar. Pas de lock-in, pas d'abonnement.
 
 Toute dérive opérationnelle qui contredit cette promesse abîme le positionnement.
 
@@ -115,8 +115,7 @@ Toute dérive opérationnelle qui contredit cette promesse abîme le positionnem
 □ Site déployé sur https://<client>.vercel.app
 □ Domaine custom <client>.fr branché · DNS configuré chez <registrar>
 □ SSL automatique actif (vérifier https://)
-□ Fiche Google Business mise à jour + connectée au site
-□ Plausible/PostHog créé sur compte client (si Standard/Premium)
+□ Plausible/PostHog créé sur compte client (si Signature/Premium)
 □ Archive ZIP du code source générée
 □ Repo GitHub archivé sur vaeon-studio
 □ Email de passation envoyé (voir template §5)
@@ -172,7 +171,7 @@ Le code vous appartient à 100 %. Vous pouvez :
 - Le modifier vous-même si vous avez un dev en interne
 
 ────────────────────────────────────────────
-📊 ANALYTICS (si Standard/Premium)
+📊 ANALYTICS (si Signature/Premium)
 ────────────────────────────────────────────
 Compte Plausible/PostHog créé à votre email.
 Login : même email que ci-dessus
