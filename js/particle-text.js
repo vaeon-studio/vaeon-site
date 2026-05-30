@@ -48,7 +48,7 @@ class Particle {
     this.acc.y = 0;
   }
 
-  draw(ctx, drawAsPoints) {
+  draw(ctx, drawAsPoints, pointSize) {
     if (this.colorWeight < 1.0) this.colorWeight = Math.min(this.colorWeight + this.colorBlendRate, 1.0);
     const c = {
       r: Math.round(this.startColor.r + (this.targetColor.r - this.startColor.r) * this.colorWeight),
@@ -57,7 +57,8 @@ class Particle {
     };
     ctx.fillStyle = `rgb(${c.r},${c.g},${c.b})`;
     if (drawAsPoints) {
-      ctx.fillRect(this.pos.x, this.pos.y, 2, 2);
+      const s = pointSize || 2;
+      ctx.fillRect(this.pos.x, this.pos.y, s, s);
     } else {
       ctx.beginPath();
       ctx.arc(this.pos.x, this.pos.y, this.particleSize / 2, 0, Math.PI * 2);
@@ -98,6 +99,8 @@ function initParticleText(canvas, words, opts = {}) {
   const drawAsPoints = opts.drawAsPoints !== false;
   const fontSize = opts.fontSize || 110;
   const fontFamily = opts.fontFamily || 'Geist Mono, monospace';
+  const pointSize = opts.pointSize || 2;
+  const speed = opts.speed || 1;
   // Brand palette (cyan/pink/amber/lime/pink-vif)
   const palette = opts.palette || [
     { r: 95, g: 201, b: 255 },   // cyan
@@ -119,7 +122,17 @@ function initParticleText(canvas, words, opts = {}) {
     off.height = canvas.height;
     const octx = off.getContext('2d');
     octx.fillStyle = 'white';
-    octx.font = `bold ${fontSize}px ${fontFamily}`;
+    // Auto-fit: shrink the font so the whole word fits within the canvas with side margins.
+    // Measured against the live font so it self-corrects on narrow screens, any DPR, or font
+    // fallback (iOS) — prevents the horizontal clipping that razor-thin margins caused on mobile.
+    let fs = fontSize;
+    const maxW = canvas.width * 0.82;
+    octx.font = `bold ${fs}px ${fontFamily}`;
+    const measured = octx.measureText(word).width;
+    if (measured > maxW) {
+      fs = Math.max(24, Math.floor(fs * (maxW / measured)));
+      octx.font = `bold ${fs}px ${fontFamily}`;
+    }
     octx.textAlign = 'center';
     octx.textBaseline = 'middle';
     octx.fillText(word, canvas.width / 2, canvas.height / 2);
@@ -149,7 +162,7 @@ function initParticleText(canvas, words, opts = {}) {
           p = new Particle();
           const r = randomEdgePos(canvas.width / 2, canvas.height / 2, (canvas.width + canvas.height) / 2, canvas.width, canvas.height);
           p.pos.x = r.x; p.pos.y = r.y;
-          p.maxSpeed = Math.random() * 6 + 4;
+          p.maxSpeed = (Math.random() * 6 + 4) * speed;
           p.maxForce = p.maxSpeed * 0.05;
           p.particleSize = Math.random() * 6 + 6;
           p.colorBlendRate = Math.random() * 0.0275 + 0.0025;
@@ -176,7 +189,7 @@ function initParticleText(canvas, words, opts = {}) {
     for (let i = particles.length - 1; i >= 0; i--) {
       const p = particles[i];
       p.move();
-      p.draw(ctx, drawAsPoints);
+      p.draw(ctx, drawAsPoints, pointSize);
       if (p.isKilled && (p.pos.x < 0 || p.pos.x > canvas.width || p.pos.y < 0 || p.pos.y > canvas.height)) {
         particles.splice(i, 1);
       }
@@ -198,24 +211,59 @@ function initParticleText(canvas, words, opts = {}) {
     rafId = requestAnimationFrame(tick);
   }
 
-  // Mouse handlers
+  // Map a client (pointer/touch) coordinate into canvas pixel space
+  function setPointer(clientX, clientY) {
+    const r = canvas.getBoundingClientRect();
+    mouse.x = (clientX - r.left) * (canvas.width / r.width);
+    mouse.y = (clientY - r.top) * (canvas.height / r.height);
+  }
+  // Re-assign every particle back to the CURRENT word so it always returns to 100%.
+  function reformCurrentWord() { nextWord(words[wordIndex]); }
+
+  // Touch devices have no real hover. A tap emits a synthetic mousemove that would set
+  // isHovering=true with no mouseleave to ever clear it — leaving a permanent kill-zone
+  // that destroys the word and stops it reforming. So on touch we ignore mouse events and
+  // drive dispersal from touch only, clearing the state AND reforming the word on release.
+  // Use hover capability (not 'ontouchstart') so a touch laptop WITH a mouse stays on the
+  // original desktop path; only true touch-primary devices (phones) take the touch branch.
+  const isTouchDevice = !!window.matchMedia && window.matchMedia('(hover:none)').matches;
+
+  // Mouse handlers (hover-capable / desktop only)
   function onDown(e) {
+    if (isTouchDevice) return;
     mouse.isPressed = true;
     mouse.isRightClick = e.button === 2;
-    const r = canvas.getBoundingClientRect();
-    mouse.x = (e.clientX - r.left) * (canvas.width / r.width);
-    mouse.y = (e.clientY - r.top) * (canvas.height / r.height);
+    setPointer(e.clientX, e.clientY);
   }
-  function onUp() { mouse.isPressed = false; mouse.isRightClick = false; }
+  function onUp() { if (isTouchDevice) return; mouse.isPressed = false; mouse.isRightClick = false; }
   function onMove(e) {
-    const r = canvas.getBoundingClientRect();
-    mouse.x = (e.clientX - r.left) * (canvas.width / r.width);
-    mouse.y = (e.clientY - r.top) * (canvas.height / r.height);
+    if (isTouchDevice) return;
+    setPointer(e.clientX, e.clientY);
     mouse.isHovering = true;
   }
-  function onEnter() { mouse.isHovering = true; }
-  function onLeave() { mouse.isHovering = false; }
+  function onEnter() { if (isTouchDevice) return; mouse.isHovering = true; }
+  function onLeave() { if (isTouchDevice) return; mouse.isHovering = false; }
   function onCtx(e) { e.preventDefault(); }
+
+  // Touch handlers: disperse while a finger is down, ALWAYS reform on release.
+  function onTouchStart(e) {
+    const t = e.touches && e.touches[0];
+    if (!t) return;
+    setPointer(t.clientX, t.clientY);
+    mouse.isHovering = true;
+  }
+  function onTouchMove(e) {
+    const t = e.touches && e.touches[0];
+    if (!t) return;
+    setPointer(t.clientX, t.clientY);
+    mouse.isHovering = true;
+  }
+  function onTouchEnd() {
+    mouse.isHovering = false;
+    mouse.isPressed = false;
+    mouse.isRightClick = false;
+    reformCurrentWord();
+  }
 
   canvas.addEventListener('mousedown', onDown);
   canvas.addEventListener('mouseup', onUp);
@@ -223,6 +271,10 @@ function initParticleText(canvas, words, opts = {}) {
   canvas.addEventListener('mouseenter', onEnter);
   canvas.addEventListener('mouseleave', onLeave);
   canvas.addEventListener('contextmenu', onCtx);
+  canvas.addEventListener('touchstart', onTouchStart, { passive: true });
+  canvas.addEventListener('touchmove', onTouchMove, { passive: true });
+  canvas.addEventListener('touchend', onTouchEnd, { passive: true });
+  canvas.addEventListener('touchcancel', onTouchEnd, { passive: true });
 
   // Boot
   nextWord(words[0]);
@@ -238,6 +290,10 @@ function initParticleText(canvas, words, opts = {}) {
       canvas.removeEventListener('mouseenter', onEnter);
       canvas.removeEventListener('mouseleave', onLeave);
       canvas.removeEventListener('contextmenu', onCtx);
+      canvas.removeEventListener('touchstart', onTouchStart);
+      canvas.removeEventListener('touchmove', onTouchMove);
+      canvas.removeEventListener('touchend', onTouchEnd);
+      canvas.removeEventListener('touchcancel', onTouchEnd);
     }
   };
 }

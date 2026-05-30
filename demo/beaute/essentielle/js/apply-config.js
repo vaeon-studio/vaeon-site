@@ -196,9 +196,11 @@
     setAttr('[data-cfg-href="maps-directions"]', 'target', '_blank');
     setAttr('[data-cfg-href="maps-directions"]', 'rel', 'noopener');
 
-    const mapsEmbed = `https://www.google.com/maps?q=loc:${C.mapsLatitude},${C.mapsLongitude}&z=16&hl=fr&output=embed`;
+    const _lat = parseFloat(C.mapsLatitude), _lon = parseFloat(C.mapsLongitude);
+    const _dLat = 0.004, _dLon = 0.009; // emprise ~quelques centaines de mètres
+    const mapsEmbed = `https://www.openstreetmap.org/export/embed.html?bbox=${_lon - _dLon}%2C${_lat - _dLat}%2C${_lon + _dLon}%2C${_lat + _dLat}&layer=mapnik&marker=${_lat}%2C${_lon}`;
     setAttr('[data-cfg="maps-iframe"]', 'src', mapsEmbed);
-    setAttr('[data-cfg="maps-iframe"]', 'title', `Carte Google Maps — ${C.nomCommerce}`);
+    setAttr('[data-cfg="maps-iframe"]', 'title', `Plan — ${C.nomCommerce}`);
 
     // ============================================================
     // PAGE ACCUEIL
@@ -376,4 +378,27 @@
   } else {
     apply();
   }
+})();
+
+
+// ─── Patch démo : liens internes & canonical relatifs au dossier de la démo ───
+// Démos servies sous /demo/<categorie>/<niveau>/ ; les chemins absolus (« / »,
+// « /reservation », « /#section ») visaient la racine vaeon.fr → 404 en prod.
+// On les réécrit en relatif ; la profondeur est déduite du src de ce script.
+(function () {
+  function fixLinks() {
+    var s = document.querySelector('script[src$="js/apply-config.js"]');
+    var src = s ? s.getAttribute('src') : 'js/apply-config.js';
+    var depth = (src.match(/\.\.\//g) || []).length; // 0 = accueil, 1 = sous-page
+    var up = depth === 0 ? './' : new Array(depth + 1).join('../');
+    document.querySelectorAll('a[href^="/"]').forEach(function (a) {
+      var h = a.getAttribute('href');
+      if (!h || h.charAt(1) === '/') return; // ignore « // » (protocol-relative)
+      a.setAttribute('href', up + h.slice(1));
+    });
+    var can = document.querySelector('link[rel="canonical"]');
+    if (can) can.setAttribute('href', location.origin + location.pathname);
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fixLinks);
+  else fixLinks();
 })();

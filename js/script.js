@@ -298,13 +298,20 @@ if (particleSectionCanvas && typeof window.initParticleText === 'function') {
     if (particleCtrl && typeof particleCtrl.destroy === 'function') particleCtrl.destroy();
     // Scale font with canvas width so words fit on small screens
     const fontSize = Math.max(56, Math.min(200, Math.round(particleSectionCanvas.width / 6)));
+    // On phones: denser sampling + bigger dots (fuller letters), faster formation and a
+    // longer hold per word, so each word reads as complete instead of perpetually morphing.
+    // Desktop keeps the original values (byte-identical look).
+    const isMobile = window.matchMedia('(max-width:760px)').matches;
+    const tuning = isMobile
+      ? { pixelSteps: 4, pointSize: 3, speed: 1.6, wordInterval: 320 }
+      : { pixelSteps: 6, pointSize: 2, speed: 1.0, wordInterval: 240 };
     particleCtrl = window.initParticleText(particleSectionCanvas, [
       'VÆON',
       'DESIGN',
       'CODE',
       'IDENTITÉ',
       'SUR-MESURE',
-    ], { fontSize, fontFamily: 'Geist Mono, monospace', wordInterval: 240 });
+    ], Object.assign({ fontSize, fontFamily: 'Geist Mono, monospace' }, tuning));
   };
   startParticles();
   // Re-init on significant viewport change (orientation, browser resize)

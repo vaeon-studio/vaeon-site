@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Contact &amp; FAQ — Devis site internet 24h | VÆON</title>
 <meta name="description" content="Discutons de votre projet. Réponse sous 24h ouvrées, devis gratuit. Toutes les réponses aux questions fréquentes." />
-<link rel="canonical" href="https://vaeon.fr/contact.html" />
+<link rel="canonical" href="https://vaeon.fr/contact" />
 <link rel="icon" type="image/svg+xml" href="/assets/logo-carre.svg" />
 <link rel="apple-touch-icon" href="/assets/logo-carre.png" />
 <meta property="og:type" content="website" />
@@ -14,7 +14,7 @@
 <meta property="og:image:width" content="4000" />
 <meta property="og:image:height" content="4000" />
 <meta property="og:image:alt" content="VÆON — Sites internet sur mesure pour TPE à Toulouse" />
-<meta property="og:url" content="https://vaeon.fr/contact.html" />
+<meta property="og:url" content="https://vaeon.fr/contact" />
 <meta property="og:title" content="Contact &amp; FAQ — Devis site internet 24h | VÆON" />
 <meta property="og:description" content="Discutons de votre projet. Réponse sous 24h ouvrées, devis gratuit. Toutes les réponses aux questions fréquentes." />
 <meta name="twitter:card" content="summary_large_image" />
@@ -33,13 +33,13 @@
       "@type": "BreadcrumbList",
       "itemListElement": [
         {"@type":"ListItem","position":1,"name":"Accueil","item":"https://vaeon.fr/"},
-        {"@type":"ListItem","position":2,"name":"Contact","item":"https://vaeon.fr/contact.html"}
+        {"@type":"ListItem","position":2,"name":"Contact","item":"https://vaeon.fr/contact"}
       ]
     },
     {
       "@type": "ContactPage",
-      "@id": "https://vaeon.fr/contact.html#contactpage",
-      "url": "https://vaeon.fr/contact.html",
+      "@id": "https://vaeon.fr/contact#contactpage",
+      "url": "https://vaeon.fr/contact",
       "name": "Contact & FAQ — VÆON",
       "isPartOf": {"@id":"https://vaeon.fr/#website"},
       "about": {"@id":"https://vaeon.fr/#organization"}
@@ -122,15 +122,15 @@
         </div>
       </div>
 
-      <!-- Formulaire de contact — envoi direct via Web3Forms (gratuit, illimité).
-           ⚠️ À CONFIGURER : remplacer YOUR_WEB3FORMS_ACCESS_KEY par la vraie clé
-           obtenue sur https://web3forms.com (entrer contact@vaeon.fr → clé reçue par mail).
-           Tant que la clé n'est pas configurée, le form tombe en fallback mailto:. -->
-      <form id="contactForm" action="https://api.web3forms.com/submit" method="POST" autocomplete="off" data-r>
-        <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_ACCESS_KEY">
-        <input type="hidden" name="subject" value="Nouveau contact VÆON">
-        <input type="hidden" name="from_name" value="Formulaire vaeon.fr">
-        <input type="text" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
+      <!-- Formulaire de contact — envoi via FormSubmit.co (sans clé ni compte).
+           ⚠️ ACTIVATION : au tout premier envoi, FormSubmit envoie un mail de
+           confirmation à contact@vaeon.fr — cliquer le lien une seule fois pour activer.
+           Ensuite chaque message arrive directement dans la boîte. -->
+      <form id="contactForm" action="https://formsubmit.co/contact@vaeon.fr" method="POST" autocomplete="off" data-r>
+        <input type="hidden" name="_subject" value="Nouveau contact VÆON">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
         <h4>Remplissez ce formulaire</h4>
         <div class="field"><label for="name">Votre nom</label><input id="name" name="nom" type="text" required placeholder="Entrez votre nom complet" /></div>
         <div class="field"><label for="email">Votre email</label><input id="email" name="email" type="email" required placeholder="Entrez votre adresse email" /></div>
@@ -200,7 +200,7 @@
 </main>
 
 <footer>
-  <div class="footer-big"><h2><em>En route</em><br>vers vous.</h2></div>
+  <div class="footer-big"><h2><em>Travelling</em><br>vers vous.</h2></div>
   <div class="footer-cols">
     <div class="fcol"><h3>VÆON</h3><p>Collectif de freelances design, développement et stratégie web basé à Toulouse. Architectures digitales sur-mesure pour commerces, maisons et marques exigeantes.</p></div>
     <div class="fcol"><h3>Pages</h3><a href="process.html">Process</a><a href="a-propos.html">À propos</a></div>
@@ -213,10 +213,9 @@
 <script src="js/script.js"></script>
 <script>
   // ============================================================
-  // CONTACT FORM → envoi direct via Web3Forms (fetch POST JSON)
-  // Affiche "Message bien reçu sous 48h" en cas de succès.
-  // Fallback automatique sur mailto: si la clé Web3Forms n'est pas
-  // configurée (placeholder YOUR_WEB3FORMS_ACCESS_KEY) ou si l'API échoue.
+  // CONTACT FORM → envoi via FormSubmit.co (fetch POST JSON, sans clé).
+  // Succès → confirmation "Message bien reçu". Échec → invite à écrire par mail.
+  // 1er envoi : FormSubmit envoie un mail d'activation à contact@vaeon.fr.
   // ============================================================
   (function(){
     var form = document.getElementById('contactForm');
@@ -225,70 +224,41 @@
     var btnLabel = btn ? btn.querySelector('.submit-label') : null;
     var successEl = document.getElementById('formSuccess');
     var errorEl = document.getElementById('formError');
-    var accessKey = form.querySelector('input[name="access_key"]').value;
-    var isConfigured = accessKey && accessKey.indexOf('YOUR_') !== 0;
+    var ENDPOINT = 'https://formsubmit.co/ajax/contact@vaeon.fr';
 
+    function reset(){
+      if (btn) btn.disabled = false;
+      if (btnLabel) btnLabel.textContent = 'Envoyer le message';
+    }
     function showSuccess(){
       if (errorEl) errorEl.classList.remove('show');
       if (successEl) successEl.classList.add('show');
       form.reset();
-      if (btn) { btn.disabled = false; }
-      if (btnLabel) btnLabel.textContent = 'Envoyer le message';
-      // Scroll into view so the user sees the confirmation
+      reset();
       if (successEl) successEl.scrollIntoView({behavior: 'smooth', block: 'center'});
     }
     function showError(){
       if (successEl) successEl.classList.remove('show');
       if (errorEl) errorEl.classList.add('show');
-      if (btn) { btn.disabled = false; }
-      if (btnLabel) btnLabel.textContent = 'Envoyer le message';
-    }
-    function fallbackMailto(fd){
-      var nom = (fd.get('nom') || '').toString().trim();
-      var email = (fd.get('email') || '').toString().trim();
-      var activite = (fd.get('activite') || '').toString().trim();
-      var service = (fd.get('service') || '').toString().trim();
-      var message = (fd.get('message') || '').toString().trim();
-      if (activite.indexOf('Sélectionnez') === 0) activite = '';
-      if (service.indexOf('Sélectionnez') === 0) service = '';
-      var subject = 'Nouveau contact VÆON' + (nom ? ' — ' + nom : '');
-      var body = [
-        nom && 'Nom : ' + nom,
-        email && 'Email : ' + email,
-        activite && 'Type d\'activité : ' + activite,
-        service && 'Service recherché : ' + service,
-        '',
-        '— À propos du projet —',
-        message || '(vide)',
-      ].filter(Boolean).join('\n');
-      window.location.href = 'mailto:contact@vaeon.fr?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+      reset();
     }
 
     form.addEventListener('submit', function(e){
       e.preventDefault();
-      var fd = new FormData(form);
-
-      // Si la clé Web3Forms n'est pas configurée, fallback direct sur mailto
-      if (!isConfigured) {
-        fallbackMailto(fd);
-        return;
-      }
-
       if (btn) { btn.disabled = true; }
       if (btnLabel) btnLabel.textContent = 'Envoi en cours…';
 
-      // Convert FormData to JSON for Web3Forms API
       var json = {};
-      fd.forEach(function(v, k){ json[k] = v; });
+      new FormData(form).forEach(function(v, k){ json[k] = v; });
 
-      fetch('https://api.web3forms.com/submit', {
+      fetch(ENDPOINT, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
         body: JSON.stringify(json),
       })
       .then(function(res){ return res.json(); })
       .then(function(data){
-        if (data && data.success) showSuccess();
+        if (data && (data.success === true || data.success === 'true')) showSuccess();
         else showError();
       })
       .catch(function(){ showError(); });
