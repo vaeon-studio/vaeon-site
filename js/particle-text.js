@@ -115,6 +115,7 @@ function initParticleText(canvas, words, opts = {}) {
   const mouse = { x: 0, y: 0, isPressed: false, isRightClick: false, isHovering: false };
   let rafId = null;
   let pickedColor = palette[0];
+  let lastPointerMove = 0;
 
   function nextWord(word) {
     const off = document.createElement('canvas');
@@ -195,6 +196,14 @@ function initParticleText(canvas, words, opts = {}) {
       }
     }
 
+    // Safety net (touch): if the finger hasn't moved for a moment, end the dispersal and
+    // force the word to rebuild. Guarantees the word ALWAYS reforms — even if a touchend is
+    // missed or iOS leaves a synthetic hover stuck (the root cause of "it never reforms").
+    if (isTouchDevice && mouse.isHovering && Date.now() - lastPointerMove > 220) {
+      mouse.isHovering = false;
+      mouse.isPressed = false;
+      reformCurrentWord();
+    }
     if (mouse.isHovering || (mouse.isPressed && mouse.isRightClick)) {
       const radius = (mouse.isPressed && mouse.isRightClick) ? 110 : 70;
       particles.forEach(p => {
@@ -216,6 +225,7 @@ function initParticleText(canvas, words, opts = {}) {
     const r = canvas.getBoundingClientRect();
     mouse.x = (clientX - r.left) * (canvas.width / r.width);
     mouse.y = (clientY - r.top) * (canvas.height / r.height);
+    lastPointerMove = Date.now();
   }
   // Re-assign every particle back to the CURRENT word so it always returns to 100%.
   function reformCurrentWord() { nextWord(words[wordIndex]); }
