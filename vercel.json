@@ -8,15 +8,20 @@
     },
     {
       "source": "/agence-web-toulouse.html",
-      "destination": "/studio-web-toulouse.html",
+      "destination": "/studio-web-toulouse/",
       "permanent": true
     },
     {
       "source": "/agence-web-toulouse",
-      "destination": "/studio-web-toulouse",
+      "destination": "/studio-web-toulouse/",
+      "permanent": true
+    },
+    {
+      "source": "/agence-web-toulouse/",
+      "destination": "/studio-web-toulouse/",
       "permanent": true
     }
   ],
   "cleanUrls": true,
-  "trailingSlash": false
+  "trailingSlash": true
 }
