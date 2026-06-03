@@ -164,11 +164,20 @@ window.SITE_CONFIG = {
   ],
 
   // ─────────────────────────────────────────────────────
-  // 10. GALERIE (6 photos statiques — Behold/Instagram réservé Iconique)
+  // 10. GALERIE INSTAGRAM (widget Behold + fallback grid statique)
+  //
+  //  - Mode par défaut : 6 photos statiques en grid 3 cols carrée façon
+  //    feed Insta (avec hover overlay likes/commentaires).
+  //  - Mode live (Behold) : créer compte gratuit sur https://behold.so,
+  //    connecter le compte de l'institut, copier l'ID du feed dans
+  //    `beholdFeedId`. apply-config.js injecte alors automatiquement le
+  //    widget qui remplace la grid statique.
   // ─────────────────────────────────────────────────────
   galerieActif:    true,                                  // false pour masquer la section
-  galerieEyebrow:  "Nos cabines",
-  galerieTitre:    "En **cabine.**",
+  galerieEyebrow:  "En direct de l'institut",
+  galerieTitre:    "Instagram **live.**",
+  galerieHandle:   "@maisonlumiere",                      // affiché sous le titre, lien vers Insta
+  beholdFeedId:    "",                                    // vide = fallback grid ; ex: "x1y2z3-..."
   galeriePhotos: [
     { src: "assets/images/galerie/galerie-01.jpg", alt: "Hydrafacial — soin du visage en cours" },
     { src: "assets/images/galerie/galerie-02.jpg", alt: "Volume russe — pose d'extensions de cils" },

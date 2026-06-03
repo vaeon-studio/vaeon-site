@@ -319,7 +319,7 @@
         }
       }
 
-      // ─── GALERIE (6 photos statiques) ───
+      // ─── GALERIE INSTAGRAM (widget Behold OU fallback grid statique) ───
       const galSection = document.querySelector('[data-cfg-section="galerie"]');
       if (galSection) {
         if (!C.galerieActif) {
@@ -327,12 +327,29 @@
         } else {
           setHTML('[data-cfg="galerie-eyebrow"]', `<span class="rule"></span>${escapeHtml(C.galerieEyebrow || '')}<span class="rule"></span>`);
           setHTML('[data-cfg="galerie-titre"]',   mdItalic(C.galerieTitre || ''));
-          const galWrap = document.querySelector('[data-cfg-list="galerie-photos"]');
-          if (galWrap && Array.isArray(C.galeriePhotos)) {
-            galWrap.innerHTML = C.galeriePhotos.map((p, i) => `
-              <figure class="galerie-tile reveal">
-                <img src="${escapeHtml(p.src || '')}" alt="${escapeHtml(p.alt || `Galerie ${i+1}`)}" loading="lazy" decoding="async" />
-              </figure>`).join('');
+          setText('[data-cfg="galerie-handle"]',  C.galerieHandle || '');
+
+          const beholdMount = document.querySelector('[data-cfg-behold-mount]');
+          const feedId = (C.beholdFeedId || '').trim();
+          if (beholdMount && feedId) {
+            // Mode live : remplace la grid par le widget Behold + injecte le script
+            beholdMount.innerHTML = `<behold-widget feed-id="${escapeHtml(feedId)}"></behold-widget>`;
+            if (!document.querySelector('script[data-behold]')) {
+              const s = document.createElement('script');
+              s.type = 'module';
+              s.src = 'https://w.behold.so/widget.js';
+              s.dataset.behold = '1';
+              document.body.appendChild(s);
+            }
+          } else {
+            // Mode fallback : grid statique 3×2 carrée façon feed Insta
+            const galWrap = document.querySelector('[data-cfg-list="galerie-photos"]');
+            if (galWrap && Array.isArray(C.galeriePhotos)) {
+              galWrap.innerHTML = C.galeriePhotos.map((p, i) => `
+                <figure class="galerie-tile reveal">
+                  <img src="${escapeHtml(p.src || '')}" alt="${escapeHtml(p.alt || `Galerie ${i+1}`)}" loading="lazy" decoding="async" />
+                </figure>`).join('');
+            }
           }
         }
       }

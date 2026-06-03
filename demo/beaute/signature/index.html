@@ -163,18 +163,27 @@
     </div>
   </section>
 
-  <!-- ========== GALERIE ==========
-       6 photos statiques alimentées par apply-config.js depuis
-       SITE_CONFIG.galerie.photos. Layout grid 3×2 desktop, 2col tablet,
-       1col mobile. Plus de Behold/Instagram intégré (réservé Iconique). -->
-  <section class="galerie" id="galerie" data-cfg-section="galerie">
+  <!-- ========== GALERIE INSTAGRAM (widget Behold + fallback grid) ==========
+       Par défaut : grid 3 cols carrée façon feed Instagram, alimentée par
+       SITE_CONFIG.galeriePhotos. Pour brancher le vrai feed Insta : créer
+       compte gratuit sur behold.so, connecter le compte de l'institut, copier
+       le feed-id dans SITE_CONFIG.beholdFeedId — apply-config.js injecte alors
+       le widget live qui remplace la grid statique. -->
+  <section class="galerie galerie-insta" id="galerie" data-cfg-section="galerie">
     <div class="container">
       <header class="section-head center reveal">
         <p class="eyebrow centered" data-cfg="galerie-eyebrow"></p>
         <h2 class="display" data-cfg="galerie-titre"></h2>
+        <a class="galerie-handle" data-cfg-href="instagram" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8" fill="currentColor"/></svg>
+          <span data-cfg="galerie-handle"></span>
+        </a>
       </header>
-      <div class="galerie-grid" data-cfg-list="galerie-photos">
-        <!-- Tiles générées dynamiquement depuis SITE_CONFIG.galerie.photos -->
+      <div class="galerie-feed" data-cfg-behold-mount>
+        <div class="galerie-grid" data-cfg-list="galerie-photos">
+          <!-- Tiles statiques (fallback) générées depuis SITE_CONFIG.galeriePhotos.
+               Si beholdFeedId est défini, ce wrap est remplacé par <behold-widget>. -->
+        </div>
       </div>
     </div>
   </section>

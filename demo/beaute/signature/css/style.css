@@ -565,6 +565,56 @@ body[data-page="mentions"]     .burger span{background:var(--ink)}
   .galerie-tile{aspect-ratio:1 / 1}
 }
 
+/* ============== GALERIE INSTAGRAM (variante feed live)
+     Override de .galerie quand on ajoute la classe .galerie-insta.
+     Format carré 3×2 desktop façon feed Insta + hover overlay
+     (likes/commentaires) + handle @ avec icône.
+     Compatible avec widget Behold (behold-widget remplace .galerie-grid). */
+.galerie-insta .galerie-grid{
+  grid-template-columns:repeat(3,1fr);
+  gap:clamp(8px,0.9vw,14px);
+  max-width:920px;margin:0 auto;
+}
+.galerie-insta .galerie-tile{
+  aspect-ratio:1 / 1;cursor:pointer;
+}
+.galerie-insta .galerie-tile::after{
+  content:"";position:absolute;inset:0;
+  background:rgba(0,0,0,0);
+  transition:background .35s var(--ease);
+  pointer-events:none;z-index:1;
+}
+.galerie-insta .galerie-tile:hover::after{background:rgba(0,0,0,.42)}
+.galerie-insta .galerie-tile::before{
+  content:"♥  124    💬  8";
+  position:absolute;inset:0;z-index:2;
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-family:var(--sans);font-weight:600;
+  font-size:.95rem;letter-spacing:.06em;
+  opacity:0;transform:translateY(6px);
+  transition:opacity .35s var(--ease), transform .35s var(--ease);
+  pointer-events:none;
+}
+.galerie-insta .galerie-tile:hover::before{opacity:1;transform:translateY(0)}
+
+.galerie-handle{
+  display:inline-flex;align-items:center;gap:8px;
+  margin-top:.9rem;
+  font-family:var(--sans);font-size:.95rem;font-weight:500;
+  color:var(--accent);text-decoration:none;
+  transition:color .25s var(--ease), transform .25s var(--ease);
+}
+.galerie-handle:hover{color:var(--ink);transform:translateY(-1px)}
+.galerie-handle svg{flex-shrink:0}
+
+.galerie-feed behold-widget{display:block;width:100%;max-width:920px;margin:0 auto}
+
+@media (max-width:520px){
+  .galerie-insta .galerie-grid{grid-template-columns:repeat(3,1fr);gap:4px}
+  .galerie-insta .galerie-tile{aspect-ratio:1 / 1}
+  .galerie-insta .galerie-tile::before{font-size:.8rem;letter-spacing:.04em}
+}
+
 /* ============== AVIS ============== */
 .avis{padding:var(--pad-y) 0;background:var(--bg)}
 .avis-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(20px,2vw,32px)}

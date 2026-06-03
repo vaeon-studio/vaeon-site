@@ -1251,38 +1251,59 @@ body{
 
 /* ─── RESPONSIVE MOBILE (< 768px) ─── */
 @media (max-width:767px){
-  /* Photo affichée à son ratio naturel (landscape 5473×3654) en pleine largeur :
-     la tête est entièrement visible et les % de position (calibrés sur l'image
-     naturelle dans config.js) tombent pile sur les traits sans crop. */
+  /* Photo agrandie et zoomée sur le sujet (cadre portrait 4/5) au lieu du ratio
+     paysage complet où l'homme apparaissait petit et calé à gauche. Le conteneur
+     impose le cadre, object-fit:cover + object-position font le zoom → la tête,
+     la barbe et le visage remplissent l'image. Les positions des 4 points sont
+     recalées plus bas POUR ce cadrage (override mobile uniquement). */
   .facemap-bg{
     height:auto;
-    aspect-ratio:5473 / 3654;
+    aspect-ratio:4 / 5;
     min-height:0;
     max-height:none;
     width:100%;
+    overflow:hidden;
   }
   .facemap-bg-img{
-    position:relative;
-    width:100%;
-    height:auto;
+    position:absolute;
+    inset:0;
+    /* !important : bat les styles inline du HTML (width:auto/object-fit) ET le
+       transform inline injecté par GSAP (parallax desktop) qui, sur mobile,
+       poussait la photo hors écran. Le parallax n'a pas lieu d'être ici. */
+    width:100% !important;
+    height:100% !important;
     right:auto;
     left:0;
-    aspect-ratio:5473 / 3654;
-    transform:none;
+    aspect-ratio:auto;
+    transform:none !important;
     -webkit-mask-image:none;
     mask-image:none;
-    object-fit:contain;
+    object-fit:cover !important;
+    object-position:18% 28% !important;
   }
+  /* Le wrapper des points est FRÈRE de .facemap-bg (pas enfant) : un height:100%
+     se référerait à la section entière (photo + card). On lui donne donc le même
+     cadre 4/5 que la photo pour que les % des points retombent pile dessus. */
   .facemap-points{
+    top:0;
+    left:0;
+    right:auto;
     width:100%;
     height:auto;
-    right:auto;
-    left:0;
-    aspect-ratio:5473 / 3654;
+    aspect-ratio:4 / 5;
   }
+  /* Positions des 4 points recalées sur le cadrage mobile zoomé.
+     left/top = CENTRE du point (transform:translate(-50%,-50%)).
+     !important : apply-config.js pose les positions de config.js en inline ;
+     on les surcharge UNIQUEMENT sur mobile, le desktop garde config.js. */
+  .facemap-point[data-prestation-id="nails"]     { left:56% !important; top:48% !important; }  /* 01 Coupe — cheveux */
+  .facemap-point[data-prestation-id="massages"]  { left:64% !important; top:61% !important; }  /* 04 Coloration — cheveux/côté */
+  .facemap-point[data-prestation-id="brow"]       { left:31% !important; top:67% !important; }  /* 02 Barbe — barbe/mâchoire */
+  .facemap-point[data-prestation-id="esthetique"] { left:34% !important; top:51% !important; }  /* 03 Soin du visage — joue */
   .facemap-marquee{
-    /* La section facemap est nettement plus courte sur mobile → recentre. */
-    top:50%;
+    /* Reste dans la zone photo (sinon il dérive dans la card). Proportionnel à
+       la largeur (donc à la hauteur du cadre 4/5) → stable sur tous les mobiles. */
+    top:40vw;
   }
   .facemap-point{
     width:40px;
