@@ -1552,3 +1552,46 @@ form h4{font-weight:700;font-size:24px;letter-spacing:-.02em;margin-bottom:8px;c
 .pv-motion .vanish{position:absolute;top:50%;left:50%;width:60px;height:60px;margin:-30px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.95) 0%,rgba(255,235,200,.5) 30%,rgba(212,160,80,.2) 60%,transparent 80%);filter:blur(3px);animation:vanishPulse 3s ease-in-out infinite;z-index:5;pointer-events:none}
 @keyframes vanishPulse{0%,100%{transform:scale(1);opacity:.8}50%{transform:scale(1.2);opacity:1}}
 .pv-motion::after{content:'';position:absolute;inset:0;pointer-events:none;background-image:repeating-linear-gradient(0deg,rgba(255,255,255,.018) 0px,rgba(255,255,255,.018) 1px,transparent 1px,transparent 3px);mix-blend-mode:screen;z-index:7}
+
+/* === Floating WhatsApp button (injecté sur toutes les pages via script.js) === */
+/* Desktop : pill avec libellé · Mobile : cercle icône seule.
+   Couleur de marque : VIOLET sur le site vitrine (défaut) · VERT sur le tunnel
+   de prospection (body.prosp-body). Pour retoucher la teinte : --wa-color. */
+.wa-fab{--wa-color:#a23bd6;--wa-color-d:#8a2fc0;--wa-glow:162,59,214;position:fixed;right:24px;bottom:24px;z-index:120;display:inline-flex;align-items:center;gap:11px;padding:15px 22px;border-radius:999px;background:var(--wa-color);color:#fff;font-weight:700;font-size:15px;line-height:1;white-space:nowrap;box-shadow:0 8px 24px rgba(0,0,0,.30),0 0 0 6px rgba(var(--wa-glow),.16);transition:transform .25s ease,box-shadow .25s ease,background .25s ease;animation:waPulse 2.6s ease-in-out infinite}
+body.prosp-body .wa-fab{--wa-color:#25d366;--wa-color-d:#1ebe5a;--wa-glow:37,211,102}
+.wa-fab svg{width:26px;height:26px;display:block;flex-shrink:0}
+.wa-fab:hover{background:var(--wa-color-d);transform:translateY(-3px);box-shadow:0 12px 30px rgba(0,0,0,.42),0 0 0 8px rgba(var(--wa-glow),.22);animation-play-state:paused}
+@keyframes waPulse{0%,100%{box-shadow:0 8px 24px rgba(0,0,0,.30),0 0 0 0 rgba(var(--wa-glow),.30)}50%{box-shadow:0 8px 24px rgba(0,0,0,.30),0 0 0 12px rgba(var(--wa-glow),0)}}
+@media (max-width:760px){.wa-fab{right:18px;bottom:18px;width:54px;height:54px;padding:0;gap:0;justify-content:center}.wa-fab .wa-fab-label{display:none}.wa-fab svg{width:29px;height:29px}}
+@media (prefers-reduced-motion:reduce){.wa-fab{animation:none}}
+
+/* === Page Contact · zone de contact direct (WhatsApp violet + Calendly + canaux) === */
+.contact-direct{max-width:760px;margin:0 auto;padding:0 24px 20px}
+.cd-card{position:relative;background:radial-gradient(820px 520px at 85% -20%,rgba(162,59,214,.14),transparent 60%),radial-gradient(680px 480px at -10% 120%,rgba(255,94,138,.10),transparent 60%),var(--bg-2);border:1px solid var(--line);border-radius:24px;padding:36px 34px 30px}
+.cd-card h2{font-family:var(--display-mono);font-weight:700;text-transform:uppercase;letter-spacing:-.03em;font-size:clamp(28px,4.5vw,42px);line-height:1.05;margin:14px 0 10px;color:var(--ink)}
+.cd-card h2 em{font-family:var(--serif);font-style:italic;font-weight:300;text-transform:none;background:linear-gradient(92deg,#b985ff,var(--c-pink) 80%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.cd-sub{color:var(--ink-2);font-size:16px;line-height:1.55;margin:0 0 26px;max-width:520px}
+.cd-ctas{display:flex;gap:12px;flex-wrap:wrap;margin:0 0 24px}
+.cd-wa{display:inline-flex;align-items:center;gap:11px;padding:16px 24px;border-radius:999px;background:linear-gradient(135deg,#a23bd6,#7c5cfc);color:#fff;font-weight:700;font-size:15.5px;box-shadow:0 12px 30px rgba(162,59,214,.40);transition:transform .2s,box-shadow .2s}
+.cd-wa svg{width:22px;height:22px;flex-shrink:0}
+.cd-wa:hover{transform:translateY(-3px);box-shadow:0 18px 40px rgba(162,59,214,.52)}
+.cd-cal{display:inline-flex;align-items:center;gap:10px;padding:15px 22px;border-radius:999px;background:transparent;color:var(--ink);font-weight:600;font-size:15px;border:1px solid var(--line-2);transition:border-color .2s,background .2s,transform .2s}
+.cd-cal svg{width:18px;height:18px;flex-shrink:0;opacity:.85}
+.cd-cal:hover{border-color:var(--ink);background:rgba(243,241,234,.04);transform:translateY(-2px)}
+.cd-divider{height:1px;background:var(--line);margin:4px 0 22px}
+.cd-methods{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.cd-method{display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(243,241,234,.03);border:1px solid var(--line);border-radius:16px;transition:transform .16s,border-color .16s,background .16s}
+.cd-method:hover{transform:translateY(-2px);border-color:var(--line-2);background:rgba(243,241,234,.055)}
+.cd-chip{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.cd-chip svg{width:20px;height:20px}
+.cd-chip.wa{background:rgba(162,59,214,.16);color:#c79cff}
+.cd-chip.tel{background:rgba(255,94,138,.16);color:#ff9cbb}
+.cd-chip.mail{background:rgba(255,90,31,.16);color:#ffa784}
+.cd-chip.ig{background:rgba(95,201,255,.16);color:#9fdcff}
+.cd-mtext{display:flex;flex-direction:column;min-width:0}
+.cd-mlabel{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);margin-bottom:2px}
+.cd-mval{font-size:15px;font-weight:600;color:var(--ink)}
+.cd-tag{margin-left:auto;font-size:10.5px;font-weight:700;letter-spacing:.03em;color:#1a0e22;background:linear-gradient(135deg,#c79cff,#b985ff);padding:3px 10px;border-radius:999px;flex-shrink:0}
+.cd-foot{margin:20px 2px 0;font-size:12.5px;color:var(--ink-3);display:flex;align-items:center;gap:8px}
+.cd-foot::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--c-orange);flex-shrink:0}
+@media (max-width:560px){.cd-card{padding:30px 22px 26px}.cd-ctas{flex-direction:column}.cd-wa,.cd-cal{width:100%;justify-content:center}}
