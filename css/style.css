@@ -1570,7 +1570,9 @@ body.prosp-body .wa-fab{--wa-color:#25d366;--wa-color-d:#1ebe5a;--wa-glow:37,211
 @media (prefers-reduced-motion:reduce){.wa-fab{animation:none}}
 
 /* === Page Contact · zone de contact direct (WhatsApp violet + Calendly + canaux) === */
-.contact-direct{max-width:760px;margin:0 auto;padding:0 24px 20px}
+.contact-direct{max-width:760px;margin:40px auto 0;padding:20px 24px;scroll-margin-top:120px}
+/* Formulaire seul (section "On en discute" retirée) : centré, même largeur que les cartes */
+.contact-wrap--solo{grid-template-columns:1fr;max-width:760px;margin-left:auto;margin-right:auto}
 .cd-card{position:relative;background:radial-gradient(820px 520px at 85% -20%,rgba(162,59,214,.14),transparent 60%),radial-gradient(680px 480px at -10% 120%,rgba(255,94,138,.10),transparent 60%),var(--bg-2);border:1px solid var(--line);border-radius:24px;padding:36px 34px 30px}
 .cd-card h2{font-family:var(--display-mono);font-weight:700;text-transform:uppercase;letter-spacing:-.03em;font-size:clamp(28px,4.5vw,42px);line-height:1.05;margin:14px 0 10px;color:var(--ink)}
 .cd-card h2 em{font-family:var(--serif);font-style:italic;font-weight:300;text-transform:none;background:linear-gradient(92deg,#b985ff,var(--c-pink) 80%);-webkit-background-clip:text;background-clip:text;color:transparent}
