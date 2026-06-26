@@ -1,6 +1,8 @@
 // === Bouton WhatsApp flottant (injecté sur toutes les pages, desktop + mobile) ===
 (function() {
   if (document.querySelector('.wa-fab')) return;
+  // Pages qui désactivent le flottant (ex. /contact : déjà un gros CTA WhatsApp + carte dédiée).
+  if (document.body.classList.contains('no-floating-wa')) return;
   // Message adapté au contexte : tunnel de prospection (landings) vs site vitrine.
   const isProspection = document.body.classList.contains('prosp-body');
   const WA_MSG = isProspection
