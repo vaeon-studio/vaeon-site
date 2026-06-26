@@ -1339,7 +1339,11 @@ form h4{font-weight:700;font-size:24px;letter-spacing:-.02em;margin-bottom:8px;c
 .form-error a{color:var(--c-pink);text-decoration:underline}
 @keyframes okIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 
-@media (max-width:980px){.contact-wrap{grid-template-columns:1fr}.contact-side{min-height:auto;padding:40px}form{padding:32px}}
+@media (max-width:980px){.contact-wrap{grid-template-columns:1fr}.contact-side{min-height:auto;padding:40px;min-width:0}form{padding:32px;min-width:0}}
+/* Anti-débordement mobile : les items de grille et champs ne dépassent jamais la largeur dispo */
+.contact-side,#contact form{min-width:0}
+.field input,.field textarea,.field select{min-width:0;max-width:100%}
+@media (max-width:560px){.contact-side{padding:32px 24px}#contact form{padding:28px 22px}}
 
 /* === CTA banner (between sections / inner pages) === */
 .cta-banner{margin:120px 40px;padding:80px 60px;background:linear-gradient(135deg, var(--bg-2) 0%, var(--bg-3) 100%);border:1px solid var(--line);border-radius:32px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:24px;position:relative;overflow:hidden}
