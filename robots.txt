@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /livraison/
 
 Sitemap: https://vaeon.fr/sitemap.xml
